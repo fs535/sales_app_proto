@@ -1,0 +1,218 @@
+<div class="top-container">
+    <div class="error" *ngIf="error">{{error}}</div>
+</div>
+<div class="left-container">
+    <h2 *ngIf="!unoffered && !category1">Products</h2>
+    <h2 *ngIf="unoffered && !category1">Not Offered Products</h2>
+    <h2 *ngIf="unoffered && category1">Not Offered Products in Category: {{category1}}</h2>
+    <h2 *ngIf="!unoffered && category1">Products in Category: {{category1}}</h2>
+    <div class="form-group">
+        <div class="form-group">
+            <label for="sel1">Product Category:</label>
+            <select class="form-control" id="sel1" [ngModel]="category1" (ngModelChange)="onCategory1Select($event)">
+                <option *ngFor="let category of categories">{{category}}</option>
+            </select>
+        </div>
+        <div class="input-group">
+             <span class="input-group-addon">
+                 <label>Not Offered Products?</label>
+                <input type="checkbox" [(ngModel)]="unoffered" (ngModelChange)="onUnofferedSelect($event)">
+            </span>
+            <input type="text" class="form-control" placeholder="Type string to find..." [(ngModel)]="productSearch" (ngModelChange)="onProductSearch($event)">
+        </div>
+    </div>
+    <table class="table table-striped left-container-table">
+        <thead>
+        <th class="zero">Id</th>
+        <th class="first">Name</th>
+        <th class="second">Category</th>
+        <th class="third">Offer</th>
+        <th class="fourth">Active</th>
+        <th class="fifth"></th>
+        <th class="last"></th>
+        </thead>
+        <tbody>
+        <tr *ngFor="let product of products" (mousedown)="onProductSelect(product);true"
+            [class.selected]="product.id === selectedProduct.id"
+            [class.available]="product.offer === ''">
+            <td class="zero">
+                <input [class.selected]="product.id === selectedProduct.id" class="wide"
+                       type="text"
+                       readonly="true" [(ngModel)]="product.id"/>
+            </td>
+            <td class="first">
+                <input [class.selected]="product.id === selectedProduct.id" class="wide"
+                       type="text"
+                       [(ngModel)]="product.name" (blur)="saveProduct(product)"/>
+            </td>
+            <td class="second">
+                <input [class.selected]="product.id === selectedProduct.id" class="wide"
+                       type="text"
+                       [(ngModel)]="product.category1" (blur)="saveProduct(product)"/>
+            </td>
+            <td class="third">
+                <input [class.selected]="product.id === selectedProduct.id" class="wide"
+                       type="text"
+                       [(ngModel)]="product.offer" (blur)="saveProduct(product)"/>
+            </td>
+            <td class="fourth">
+                <input
+                        type="checkbox"
+                        [(ngModel)]="product.active" (ngModelChange)="onActiveChange($event, product)"/>
+            </td>
+            <td class="fifth"></td>
+            <td class="last"><a class="middle" *ngIf="selectedOffer.id != '' && product.offer == ''"
+                                (click)="assignSelectedOffer(product)"><img src="images/arrow_right.png"/></a></td>
+        </tr>
+        <tr *ngIf="!category1 && !unoffered">
+            <td colspan="4" style="text-align: center">Select Category/Not Offered</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="right-container1">
+    <h2 *ngIf="unassigned">New Offers</h2>
+    <h2 *ngIf="!unassigned && offerCategory1">Offers for Products in Category: {{offerCategory1}}</h2>
+    <h2 *ngIf="!unassigned && !offerCategory1">Offers</h2>
+    <div class="form-group">
+    </div>
+    <div class="form-group">
+        <div class="form-group">
+            <label>Offers for Product in Category:</label>
+            <select *ngIf="!unassigned" class="form-control" [ngModel]="offerCategory1"
+                    (ngModelChange)="onOfferCategory1Select($event)">
+                <option *ngFor="let category of categories">{{category}}</option>
+            </select>
+            <select *ngIf="unassigned" class="form-control" [disabled]="true"></select>
+        </div>
+        <div class="input-group">
+             <span class="input-group-addon">
+                 <label>New Offers?</label>
+                <input type="checkbox" [(ngModel)]="unassigned" (ngModelChange)="onUnassignedSelect($event)">
+            </span>
+            <input type="text" class="form-control" placeholder="Type string to find..."  [(ngModel)]="offerSearch" (ngModelChange)="onOfferSearch($event)">
+        </div>
+    </div>
+    <button (click)="addOffer()">Add New Offer</button>
+    <div *ngIf="addingOffer">
+        <table class="table table-striped right-container1-table right-container1-table-new">
+            <thead>
+            <th class="zero">Id</th>
+            <th class="first">Name</th>
+            <th class="second">Discount</th>
+            <th class="third"></th>
+            <th class="last"></th>
+            </thead>
+            <tbody>
+            <tr [class.selected]="true">
+                <td class="zero">
+                    <input [class.selected]="offer.id === selectedOffer.id" class="wide"
+                           type="text"
+                           [(ngModel)]="offer.id"/>
+                </td>
+                <td class="first">
+                    <input [class.selected]="offer.id === selectedOffer.id" class="wide"
+                           type="text"
+                           [(ngModel)]="offer.name"/>
+                </td>
+                <td class="second">
+                    <input [class.selected]="offer.id === selectedOffer.id" class="wide"
+                           type="text"
+                           [(ngModel)]="offer.discount"/>
+                </td>
+                <td class="third"></td>
+                <td class="last"></td>
+            </tr>
+            </tbody>
+        </table>
+        <button (click)="saveOffer(offer)">Save</button>
+        <button (click)="closeOffer()">Cancel</button>
+    </div>
+    <div *ngIf="!addingOffer">
+        <table class="table table-striped right-container1-table">
+            <thead>
+            <th class="zero">Id</th>
+            <th class="first">Name</th>
+            <th class="second">Discount</th>
+            <th class="third"></th>
+            <th class="last"></th>
+            </thead>
+            <tbody>
+            <tr *ngFor="let offer of offers" (mousedown)="onOfferSelect(offer);true"
+                [class.selected]="offer.id === selectedOffer.id">
+                <td class="zero">
+                    <input [class.selected]="offer.id === selectedOffer.id" class="wide"
+                           type="text"
+                           [(ngModel)]="offer.id" readonly="true"/>
+                </td>
+                <td class="first">
+                    <input [class.selected]="offer.id === selectedOffer.id" class="wide" (blur)="saveOffer(offer)"
+                           type="text"
+                           [(ngModel)]="offer.name"/>
+                </td>
+                <td class="second">
+                    <input [class.selected]="offer.id === selectedOffer.id" class="wide" (blur)="saveOffer(offer)"
+                           type="text"
+                           [(ngModel)]="offer.discount"/>
+                </td>
+                <td class="third"></td>
+                <td class="last"></td>
+            </tr>
+            <tr *ngIf="!unassigned && !offerCategory1">
+                <td colspan="4" style="text-align: center">Select Category or Unassigned Offers</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="right-container2">
+    <h2 *ngIf="selectedOffer.id == ''">Offer Products</h2>
+    <h2 *ngIf="selectedOffer.id != ''">Offer Products: {{selectedOffer.name}}</h2>
+    <div>
+        <table class="table table-striped right-container2-table">
+            <thead>
+            <th class="zero">Id</th>
+            <th class="first">Name</th>
+            <th class="second">Category</th>
+            <th class="third">Offer</th>
+            <th class="fourth">Active</th>
+            <th class="fifth"></th>
+            <th class="last"></th>
+            </thead>
+            <tbody>
+            <tr *ngFor="let product of offerProducts">
+                <td class="zero">
+                    <input [class.selected]="product.id === selectedProduct.id" class="wide"
+                           type="text"
+                           [(ngModel)]="product.id" readonly="true"/>
+                </td>
+                <td class="first">
+                    <input [class.selected]="product.id === selectedProduct.id" class="wide"
+                           type="text"
+                           [(ngModel)]="product.name" (blur)="saveProduct(product)"/>
+                </td>
+                <td class="second">
+                    <input [class.selected]="product.id === selectedProduct.id" class="wide"
+                           type="text"
+                           [(ngModel)]="product.category1" (blur)="saveProduct(product)"/>
+                </td>
+                <td class="third">
+                    <input [class.selected]="product.id === selectedProduct.id" class="wide"
+                           type="text"
+                           [(ngModel)]="product.offer" (blur)="saveProduct(product)"/>
+                </td>
+                <td class="fourth">
+                    <input
+                            type="checkbox"
+                            [(ngModel)]="product.active" (ngModelChange)="onActiveChange($event, product)"/>
+                </td>
+                <td class="fifth"></td>
+                <td class="last"></td>
+            </tr>
+            <tr *ngIf="selectedOffer.id == ''">
+                <td colspan="4" style="text-align: center">Select Offer</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

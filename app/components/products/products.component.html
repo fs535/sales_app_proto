@@ -1,0 +1,99 @@
+<div class="top-container">
+    <div class="error" *ngIf="error">{{error}}</div>
+</div>
+<div class="product-container">
+<h2 *ngIf="!unoffered && !category1">Products</h2>
+<h2 *ngIf="unoffered && !category1">Not Offered Products</h2>
+<h2 *ngIf="unoffered && category1">Not Offered Products in Category: {{category1}}</h2>
+<h2 *ngIf="!unoffered && category1">Products in Category: {{category1}}</h2>
+<div class="form-group">
+    <div class="form-group">
+        <label for="sel1">Product Category:</label>
+        <select class="form-control" id="sel1" [ngModel]="category1" (ngModelChange)="onCategory1Select($event)">
+            <option *ngFor="let category of categories">{{category}}</option>
+        </select>
+    </div>
+    <div class="input-group">
+             <span class="input-group-addon">
+                 <label>Not Offered Products?</label>
+                <input type="checkbox" [(ngModel)]="unoffered" (ngModelChange)="onUnofferedSelect($event)">
+            </span>
+        <input type="text" class="form-control" placeholder="Type string to find..." [(ngModel)]="productSearch"
+               (ngModelChange)="onProductSearch($event)">
+    </div>
+</div>
+<table class="table table-striped product-container-table">
+    <thead>
+    <th class="zero">Id</th>
+    <th class="first">Name</th>
+    <th class="second">Category1</th>
+    <th class="third">Category2</th>
+    <th class="fourth">Category3</th>
+    <th class="fifth">Vendor</th>
+    <th class="sixth">Price</th>
+    <th class="seventh">Active</th>
+    <th class="eighth">Offer</th>
+    <th class="nineth">OfferId</th>
+    <th class="tenth"></th>
+    <th class="last"></th>
+    </thead>
+    <tbody>
+    <tr *ngFor="let product of products" (mousedown)="onProductSelect(product);true"
+        [class.selected]="product.id === selectedProduct.id"
+        [class.available]="product.offer === ''">
+        <td class="zero">
+            <input [class.selected]="product.id === selectedProduct.id" class="wide"
+                   type="text"
+                   [(ngModel)]="product.id" readonly="true"/>
+        </td>
+        <td class="first">
+            <input [class.selected]="product.id === selectedProduct.id" class="wide"
+                   type="text"
+                   [(ngModel)]="product.name" (blur)="saveProduct(product)"/>
+        </td>
+        <td class="second">
+            <input [class.selected]="product.id === selectedProduct.id" class="wide"
+                   type="text"
+                   [(ngModel)]="product.category1" (blur)="saveProduct(product)"/>
+        </td>
+        <td class="third">
+            <input [class.selected]="product.id === selectedProduct.id" class="wide"
+                   type="text"
+                   [(ngModel)]="product.category2" (blur)="saveProduct(product)"/>
+        </td>
+        <td class="fourth">
+            <input [class.selected]="product.id === selectedProduct.id" class="wide"
+                   type="text"
+                   [(ngModel)]="product.category3" (blur)="saveProduct(product)"/>
+        </td>
+        <td class="fifth">
+            <input [class.selected]="product.id === selectedProduct.id" class="wide"
+                   type="text"
+                   [(ngModel)]="product.vendor" (blur)="saveProduct(product)"/>
+        </td>
+        <td class="sixth">
+            <input [class.selected]="product.id === selectedProduct.id" class="wide"
+                   type="text"
+                   [(ngModel)]="product.price" (blur)="saveProduct(product)"/>
+        </td>
+        <td class="seventh">
+            <md-slide-toggle [(ngModel)]="product.active" (ngModelChange)="onActiveChange($event, product)">
+            </md-slide-toggle>
+        </td>
+        <td class="eighth">
+            <input [class.selected]="product.id === selectedProduct.id" class="wide"
+                   type="text"
+                   [(ngModel)]="product.offer" (blur)="saveProduct(product)"/>
+        </td>
+        <td class="nineth">
+            <input [class.selected]="product.id === selectedProduct.id" class="wide"
+                   type="text"
+                   [(ngModel)]="product.offerId" readonly="true" />
+        </td>
+        <td class="tenth"></td>
+        <td class="last"></td>
+    </tr>
+    </tbody>
+</table>
+
+</div>

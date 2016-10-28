@@ -1,0 +1,7 @@
+[
+  {"id": "32966","name": "Acnicyl Cleanser 100 ml", "category1": "Ansikte", "category2": "Acne/rosacea", "category3": "Kosmetisk", "price": "129.00", "vendor": "Acnicyl", "offer": "10001", "offerId": "10001", "active": true},
+  {"id": "32965","name": "Acnicyl Cream 30 ml", "category1": "Ansikte", "category2": "Acne/rosacea", "category3": "Kosmetisk", "price": "109.00", "vendor": "Acnicyl", "offer": "10002", "offerId": "10002", "active": true},
+  {"id": "41109","name": "Acnicyl Everyday Cream 50 ml", "category1": "Ansikte", "category2": "Acne/rosacea", "category3": "Kosmetisk", "price": "165.00", "vendor": "Acnicyl", "offer": "10003", "offerId": "10003", "active": true},
+  {"id": "27787","name": "ACO BODY MJUK FOT","category1": "Fot", "category2": "Fotkräm", "category3": "Fotkräm", "price": "42.00", "vendor": "ACO", "offer": "", "offerId": "", "active": true},
+  {"id": "27902","name": "Sensifresh Handdesinfektion 50 ml","category1": "Hand","category2": "Desinfektion", "category3": "Desinfektion övrigt", "price": "20.00", "vendor": "Sensifresh", "offer": "", "offerId": "", "active": true}
+]

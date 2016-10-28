@@ -1,0 +1,9 @@
+/node_modules
+/typings
+/app/**/*.map
+/app/**/*.js
+/.idea
+/pkg
+/src/golang.org
+/src/github.com
+/*.iml
