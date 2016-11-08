@@ -4,6 +4,9 @@ import {FormsModule}   from '@angular/forms';
 import {SelectModule} from 'ng2-select/components/select.module';
 import {HttpModule, XHRBackend, RequestOptions, Http} from '@angular/http';
 import {routing} from './app.routes';
+import { DatepickerModule } from 'angular2-material-datepicker'
+import { PerfectScrollbarModule } from 'angular2-perfect-scrollbar';
+import { PerfectScrollbarConfigInterface } from 'angular2-perfect-scrollbar';
 
 import {AppComponent}  from './components/app.component';
 import {ProductsComponent} from "./components/products/products.component";
@@ -15,10 +18,14 @@ import {CustomHttp} from "./services/custom.http";
 import "hammerjs"
 import { MaterialModule } from '@angular/material';
 
+const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
+  suppressScrollX: true
+};
+
 var settings: Settings;
 
 @NgModule({
-    imports: [FormsModule, HttpModule, BrowserModule, routing, MaterialModule.forRoot(), SelectModule],
+    imports: [FormsModule, HttpModule, BrowserModule, routing, MaterialModule.forRoot(), SelectModule, DatepickerModule, PerfectScrollbarModule.forRoot(PERFECT_SCROLLBAR_CONFIG)],
     declarations: [AppComponent, ProductsComponent, ProductOffersComponent, Autosize, SpinnerComponent],
     entryComponents: [AppComponent],
     providers: [{

@@ -24,7 +24,14 @@ export class OfferService {
         return this.http.get(`${this.settings.hub_url}/offers`,{
              search: params
         }).toPromise()
-            .then(response => response.json())
+            .then(res =>  {
+                var data = res.json() || [];
+                data.forEach((d: any) => {
+                    d.validFrom = new Date(d.validFrom);
+                    d.validTo = new Date(d.validTo);
+                });
+                return data;
+            })
             .catch(this.handleError);
     }
 
@@ -44,7 +51,12 @@ export class OfferService {
         return this.http
             .patch(url, JSON.stringify(offer), {headers: headers})
             .toPromise()
-            .then((res) => res.json())
+            .then((res) => {
+                var data = res.json();
+                data.validFrom = new Date(data.validFrom);
+                data.validTo = new Date(data.validTo);
+                return data;
+            })
             .catch(this.handleError);
     }
 
@@ -56,7 +68,12 @@ export class OfferService {
         return this.http
             .post(url, JSON.stringify(offer), {headers: headers})
             .toPromise()
-            .then((res) => res.json())
+            .then((res) => {
+                var data = res.json();
+                data.validFrom = new Date(data.validFrom);
+                data.validTo = new Date(data.validTo);
+                return data;
+            })
             .catch(this.handleError);
     }
 

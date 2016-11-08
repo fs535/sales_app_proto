@@ -7,6 +7,7 @@ import {SelectItem}                from 'ng2-select/components/select/select-ite
 import {ProductService}         from '../../services/products.service';
 import {OfferService}         from '../../services/offers.service';
 import {Http} from "@angular/http";
+import {MdSlideToggleChange} from '@angular/material/slide-toggle/slide-toggle'
 @Component({
     selector: 'my-productoffers',
     templateUrl: 'app/components/productoffers/productoffers.component.html'
@@ -229,13 +230,13 @@ export class ProductOffersComponent implements OnInit {
         this.getOffers();
     }
 
-    onOfferSuspendedChange(suspended: boolean, offer: Offer) {
-          offer.suspended = suspended;
+    onOfferSuspendedChange(suspended: MdSlideToggleChange, offer: Offer) {
+          offer.suspended = suspended.checked;
           this.saveOffer(offer);
     }
 
-    onNewOfferSuspendedChange(suspended: boolean, offer: Offer) {
-          offer.suspended = suspended;
+    onNewOfferSuspendedChange(suspended: MdSlideToggleChange, offer: Offer) {
+          offer.suspended = suspended.checked;
     }
 
     onOfferTypeSelect(item: SelectItem) {

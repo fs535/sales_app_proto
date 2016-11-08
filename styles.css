@@ -16,11 +16,11 @@ body {
   color: #888;
 }
 
-input[type="text"], select, textarea {
-  color: #888;
-  font-family: Cambria, Georgia;
-  background-color: transparent;
-  border: 0px solid;
+input.datepicker__input,input[type="text"],input[type="date"], select, textarea {
+  color: #888  !important;
+  font-family: Cambria, Georgia !important;
+  background-color: transparent !important;
+  border: 0px solid !important;
 }
 
 a {
@@ -108,23 +108,73 @@ tr.selected {
     }
 }
 
+md-slide-toggle {
+    margin: 0 !important;
+}
+
+.datepicker__input {
+    width: 100% !important;
+}
+
 .top-container {
     width: 100%;
+    min-width: 1000px;
 }
 
-table {
+table.top-container-table {
+    display: table;
+    table-layout: fixed;
     width: 100%;
-    display:block;
 }
-thead {
-    display: block;
+table.top-container-table thead, table.top-container-table tbody {
+    float: left;
     width: 100%;
-    height: 20px;
 }
-tbody {
-    display: block;
+table.top-container-table tbody {
+    overflow-y: auto;
     height: 200px;
-    overflow-y: auto;    /* Trigger vertical scroll    */
-    overflow-x: hidden;  /* Hide the horizontal scroll */
+}
+table.top-container-table tr {
+    width: 100%;
+    display: table;
+    table-layout: fixed;
+    text-align: left;
 }
 
+table.top-container-table th.th1, table.top-container-table td.td1 {
+    width: 5%;
+}
+table.top-container-table th.th2, table.top-container-table td.td2 {
+    width: 25%;
+}
+table.top-container-table th.th3, table.top-container-table td.td3 {
+    width: 5%;
+}
+table.top-container-table th.th4, table.top-container-table td.td4 {
+    width: 5%;
+}
+table.top-container-table th.th5, table.top-container-table td.td5 {
+    width: 5%;
+}
+table.top-container-table th.th6, table.top-container-table td.td6 {
+    width: 5%;
+}
+table.top-container-table th.th7, table.top-container-table td.td7 {
+    width: 5%;
+}
+table.top-container-table th.th8, table.top-container-table td.td8 {
+    width: 10%;
+}
+table.top-container-table th.th9, table.top-container-table td.td9 {
+    width: 15%;
+}
+table.top-container-table th.th10, table.top-container-table td.td10 {
+    width: 15%;
+}
+table.top-container-table th.thlast, table.top-container-table td.tdlast {
+    width: 5%;
+}
+table.top-container-table th.thall, table.top-container-table td.tdall {
+    width: 100%;
+    text-align: center;
+}
