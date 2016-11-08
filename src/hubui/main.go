@@ -45,7 +45,6 @@ func main() {
 	mux.HandleFunc("/v1/products/categories", productCategoriesAPIHandler)
 	mux.HandleFunc("/v1/products", productAPIHandler)
 	mux.HandleFunc("/v1/offers", offerAPIHandler)
-	mux.HandleFunc("/v1/offers/unassigned", unassignedOfferAPIHandler)
 
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		if r.URL.Path == "/" {

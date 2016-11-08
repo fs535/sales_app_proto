@@ -4,6 +4,8 @@ import 'rxjs/add/operator/toPromise';
 import {Product} from '../domain/product';
 import {Offer} from '../domain/offer';
 import {Settings} from "../domain/settings";
+import {Categories} from "../domain/categories";
+
 @Injectable()
 export class ProductService {
     constructor(private http: Http, private settings: Settings) {
@@ -23,20 +25,33 @@ export class ProductService {
     }
 
 
-    getProductCategories(): Promise<string[]> {
+    getProductCategories(): Promise<Categories> {
         return this.http.get(`${this.settings.hub_url}/products/categories`)
             .toPromise()
             .then(response => {
-                let arr = response.json()
-                arr.splice(0, 0, "")
-                return arr
+                let r = response.json()
+                r.category1values.splice(0, 0, "")
+                r.category2values.splice(0, 0, "")
+                r.category3values.splice(0, 0, "")
+                r.brands.splice(0, 0, "")
+                r.prices.splice(0, 0, "")
+                r.sizes.splice(0, 0, "")
+                return r
             })
             .catch(this.handleError);
     }
 
-    getProducts(category1: string, unoffered: boolean, text: string): Promise<Product[]> {
+    getProducts(category1: string, category2: string, category3: string,
+                brand: string, price: string, size: string,
+                unoffered: boolean, text: string): Promise<Product[]> {
         let params: URLSearchParams = new URLSearchParams();
         params.set('category1', category1);
+        params.set('category2', category2);
+        params.set('category3', category3);
+        params.set('brand', brand);
+        params.set('price', price);
+        params.set('size', size);
+
         params.set('offered', unoffered ? "0" : "");
         params.set('text', text);
 

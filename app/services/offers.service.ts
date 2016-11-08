@@ -8,21 +8,16 @@ export class OfferService {
     constructor(private http: Http, private settings: Settings) {
     }
 
-    getUnassignedOffers(text: string): Promise<Offer[]> {
+    getOffers(offerType: string,category1: string, category2: string, category3: string,
+              brand: string, price: string, size: string, product: string, text: string): Promise<Offer[]> {
         let params: URLSearchParams = new URLSearchParams();
-        params.set('text', text);
-
-        return this.http.get(`${this.settings.hub_url}/offers/unassigned`, {
-            search: params
-        }).toPromise()
-            .then(response => response.json())
-            .catch(this.handleError);
-    }
-
-    getOffers(category1: string, unoffered: boolean, product: string, text: string): Promise<Offer[]> {
-        let params: URLSearchParams = new URLSearchParams();
+        params.set('type', offerType);
         params.set('category1', category1);
-        params.set('offered', unoffered ? "0" : "");
+        params.set('category2', category2);
+        params.set('category3', category3);
+        params.set('brand', brand);
+        params.set('price', price);
+        params.set('size', size);
         params.set('product', product);
         params.set('text', text);
 

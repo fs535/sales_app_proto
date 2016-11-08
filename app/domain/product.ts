@@ -4,9 +4,12 @@ export class Product {
     category1: string;
     category2: string;
     category3: string;
-    vendor: string;
+    brand: string;
     price: string;
-    active: boolean;
+    size: string;
+    activatedPim: boolean;
+    pictureUrl: string;
+    description: string;
 
     offer: string;
     offerId: string;

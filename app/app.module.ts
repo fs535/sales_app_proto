@@ -1,7 +1,7 @@
 import {NgModule, ApplicationRef, Provider, NgModuleRef}      from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule}   from '@angular/forms';
-
+import {SelectModule} from 'ng2-select/components/select.module';
 import {HttpModule, XHRBackend, RequestOptions, Http} from '@angular/http';
 import {routing} from './app.routes';
 
@@ -18,7 +18,7 @@ import { MaterialModule } from '@angular/material';
 var settings: Settings;
 
 @NgModule({
-    imports: [FormsModule, HttpModule, BrowserModule, routing, MaterialModule.forRoot()],
+    imports: [FormsModule, HttpModule, BrowserModule, routing, MaterialModule.forRoot(), SelectModule],
     declarations: [AppComponent, ProductsComponent, ProductOffersComponent, Autosize, SpinnerComponent],
     entryComponents: [AppComponent],
     providers: [{

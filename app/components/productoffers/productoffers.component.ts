@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Router}            from '@angular/router';
 import {Product}                from '../../domain/product';
 import {Offer}                from '../../domain/offer';
+import {Categories}                from '../../domain/categories';
+import {SelectItem}                from 'ng2-select/components/select/select-item';
 import {ProductService}         from '../../services/products.service';
 import {OfferService}         from '../../services/offers.service';
 import {Http} from "@angular/http";
@@ -12,20 +14,36 @@ import {Http} from "@angular/http";
 export class ProductOffersComponent implements OnInit {
     products: Product[];
     offerProducts: Product[];
+    offerTypes: string[] = ["All", "New", "Assigned"];
+    offerType: any = [{id:"All", text:"All"}];
 
     selectedProduct: Product = new Product("");
     selectedOffer: Offer = new Offer("");
 
-    categories: string[];
-    category1: string = "";
-    offerCategory1: string = "";
+    category1values: string[];
+    category2values: string[];
+    category3values: string[];
+    brands: string[];
+    prices: string[];
+    sizes: string[];
 
-    productSearch: string = ""
-    offerSearch: string = ""
+
+    category1: string = "";
+    category2: string = "";
+    category3: string = "";
+    brand: string = "";
+    price: string = "";
+    size: string = "";
+
+    offerCategory1: string = "";
+    offerCategory2: string = "";
+    offerCategory3: string = "";
+    offerBrand: string = "";
+    offerPrice: string = "";
+    offerSize: string = "";
 
     unoffered: boolean = false;
-    unassigned: boolean = false;
-    unassignedOffers: Offer[]
+    newOffers: Offer[]
     offers: Offer[]
 
     offer: Offer = new Offer("");
@@ -39,12 +57,17 @@ export class ProductOffersComponent implements OnInit {
                 private offerService: OfferService) {
     }
 
-    getProductCategories(): Promise<string[]> {
+    getProductCategories(): Promise<Categories> {
         return this.productService
             .getProductCategories()
-            .then(categories => {
-                this.categories = categories;
-                return this.categories;
+            .then(result => {
+                this.category1values = result.category1values;
+                this.category2values = result.category2values;
+                this.category3values = result.category3values;
+                this.brands = result.brands;
+                this.prices = result.prices;
+                this.sizes = result.sizes;
+                return result;
             })
             .catch(error => this.error += error);
     }
@@ -54,7 +77,8 @@ export class ProductOffersComponent implements OnInit {
         this.products = [];
         if(this.category1 != '' || this.unoffered) {
             return this.productService
-                .getProducts(this.category1, this.unoffered, this.productSearch)
+                .getProducts(this.category1,this.category1,this.category1,
+                             this.brand, this.price, this.size, this.unoffered, '')
                 .then(products => {
                     this.products = products;
                     return this.products;
@@ -78,18 +102,10 @@ export class ProductOffersComponent implements OnInit {
 
     getOffers(): Promise<Offer[]> {
         this.offers = []
-        if(this.unassigned) {
-            return this.offerService
-                .getUnassignedOffers(this.offerSearch)
-                .then(offers => {
-                    this.offers = offers;
-                    return this.offers;
-                })
-                .catch(error => this.error += error);
-        } else if (this.offerCategory1 != ''){
+        if (this.offerType[0].id == 'New' || this.offerSize != ''  || this.offerPrice != '' || this.offerBrand != '' || this.offerCategory1 != '' || this.offerCategory2 != '' || this.offerCategory3 != ''){
             this.offers = [];
             return this.offerService
-                .getOffers(this.offerCategory1, this.unoffered, '', this.offerSearch)
+                .getOffers(this.offerType[0].id, this.offerCategory1, this.offerCategory2, this.offerCategory3, this.offerBrand, this.offerPrice, this.offerSize,'', '')
                 .then(offers => {
                     this.offers = offers;
                     return this.offers;
@@ -125,22 +141,105 @@ export class ProductOffersComponent implements OnInit {
         this.getProductCategories()
     }
 
-    onCategory1Select(category1: string) {
-        this.category1 = category1;
-        if(!this.offerCategory1) {
-            this.offerCategory1 = category1;
+    onCategory1Select(category1: SelectItem) {
+        this.category1 = category1.id;
+        this.getProducts();
+        this.getOffers();
+    }
+
+    onCategory2Select(category2: SelectItem) {
+        this.category2 = category2.id;
+        this.getProducts();
+        this.getOffers();
+    }
+
+    onCategory3Select(category3: SelectItem) {
+        this.category3 = category3.id;
+        this.getProducts();
+        this.getOffers();
+    }
+
+    onBrandSelect(brand: SelectItem) {
+        this.brand = brand.id;
+        this.getProducts();
+        this.getOffers();
+    }
+    onPriceSelect(price: SelectItem) {
+        this.price = price.id;
+        this.getProducts();
+        this.getOffers();
+    }
+    onSizeSelect(size: SelectItem) {
+        this.size = size.id;
+        this.getProducts();
+        this.getOffers();
+    }
+
+    onOfferCategory1Select(category1: SelectItem) {
+        this.offerCategory1 = category1.id;
+        if(!this.category1) {
+            this.category1 = category1.id;
         }
         this.getProducts();
         this.getOffers();
     }
 
-    onOfferCategory1Select(category1: string) {
-        this.offerCategory1 = category1;
+    onOfferCategory2Select(category2: SelectItem) {
+        this.offerCategory2 = category2.id;
+        if(!this.category2) {
+            this.category2 = category2.id;
+        }
+        this.getProducts();
         this.getOffers();
     }
 
-    onUnassignedSelect(unassigned: boolean) {
-        this.unassigned = unassigned;
+    onOfferCategory3Select(category3: SelectItem) {
+        this.offerCategory3 = category3.id;
+        if(!this.category3) {
+            this.category3 = category3.id;
+        }
+        this.getProducts();
+        this.getOffers();
+    }
+
+    onOfferBrandSelect(brand: SelectItem) {
+        this.offerBrand = brand.id;
+        if(!this.brand) {
+            this.brand = brand.id;
+        }
+        this.getProducts();
+        this.getOffers();
+    }
+
+    onOfferPriceSelect(price: SelectItem) {
+        this.offerPrice = price.id;
+        if(!this.price) {
+            this.price = price.id;
+        }
+        this.getProducts();
+        this.getOffers();
+    }
+
+    onOfferSizeSelect(size: SelectItem) {
+        this.offerSize = size.id;
+        if(!this.size) {
+            this.size = size.id;
+        }
+        this.getProducts();
+        this.getOffers();
+    }
+
+    onOfferSuspendedChange(suspended: boolean, offer: Offer) {
+          offer.suspended = suspended;
+          this.saveOffer(offer);
+    }
+
+    onNewOfferSuspendedChange(suspended: boolean, offer: Offer) {
+          offer.suspended = suspended;
+    }
+
+    onOfferTypeSelect(item: SelectItem) {
+        this.offerType[0] = {"id":item.id, "text":item.text};
         this.getOffers();
     }
 
@@ -150,17 +249,6 @@ export class ProductOffersComponent implements OnInit {
         this.getProducts();
         this.getOffers();
     }
-
-    onProductSearch(productSearch: string) {
-        this.productSearch = productSearch;
-        this.getProducts();
-    }
-
-    onOfferSearch(offerSearch: string) {
-        this.offerSearch = offerSearch;
-        this.getOffers();
-    }
-
 
     onProductSelect(product: Product) {
         this.selectedProduct = product
@@ -179,7 +267,7 @@ export class ProductOffersComponent implements OnInit {
             if (isNew) {
                 this.addingOffer = false;
                 this.selectedOffer = offer;
-                this.unassigned = true
+                this.offerType[0] = {'id':'New', 'text':'New'};
                 this.getOffers();
                 this.getOfferProducts();
                 this.getProducts()
@@ -210,7 +298,7 @@ export class ProductOffersComponent implements OnInit {
     }
 
     onActiveChange(active: boolean, product: Product) {
-          product.active = active;
+          product.activatedPim = active;
           this.saveProduct(product);
     }
 

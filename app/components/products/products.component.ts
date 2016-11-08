@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Router}            from '@angular/router';
 import {Product}                from '../../domain/product';
 import {Offer}                from '../../domain/offer';
+import {Categories}                from '../../domain/categories';
+import {SelectItem}                from 'ng2-select/components/select/select-item';
 import {ProductService}         from '../../services/products.service';
 import {OfferService}         from '../../services/offers.service';
 import {Http} from "@angular/http";
@@ -14,8 +16,19 @@ export class ProductsComponent implements OnInit {
 
     selectedProduct: Product = new Product("");
 
-    categories: string[];
+    category1values: string[];
+    category2values: string[];
+    category3values: string[];
+    brands: string[];
+    prices: string[];
+    sizes: string[];
+
     category1: string = "";
+    category2: string = "";
+    category3: string = "";
+    brand: string = "";
+    price: string = "";
+    size: string = "";
 
     productSearch: string = ""
 
@@ -27,21 +40,27 @@ export class ProductsComponent implements OnInit {
                 private productService: ProductService) {
     }
 
-    getProductCategories(): Promise<string[]> {
+    getProductCategories(): Promise<Categories> {
         return this.productService
             .getProductCategories()
-            .then(categories => {
-                this.categories = categories;
-                return this.categories;
+            .then(response => {
+                this.category1values = response.category1values;
+                this.category2values = response.category2values;
+                this.category3values = response.category3values;
+                this.brands = response.brands;
+                this.prices = response.prices;
+                this.sizes = response.sizes;
+                return response;
             })
             .catch(error => this.error += error);
     }
 
-
     getProducts(): Promise<Product[]> {
         this.products = [];
         return this.productService
-            .getProducts(this.category1, this.unoffered, this.productSearch)
+            .getProducts(this.category1, this.category1, this.category1,
+                         this.brand, this.price, this.size,
+                         this.unoffered, this.productSearch)
             .then(products => {
                 this.products = products;
                 return this.products;
@@ -55,8 +74,28 @@ export class ProductsComponent implements OnInit {
         this.getProducts()
     }
 
-    onCategory1Select(category1: string) {
-        this.category1 = category1;
+    onCategory1Select(category1: SelectItem) {
+        this.category1 = category1.id;
+        this.getProducts();
+    }
+    onCategory2Select(category2: SelectItem) {
+        this.category2 = category2.id;
+        this.getProducts();
+    }
+    onCategory3Select(category3: SelectItem) {
+        this.category3 = category3.id;
+        this.getProducts();
+    }
+    onBrandSelect(brand: SelectItem) {
+        this.brand = brand.id;
+        this.getProducts();
+    }
+    onPriceSelect(price: SelectItem) {
+        this.price = price.id;
+        this.getProducts();
+    }
+    onSizeSelect(size: SelectItem) {
+        this.size = size.id;
         this.getProducts();
     }
 
@@ -90,7 +129,7 @@ export class ProductsComponent implements OnInit {
     }
 
     onActiveChange(active: boolean, product: Product) {
-          product.active = active;
+          product.activatedPim = active;
           this.saveProduct(product);
     }
 }

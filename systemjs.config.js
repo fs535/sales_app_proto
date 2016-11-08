@@ -25,7 +25,8 @@
       '@angular/material': 'npm:@angular/material/material.umd.js',
       // other libraries
       'rxjs':                       'npm:rxjs',
-      'hammerjs':                   'npm:hammerjs'
+      'hammerjs':                   'npm:hammerjs',
+      'ng2-select/components': 'npm:ng2-select/components'
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
@@ -38,6 +39,10 @@
       },
       'hammerjs': {
         main: './hammer.min.js',
+        defaultExtension: 'js'
+      },
+      'ng2-select/components': {
+        main: './select.module.js',
         defaultExtension: 'js'
       }
     }

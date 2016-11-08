@@ -8,9 +8,21 @@
 <h2 *ngIf="!unoffered && category1">Products in Category: {{category1}}</h2>
 <div class="form-group">
     <div class="form-group">
-        <label for="sel1">Product Category:</label>
+        <label for="sel1">Category1:</label>
         <select class="form-control" id="sel1" [ngModel]="category1" (ngModelChange)="onCategory1Select($event)">
-            <option *ngFor="let category of categories">{{category}}</option>
+            <option *ngFor="let category of category1values">{{category}}</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="sel2">Category2:</label>
+        <select class="form-control" id="sel2" [ngModel]="category2" (ngModelChange)="onCategory2Select($event)">
+            <option *ngFor="let category of category2values">{{category}}</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="sel3">Category1:</label>
+        <select class="form-control" id="sel3" [ngModel]="category3" (ngModelChange)="onCategory3Select($event)">
+            <option *ngFor="let category of category3values">{{category}}</option>
         </select>
     </div>
     <div class="input-group">
@@ -29,9 +41,9 @@
     <th class="second">Category1</th>
     <th class="third">Category2</th>
     <th class="fourth">Category3</th>
-    <th class="fifth">Vendor</th>
+    <th class="fifth">Brand</th>
     <th class="sixth">Price</th>
-    <th class="seventh">Active</th>
+    <th class="seventh">PIM Activated</th>
     <th class="eighth">Offer</th>
     <th class="nineth">OfferId</th>
     <th class="tenth"></th>
@@ -69,7 +81,7 @@
         <td class="fifth">
             <input [class.selected]="product.id === selectedProduct.id" class="wide"
                    type="text"
-                   [(ngModel)]="product.vendor" (blur)="saveProduct(product)"/>
+                   [(ngModel)]="product.brand" (blur)="saveProduct(product)"/>
         </td>
         <td class="sixth">
             <input [class.selected]="product.id === selectedProduct.id" class="wide"
@@ -77,7 +89,7 @@
                    [(ngModel)]="product.price" (blur)="saveProduct(product)"/>
         </td>
         <td class="seventh">
-            <md-slide-toggle [(ngModel)]="product.active" (ngModelChange)="onActiveChange($event, product)">
+            <md-slide-toggle [(ngModel)]="product.activatedPim" (ngModelChange)="onActiveChange($event, product)">
             </md-slide-toggle>
         </td>
         <td class="eighth">
