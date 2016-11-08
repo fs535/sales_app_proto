@@ -16,11 +16,19 @@ body {
   color: #888;
 }
 
-input.datepicker__input,input[type="text"],input[type="date"], select, textarea {
+td input.datepicker__input, td input[type="text"], td input[type="date"], td select, td textarea {
   color: #888  !important;
   font-family: Cambria, Georgia !important;
   background-color: transparent !important;
   border: 0px solid !important;
+}
+
+.text-muted {
+    color: #999;
+    font-weight: bold;
+}
+.table>thead>tr>th {
+padding: 3px;
 }
 
 a {

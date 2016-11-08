@@ -27,6 +27,7 @@ export class ProductOffersComponent implements OnInit {
     brands: string[];
     prices: string[];
     sizes: string[];
+    combTypes: string[] = ["1", "2", "3", "4"];
 
 
     category1: string = "";
