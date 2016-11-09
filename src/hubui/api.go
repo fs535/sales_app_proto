@@ -593,7 +593,19 @@ func offerAPIHandler(w http.ResponseWriter, r *http.Request) {
 		// validateion
 		if o.Name == "" {
 			msg := fmt.Sprintf("Offer Name Required")
-			http.Error(w, msg, http.StatusNotFound)
+			http.Error(w, msg, http.StatusBadRequest)
+			log.Println(msg)
+			return
+		}
+		if o.ValidFrom.IsZero() {
+			msg := fmt.Sprintf("Offer ValidFrom Required")
+			http.Error(w, msg, http.StatusBadRequest)
+			log.Println(msg)
+			return
+		}
+		if o.ValidTo.IsZero() {
+			msg := fmt.Sprintf("Offer ValidTo Required")
+			http.Error(w, msg, http.StatusBadRequest)
 			log.Println(msg)
 			return
 		}

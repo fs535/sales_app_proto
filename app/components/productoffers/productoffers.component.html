@@ -1,7 +1,7 @@
 <div class="top-container container-fluid">
     <h2>
-        <span *ngIf="offerType[0].id == 'New'">New Offers</span>
-        <span *ngIf="offerType[0].id != 'New'">Offers</span>
+        <span *ngIf="offerType == 'New'">New Offers</span>
+        <span *ngIf="offerType != 'New'">Offers</span>
         <span *ngIf="canGetOffers()">{{getOfferWith()}}</span>
     </h2>
     <div class="error" *ngIf="error">{{error}}</div>
@@ -9,7 +9,7 @@
         <div class="form-group col-md-2">
             <ng-select [allowClear]="true"
                        [items]="category1values"
-                       [disabled]="offerType[0].id == 'New'"
+                       [disabled]="offerType == 'New'"
                        (selected)="onOfferCategory1Select($event)"
                        (removed)="onOfferCategory1Select({'id':'','text':''})"
                        placeholder="Category1...">
@@ -18,7 +18,7 @@
         <div class="form-group col-md-2">
             <ng-select [allowClear]="true"
                        [items]="category2values"
-                       [disabled]="offerType[0].id == 'New'"
+                       [disabled]="offerType == 'New'"
                        (selected)="onOfferCategory2Select($event)"
                        (removed)="onOfferCategory2Select({'id':'','text':''})"
                        placeholder="Category2...">
@@ -27,7 +27,7 @@
         <div class="form-group col-md-2">
             <ng-select [allowClear]="true"
                        [items]="category3values"
-                       [disabled]="offerType[0].id == 'New'"
+                       [disabled]="offerType == 'New'"
                        (selected)="onOfferCategory3Select($event)"
                        (removed)="onOfferCategory3Select({'id':'','text':''})"
                        placeholder="Category3...">
@@ -36,7 +36,7 @@
         <div class="form-group col-md-2">
             <ng-select [allowClear]="true"
                        [items]="brands"
-                       [disabled]="offerType[0].id == 'New'"
+                       [disabled]="offerType == 'New'"
                        (selected)="onOfferBrandSelect($event)"
                        (removed)="onOfferBrandSelect({'id':'','text':''})"
                        placeholder="Brand...">
@@ -45,7 +45,7 @@
         <div class="form-group col-md-2">
             <ng-select [allowClear]="true"
                        [items]="prices"
-                       [disabled]="offerType[0].id == 'New'"
+                       [disabled]="offerType == 'New'"
                        (selected)="onOfferPriceSelect($event)"
                        (removed)="onOfferPriceSelect({'id':'','text':''})"
                        placeholder="Price...">
@@ -54,7 +54,7 @@
         <div class="form-group col-md-1">
             <ng-select [allowClear]="true"
                        [items]="sizes"
-                       [disabled]="offerType[0].id == 'New'"
+                       [disabled]="offerType == 'New'"
                        (selected)="onOfferSizeSelect($event)"
                        (removed)="onOfferSizeSelect({'id':'','text':''})"
                        placeholder="Size...">
@@ -63,7 +63,7 @@
         <div class="form-group col-md-1">
             <ng-select [allowClear]="false"
                        [items]="offerTypes"
-                       [active]="offerType"
+                       [active]="offerTypeSelected"
                        (selected)="onOfferTypeSelect($event)">
             </ng-select>
         </div>
@@ -220,7 +220,7 @@
         <tbody *ngIf="addingOffer">
         <tr [class.selected]="true">
             <td class="td1">
-                <input [class.selected]="true" class="wide"
+                <input [class.selected]="true" readonly="true" class="wide"
                        type="text"
                        [(ngModel)]="offer.id"/>
             </td>

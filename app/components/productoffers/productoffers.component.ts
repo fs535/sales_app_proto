@@ -15,8 +15,9 @@ import {MdSlideToggleChange} from '@angular/material/slide-toggle/slide-toggle'
 export class ProductOffersComponent implements OnInit {
     products: Product[];
     offerProducts: Product[];
-    offerTypes: string[] = ["All", "New", "Assigned"];
-    offerType: any = [{id:"All", text:"All"}];
+    offerTypes: any[] = [{id:"All", text:"All"}, {id:"New", text:"New"}, {id:"Assigned", text:"Assigned"}];
+    offerType: string = "All";
+    offerTypeSelected: any[] = [{id:"All", text:"All"}];
 
     selectedProduct: Product = new Product("");
     selectedOffer: Offer = new Offer("");
@@ -187,7 +188,7 @@ export class ProductOffersComponent implements OnInit {
     }
 
     canGetOffers(): boolean {
-        return this.offerType[0].id == 'New' || this.offerSize != ''  || this.offerPrice != '' || this.offerBrand != '' ||
+        return this.offerType == 'New' || this.offerSize != ''  || this.offerPrice != '' || this.offerBrand != '' ||
                            this.offerCategory1 != '' || this.offerCategory2 != '' || this.offerCategory3 != '' ||
                            this.offerId != '' || this.offerName != '' || this.offerCombType != '' || this.offerDemandId != '' ||
                            this.offerDemandCount != '' || this.offerBenefitId != '' || this.offerDiscount != '' ||
@@ -199,7 +200,7 @@ export class ProductOffersComponent implements OnInit {
         if (this.canGetOffers()){
             this.offers = [];
             return this.offerService
-                .getOffers(this.offerType[0].id, this.offerCategory1, this.offerCategory2, this.offerCategory3,
+                .getOffers(this.offerType, this.offerCategory1, this.offerCategory2, this.offerCategory3,
                 this.offerBrand, this.offerPrice, this.offerSize,'', '', this.offerId, this.offerName,
                 this.offerCombType, this.offerDemandId, this.offerCombMax, this.offerValidFrom, this.offerValidTo, this.offerSuspended)
 
@@ -334,7 +335,7 @@ export class ProductOffersComponent implements OnInit {
     }
 
     onOfferTypeSelect(item: SelectItem) {
-        this.offerType[0] = {"id":item.id, "text":item.text};
+        this.offerType = item.id;
         this.getOffers();
     }
 
@@ -407,7 +408,8 @@ export class ProductOffersComponent implements OnInit {
             if (isNew) {
                 this.addingOffer = false;
                 this.selectedOffer = offer;
-                this.offerType[0] = {'id':'New', 'text':'New'};
+                this.offerType = "New"
+                this.offerTypeSelected = [{id:"New", text:"New"}];
                 this.getOffers();
                 this.getOfferProducts();
                 this.getProducts()
