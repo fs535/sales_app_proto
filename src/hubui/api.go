@@ -18,40 +18,46 @@ type Categories struct {
 	Category1Values []string `json:"category1values"`
 	Category2Values []string `json:"category2values"`
 	Category3Values []string `json:"category3values"`
-	Brands []string `json:"brands"`
-	Prices []string `json:"prices"`
-	Sizes []string `json:"sizes"`
+	Brands          []string `json:"brands"`
+	Prices          []string `json:"prices"`
+	Sizes           []string `json:"sizes"`
+	CombTypes       []string `json:"combTypes"`
+	DemandIds       []string `json:"demandIds"`
+	DemandCounts    []string `json:"demandCounts"`
+	BenefitIds      []string `json:"benefitIds"`
+	Discounts       []string `json:"discounts"`
+	CombMaxs        []string `json:"combMaxs"`
 }
 
 type Offer struct {
-	Id       string `json:"id"`
-	Name     string `json:"name"`
-	CombType string `json:"combType"`
-	DemandId string `json:"demandId"`
-	DemandCount string `json:"demandCount"`
-	BenefitId string `json:"benefitId"`
-	Discount string `json:"discount"`
-	CombMax string `json:"combMax"`
-	ValidFrom time.Time `json:"validFrom"`
-	ValidTo time.Time `json:"validTo"`
-	Suspended bool `json:"suspended"`
+	Id             string `json:"id"`
+	Name           string `json:"name"`
+	CombType       string `json:"combType"`
+	DemandId       string `json:"demandId"`
+	DemandCount    string `json:"demandCount"`
+	BenefitId      string `json:"benefitId"`
+	Discount       string `json:"discount"`
+	CombMax        string `json:"combMax"`
+	ValidFrom      time.Time `json:"validFrom"`
+	ValidTo        time.Time `json:"validTo"`
+	Suspended      bool `json:"suspended"`
 	CombCardPrefix string `json:"combCardPrefix"`
-	CombStacking bool `json:"combStacking"`
+	CombStacking   bool `json:"combStacking"`
 	CombExternalId string `json:"combExternalId"`
 }
 
 type Product struct {
-	Id       string `json:"id"`
-	Name     string `json:"name"`
-	Category1 string `json:"category1"`
-	Category2 string `json:"category2"`
-	Category3 string `json:"category3"`
-	Price    string `json:"price"`
-	Size    string `json:"size"`
-	Brand   string `json:"brand"`
-	Offer    string `json:"offer"`
-	OfferId    string `json:"offerId"`
-	ActivatedPim   bool `json:"activatedPim"`
+	Id           string `json:"id"`
+	Name         string `json:"name"`
+	Category1    string `json:"category1"`
+	Category2    string `json:"category2"`
+	Category3    string `json:"category3"`
+	Price        string `json:"price"`
+	Size         string `json:"size"`
+	Brand        string `json:"brand"`
+	Offer        string `json:"offer"`
+	OfferId      string `json:"offerId"`
+	ActivatedPim bool `json:"activatedPim"`
 	PictureUrl   string `json:"pictureUrl"`
 	Description  string `json:"description"`
 }
@@ -100,6 +106,12 @@ func productCategoriesAPIHandler(w http.ResponseWriter, r *http.Request) {
 		result4 := map[string]struct{}{}
 		result5 := map[string]struct{}{}
 		result6 := map[string]struct{}{}
+		result7 := map[string]struct{}{}
+		result8 := map[string]struct{}{}
+		result9 := map[string]struct{}{}
+		result10 := map[string]struct{}{}
+		result11 := map[string]struct{}{}
+		result12 := map[string]struct{}{}
 
 		for _, p := range products {
 			result1[p.Category1] = struct{}{}
@@ -108,13 +120,29 @@ func productCategoriesAPIHandler(w http.ResponseWriter, r *http.Request) {
 			result4[p.Brand] = struct{}{}
 			result5[p.Price] = struct{}{}
 			result6[p.Size] = struct{}{}
+
 		}
+		for _, o := range offers {
+			result7[o.CombType] = struct{}{}
+			result8[o.DemandId] = struct{}{}
+			result9[o.DemandCount] = struct{}{}
+			result10[o.BenefitId] = struct{}{}
+			result11[o.Discount] = struct{}{}
+			result12[o.CombMax] = struct{}{}
+		}
+
 		output1 := []string{}
 		output2 := []string{}
 		output3 := []string{}
 		output4 := []string{}
 		output5 := []string{}
 		output6 := []string{}
+		output7 := []string{}
+		output8 := []string{}
+		output9 := []string{}
+		output10 := []string{}
+		output11 := []string{}
+		output12 := []string{}
 
 		for k := range result1 {
 			output1 = append(output1, k)
@@ -134,6 +162,24 @@ func productCategoriesAPIHandler(w http.ResponseWriter, r *http.Request) {
 		for k := range result6 {
 			output6 = append(output6, k)
 		}
+		for k := range result7 {
+			output7 = append(output7, k)
+		}
+		for k := range result8 {
+			output8 = append(output8, k)
+		}
+		for k := range result9 {
+			output9 = append(output9, k)
+		}
+		for k := range result10 {
+			output10 = append(output10, k)
+		}
+		for k := range result11 {
+			output11 = append(output11, k)
+		}
+		for k := range result12 {
+			output12 = append(output12, k)
+		}
 
 		out, _ := json.Marshal(Categories{
 			Category1Values: output1,
@@ -141,7 +187,14 @@ func productCategoriesAPIHandler(w http.ResponseWriter, r *http.Request) {
 			Category3Values: output3,
 			Brands: output4,
 			Prices: output5,
-			Sizes: output6})
+			Sizes: output6,
+			CombTypes: output7,
+			DemandIds: output8,
+			DemandCounts: output9,
+			BenefitIds: output10,
+			Discounts: output11,
+			CombMaxs: output12,
+		})
 		w.Write(out); // write json to the output
 	}
 }
@@ -365,8 +418,16 @@ func offerAPIHandler(w http.ResponseWriter, r *http.Request) {
 		price := r.URL.Query().Get("price")
 		size := r.URL.Query().Get("size")
 
+		id := r.URL.Query().Get("id")
+		nameSearch := r.URL.Query().Get("nameSearch")
+		combType := r.URL.Query().Get("combType")
+		demandId := r.URL.Query().Get("demandId")
+		combMax := r.URL.Query().Get("combMax")
+		validFrom := r.URL.Query().Get("validFrom")
+		validTo := r.URL.Query().Get("validTo")
+		suspended := r.URL.Query().Get("suspended")
+
 		selectedProduct := r.URL.Query().Get("product")
-		text := r.URL.Query().Get("text")
 
 		result := map[string]Product{}
 		for _, p := range products {
@@ -424,44 +485,96 @@ func offerAPIHandler(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 
-		offerIds := map[string]struct{}{}
+		offerIds := map[string]Offer{}
 		offerResult := []Offer{} // map from Id to full object
 		for _, p := range result {
 			if p.Offer != "" {
-				offerIds[p.Offer] = struct{}{}
+				offerIds[p.Offer] = *findOfferById(p.Offer)
 			}
 		}
-		if(offerType == "New") {
+		if (offerType == "New") {
 			// discard product based results
-			offerIds = map[string]struct{}{}
+			offerIds = map[string]Offer{}
 		}
 		// Add offers which have no products
-		if offerType == "New" || offerType == "All"   {
+		if offerType == "New" || offerType == "All" {
 			for _, o := range offers {
 				if findInProducts(o.Id) == nil {
-					offerIds[o.Id] = struct{}{}
+					offerIds[o.Id] = o
 				}
 			}
 		}
-		for id := range offerIds {
-			for _, o := range offers {
-				if o.Id == id {
-					if (text != "" && (strings.HasPrefix(strings.ToLower(o.Name), strings.ToLower(text)) ||
-						strings.HasPrefix(strings.ToLower(o.Discount), strings.ToLower(text)) ||
-						strings.HasPrefix(strings.ToLower(o.CombType), strings.ToLower(text)) ||
-						strings.HasPrefix(strings.ToLower(o.DemandCount), strings.ToLower(text)) ||
-						strings.HasPrefix(strings.ToLower(o.DemandId), strings.ToLower(text)) ||
-						strings.HasPrefix(strings.ToLower(o.BenefitId), strings.ToLower(text)) ||
-						strings.HasPrefix(strings.ToLower(o.CombMax), strings.ToLower(text)) ||
-						strings.HasPrefix(strings.ToLower(o.ValidFrom.Format(time.RFC3339)), strings.ToLower(text)) ||
-						strings.HasPrefix(strings.ToLower(o.ValidTo.Format(time.RFC3339)), strings.ToLower(text)) ||
-						strings.HasPrefix(strings.ToLower(o.CombCardPrefix), strings.ToLower(text)) ||
-						strings.HasPrefix(strings.ToLower(o.CombExternalId), strings.ToLower(text)) ||
-						strings.HasPrefix(strings.ToLower(o.Id), strings.ToLower(text)))) {
-						offerResult = append(offerResult, o)
-					} else if(text == "") {
-						offerResult = append(offerResult, o)
+
+		if (id != "") {
+			for i, o := range offerIds {
+				if o.Id != id {
+					delete(offerIds, i)
+				}
+			}
+		}
+		if (nameSearch != "") {
+			for i, o := range offerIds {
+				if o.Name != nameSearch {
+					delete(offerIds, i)
+				}
+			}
+		}
+		if (combType != "") {
+			for i, o := range offerIds {
+				if o.CombType != combType {
+					delete(offerIds, i)
+				}
+			}
+		}
+		if (demandId != "") {
+			for i, o := range offerIds {
+				if o.DemandId != demandId {
+					delete(offerIds, i)
+				}
+			}
+		}
+		if (combMax != "") {
+			for i, o := range offerIds {
+				if o.CombMax != combMax {
+					delete(offerIds, i)
+				}
+			}
+		}
+		if (validFrom != "") {
+			for i, o := range offerIds {
+				parsed, _ := time.Parse(time.RFC3339, validFrom)
+				if o.ValidFrom != parsed {
+					delete(offerIds, i)
+				}
+			}
+		}
+		if (validTo != "") {
+			for i, o := range offerIds {
+				parsed, _ := time.Parse(time.RFC3339, validTo)
+				if o.ValidTo != parsed {
+					delete(offerIds, i)
+				}
+			}
+		}
+		if (suspended != "") {
+			for i, o := range offerIds {
+				if(suspended == "1") {
+					if o.Suspended != true {
+						delete(offerIds, i)
 					}
+				}
+				if(suspended == "0") {
+					if o.Suspended != false {
+						delete(offerIds, i)
+					}
+				}
+			}
+		}
+
+		for i := range offerIds {
+			for _, o := range offers {
+				if o.Id == i {
+					offerResult = append(offerResult, o)
 				}
 			}
 		}

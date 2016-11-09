@@ -9,7 +9,9 @@ export class OfferService {
     }
 
     getOffers(offerType: string,category1: string, category2: string, category3: string,
-              brand: string, price: string, size: string, product: string, text: string): Promise<Offer[]> {
+              brand: string, price: string, size: string, product: string, text: string,
+              offerId: string, offerName: string, offerCombType: string, offerDemandId: string, offerCombMax: string,
+              offerValidFrom: string, offerValidTo: string, offerSuspended: string): Promise<Offer[]> {
         let params: URLSearchParams = new URLSearchParams();
         params.set('type', offerType);
         params.set('category1', category1);
@@ -19,7 +21,14 @@ export class OfferService {
         params.set('price', price);
         params.set('size', size);
         params.set('product', product);
-        params.set('text', text);
+        params.set('id', offerId);
+        params.set('nameSearch', offerName);
+        params.set('combType', offerCombType);
+        params.set('demandId', offerDemandId);
+        params.set('combMax', offerCombMax);
+        params.set('validFrom', offerValidFrom);
+        params.set('validTo', offerValidTo);
+        params.set('suspended', offerSuspended);
 
         return this.http.get(`${this.settings.hub_url}/offers`,{
              search: params

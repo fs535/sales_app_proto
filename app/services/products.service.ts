@@ -36,6 +36,12 @@ export class ProductService {
                 r.brands.splice(0, 0, "")
                 r.prices.splice(0, 0, "")
                 r.sizes.splice(0, 0, "")
+                r.combTypes.splice(0, 0, "")
+                r.demandIds.splice(0, 0, "")
+                r.demandCounts.splice(0, 0, "")
+                r.benefitIds.splice(0, 0, "")
+                r.discounts.splice(0, 0, "")
+                r.combMaxs.splice(0, 0, "")
                 return r
             })
             .catch(this.handleError);

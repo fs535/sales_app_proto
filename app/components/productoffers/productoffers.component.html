@@ -1,12 +1,9 @@
 <div class="top-container container-fluid">
-    <h2 *ngIf="offerType[0].id == 'New'">New Offers</h2>
-    <h2 *ngIf="offerType[0].id != 'New' && (offerCategory1 || offerCategory2 || offerCategory3 || offerPrice || offerBrand || offerSize)">
-        Offers for Products with:
-        {{offerCategory1 == '' ? '' : offerCategory1}} {{offerCategory2 == '' ? '' : offerCategory2}} {{offerCategory3
-        == '' ? '' : offerCategory3}} {{offerBrand == '' ? '' : offerBrand}} {{offerPrice == '' ? '' : offerPrice}}
-        {{offerSize == '' ? '' : offerSize}}</h2>
-    <h2 *ngIf="offerType[0].id != 'New' && !(offerCategory1 || offerCategory2 || offerCategory3 || offerPrice || offerBrand || offerSize)">
-        Offers</h2>
+    <h2>
+        <span *ngIf="offerType[0].id == 'New'">New Offers</span>
+        <span *ngIf="offerType[0].id != 'New'">Offers</span>
+        <span *ngIf="canGetOffers()">{{getOfferWith()}}</span>
+    </h2>
     <div class="error" *ngIf="error">{{error}}</div>
     <div class="row">
         <div class="form-group col-md-2">
@@ -80,10 +77,12 @@
         <thead>
         <tr>
             <th class="th1">
-                <input [disabled]="addingOffer" placeholder="ID" title="ID" class="form-control" type="text" [(ngModel)]="offerIdSearch"/>
+                <input [disabled]="addingOffer" placeholder="ID" title="ID" class="form-control" type="text"
+                       (ngModelChange)="onOfferIdSearch($event)" [(ngModel)]="offerIdSearch"/>
             </th>
             <th class="th2">
-                <input [disabled]="addingOffer" placeholder="Name" title="Name" class="form-control" type="text" [(ngModel)]="offerNameSearch"/>
+                <input [disabled]="addingOffer" placeholder="Name" title="Name" class="form-control" type="text"
+                       (ngModelChange)="onOfferNameSearch($event)" [(ngModel)]="offerNameSearch"/>
             </th>
             <th class="th3">
                 <ng-select class="wide" [allowClear]="true"
@@ -97,7 +96,7 @@
             <th class="th4">
                 <ng-select class="wide" [allowClear]="true"
                            [disabled]="addingOffer"
-                           [items]="combTypes"
+                           [items]="demandIds"
                            (selected)="onOfferDemandIdSearch($event)"
                            (removed)="onOfferDemandIdSearch({'id':'','text':''})"
                            placeholder="DID" title="Demand ID">
@@ -106,7 +105,7 @@
             <th class="th5">
                 <ng-select class="wide" [allowClear]="true"
                            [disabled]="addingOffer"
-                           [items]="combTypes"
+                           [items]="demandCounts"
                            (selected)="onOfferDemandCountSearch($event)"
                            (removed)="onOfferDemandCountSearch({'id':'','text':''})"
                            placeholder="DCN" title="Demand Count">
@@ -115,7 +114,7 @@
             <th class="th6">
                 <ng-select class="wide" [allowClear]="true"
                            [disabled]="addingOffer"
-                           [items]="combTypes"
+                           [items]="benefitIds"
                            (selected)="onOfferBenefitIdSearch($event)"
                            (removed)="onOfferBenefitIdSearch({'id':'','text':''})"
                            placeholder="BID" title="Benefit ID">
@@ -124,7 +123,7 @@
             <th class="th7">
                 <ng-select class="wide" [allowClear]="true"
                            [disabled]="addingOffer"
-                           [items]="combTypes"
+                           [items]="discounts"
                            (selected)="onOfferDiscountSearch($event)"
                            (removed)="onOfferDiscountSearch({'id':'','text':''})"
                            placeholder="DISC" title="Discount">
@@ -133,24 +132,26 @@
             <th class="th8">
                 <ng-select class="wide" [allowClear]="true"
                            [disabled]="addingOffer"
-                           [items]="combTypes"
-                           (selected)="onOfferDiscountSearch($event)"
-                           (removed)="onOfferDiscountSearch({'id':'','text':''})"
+                           [items]="combMaxs"
+                           (selected)="onOfferCombMaxSearch($event)"
+                           (removed)="onOfferCombMaxSearch({'id':'','text':''})"
                            placeholder="CM" title="Comb Max">
                 </ng-select>
             </th>
             <th class="th9">
                 <input placeholder="Valid From" title="Valid From" class="form-control" type="text"
-                       [disabled]="addingOffer" [(ngModel)]="offerValidFromSearch"/>
+                       [disabled]="addingOffer" (ngModelChange)="onOfferValidFromSearch($event)"
+                       [(ngModel)]="offerValidFromSearch"/>
             </th>
             <th class="th10">
                 <input placeholder="Valid To" title="Valid To" class="form-control" type="text"
-                       [disabled]="addingOffer" [(ngModel)]="offerValidToSearch"/>
+                       [disabled]="addingOffer" (ngModelChange)="onOfferValidToSearch($event)"
+                       [(ngModel)]="offerValidToSearch"/>
             </th>
             <th class="thlast">
                 <ng-select class="wide" [allowClear]="true"
                            [disabled]="addingOffer"
-                           [items]="combTypes"
+                           [items]="yesno"
                            (selected)="onOfferSuspendedSearch($event)"
                            (removed)="onOfferSuspendedSearch({'id':'','text':''})"
                            placeholder="SUS" title="Suspended">
@@ -212,7 +213,7 @@
                                  (change)="onOfferSuspendedChange($event, offer)"></md-slide-toggle>
             </td>
         </tr>
-        <tr *ngIf="offerType[0].id != 'New' && !(offerCategory1 || offerCategory2 || offerCategory3 || offerBrand || offerPrice || offerSize)">
+        <tr *ngIf="!canGetOffers()">
             <td class="tdall" colspan="11">Select at least one filter above...</td>
         </tr>
         </tbody>

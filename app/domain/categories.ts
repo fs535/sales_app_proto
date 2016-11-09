@@ -5,4 +5,10 @@ export class Categories {
     brands: string[];
     prices: string[];
     sizes: string[];
+    combTypes: string[];
+    demandIds: string[];
+    demandCounts: string[];
+    benefitIds: string[];
+    discounts: string[];
+    combMaxs: string[];
 }

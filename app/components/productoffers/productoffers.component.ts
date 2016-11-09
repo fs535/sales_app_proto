@@ -27,7 +27,14 @@ export class ProductOffersComponent implements OnInit {
     brands: string[];
     prices: string[];
     sizes: string[];
-    combTypes: string[] = ["1", "2", "3", "4"];
+    combTypes: string[];
+    demandIds: string[];
+    demandCounts: string[];
+    benefitIds: string[];
+    discounts: string[];
+    combMaxs: string[];
+
+    yesno: any = [{id:"", text:""},{id:"1", text:"Yes"}, {id:"", text:"No"}];
 
 
     category1: string = "";
@@ -43,6 +50,18 @@ export class ProductOffersComponent implements OnInit {
     offerBrand: string = "";
     offerPrice: string = "";
     offerSize: string = "";
+
+    offerId: string = "";
+    offerName: string = "";
+    offerCombType: string = "";
+    offerDemandId: string = "";
+    offerDemandCount: string = "";
+    offerBenefitId: string = "";
+    offerDiscount: string = "";
+    offerCombMax: string = "";
+    offerValidFrom: string = "";
+    offerValidTo: string = "";
+    offerSuspended: string = "";
 
     unoffered: boolean = false;
     newOffers: Offer[]
@@ -69,6 +88,12 @@ export class ProductOffersComponent implements OnInit {
                 this.brands = result.brands;
                 this.prices = result.prices;
                 this.sizes = result.sizes;
+                this.combTypes = result.combTypes;
+                this.demandIds = result.demandIds;
+                this.demandCounts = result.demandCounts;
+                this.benefitIds = result.benefitIds;
+                this.discounts = result.discounts;
+                this.combMaxs = result.combMaxs;
                 return result;
             })
             .catch(error => this.error += error);
@@ -102,12 +127,82 @@ export class ProductOffersComponent implements OnInit {
         }
     }
 
+    getOfferWith() {
+        var result = "with:";
+        if(this.offerCategory1 != '') {
+            result += " "+this.offerCategory1
+        }
+        if(this.offerCategory2 != '') {
+            result += " "+this.offerCategory2
+        }
+        if(this.offerCategory3 != '') {
+            result += " "+this.offerCategory3
+        }
+        if(this.offerBrand != '') {
+            result += " "+this.offerBrand
+        }
+        if(this.offerPrice != '') {
+            result += " "+this.offerPrice
+        }
+        if(this.offerSize != '') {
+            result += " "+this.offerSize
+        }
+        if(this.offerId != '') {
+            result += " "+this.offerId
+        }
+        if(this.offerName != '') {
+            result += " "+this.offerName
+        }
+        if(this.offerCombType != '') {
+            result += " "+this.offerCombType
+        }
+        if(this.offerDemandId != '') {
+            result += " "+this.offerDemandId
+        }
+        if(this.offerDemandCount != '') {
+            result += " "+this.offerDemandCount
+        }
+        if(this.offerBenefitId != '') {
+            result += " "+this.offerBenefitId
+        }
+        if(this.offerDiscount != '') {
+            result += " "+this.offerDiscount
+        }
+        if(this.offerCombMax != '') {
+            result += " "+this.offerCombMax
+        }
+        if(this.offerValidFrom != '') {
+            result += " "+this.offerValidFrom
+        }
+        if(this.offerValidTo != '') {
+            result += " "+this.offerValidTo
+        }
+        if(this.offerSuspended != '' && this.offerSuspended == '1') {
+            result += " Suspended"
+        }
+        if(this.offerSuspended != '' && this.offerSuspended == '0') {
+            result += " Not-Suspended"
+        }
+        return result;
+    }
+
+    canGetOffers(): boolean {
+        return this.offerType[0].id == 'New' || this.offerSize != ''  || this.offerPrice != '' || this.offerBrand != '' ||
+                           this.offerCategory1 != '' || this.offerCategory2 != '' || this.offerCategory3 != '' ||
+                           this.offerId != '' || this.offerName != '' || this.offerCombType != '' || this.offerDemandId != '' ||
+                           this.offerDemandCount != '' || this.offerBenefitId != '' || this.offerDiscount != '' ||
+                           this.offerCombMax != '' || this.offerValidFrom != '' || this.offerValidTo != '' ||
+                           this.offerSuspended != ''
+    }
     getOffers(): Promise<Offer[]> {
         this.offers = []
-        if (this.offerType[0].id == 'New' || this.offerSize != ''  || this.offerPrice != '' || this.offerBrand != '' || this.offerCategory1 != '' || this.offerCategory2 != '' || this.offerCategory3 != ''){
+        if (this.canGetOffers()){
             this.offers = [];
             return this.offerService
-                .getOffers(this.offerType[0].id, this.offerCategory1, this.offerCategory2, this.offerCategory3, this.offerBrand, this.offerPrice, this.offerSize,'', '')
+                .getOffers(this.offerType[0].id, this.offerCategory1, this.offerCategory2, this.offerCategory3,
+                this.offerBrand, this.offerPrice, this.offerSize,'', '', this.offerId, this.offerName,
+                this.offerCombType, this.offerDemandId, this.offerCombMax, this.offerValidFrom, this.offerValidTo, this.offerSuspended)
+
                 .then(offers => {
                     this.offers = offers;
                     return this.offers;
@@ -230,12 +325,10 @@ export class ProductOffersComponent implements OnInit {
         this.getProducts();
         this.getOffers();
     }
-
     onOfferSuspendedChange(suspended: MdSlideToggleChange, offer: Offer) {
           offer.suspended = suspended.checked;
           this.saveOffer(offer);
     }
-
     onNewOfferSuspendedChange(suspended: MdSlideToggleChange, offer: Offer) {
           offer.suspended = suspended.checked;
     }
@@ -260,6 +353,51 @@ export class ProductOffersComponent implements OnInit {
         this.selectedOffer = offer;
         this.addingOffer = false;
         this.getOfferProducts()
+    }
+
+    onOfferIdSearch(item: string) {
+        this.offerId = item;
+        this.getOffers();
+    }
+    onOfferNameSearch(item: string) {
+        this.offerName = item;
+        this.getOffers();
+    }
+    onOfferCombTypeSearch(item: SelectItem) {
+        this.offerCombType = item.id;
+        this.getOffers();
+    }
+    onOfferDemandIdSearch(item: SelectItem) {
+        this.offerDemandId = item.id;
+        this.getOffers();
+    }
+    onOfferDemandCountSearch(item: SelectItem) {
+        this.offerDemandCount = item.id;
+        this.getOffers();
+    }
+    onOfferBenefitIdSearch(item: SelectItem) {
+        this.offerBenefitId = item.id;
+        this.getOffers();
+    }
+    onOfferDiscountSearch(item: SelectItem) {
+        this.offerDiscount = item.id;
+        this.getOffers();
+    }
+    onOfferCombMaxSearch(item: SelectItem) {
+        this.offerCombMax = item.id;
+        this.getOffers();
+    }
+    onOfferValidFromSearch(item: string) {
+        this.offerValidFrom = item;
+        this.getOffers();
+    }
+    onOfferValidToSearch(item: string) {
+        this.offerValidTo = item;
+        this.getOffers();
+    }
+    onOfferSuspendedSearch(item: SelectItem) {
+        this.offerSuspended = item.id;
+        this.getOffers();
     }
 
     saveOffer(offer: Offer) {
