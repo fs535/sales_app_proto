@@ -21,7 +21,6 @@ td input.datepicker__input, td input[type="text"], td input[type="date"], td sel
   font-family: Cambria, Georgia !important;
   background-color: transparent !important;
   border: 0px solid !important;
-  font-size:12px;
 }
 
 .text-muted {
@@ -192,6 +191,7 @@ table.top-container-table th.thall, table.top-container-table td.tdall {
 .left-container {
     width: 60%;
     min-width: 600px;
+    float: left;
 }
 
 table.left-container-table {
@@ -244,7 +244,7 @@ table.left-container-table th.thall, table.left-container-table td.tdall {
 .right-container {
     width: 40%;
     min-width: 400px;
-    float: right;
+    margin-left: 60%;
 }
 
 table.right-container-table {

@@ -40,9 +40,9 @@ export class ProductsComponent implements OnInit {
                 private productService: ProductService) {
     }
 
-    getProductCategories(): Promise<Categories> {
+    getCollections(): Promise<Categories> {
         return this.productService
-            .getProductCategories()
+            .getCollections()
             .then(response => {
                 this.category1values = response.category1values;
                 this.category2values = response.category2values;
@@ -69,7 +69,7 @@ export class ProductsComponent implements OnInit {
 
     ngOnInit() {
         this.error = '';
-        this.getProductCategories()
+        this.getCollections()
         this.getProducts()
     }
 

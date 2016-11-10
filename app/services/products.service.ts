@@ -31,7 +31,7 @@ export class ProductService {
 
 
     getCollections(): Promise<Categories> {
-        return this.http.get(`${this.settings.hub_url}/products/categories`)
+        return this.http.get(`${this.settings.hub_url}/collections`)
             .toPromise()
             .then(response => {
                 let r = response.json()

@@ -281,11 +281,11 @@
     </table>
 </div>
 <div class="left-container">
-    <h3>
+    <div>
         <span *ngIf="offerType == 'New'">Non-Assigned Products</span>
         <span *ngIf="offerType != 'New'">Products</span>
         <span *ngIf="canGetProducts()">{{getProductWith()}}</span>
-    </h3>
+    </div>
     <table class="table table-striped left-container-table">
         <thead>
         <tr>
@@ -382,10 +382,10 @@
     </table>
 </div>
 <div class="right-container">
-    <h3>
+    <div>
         <span *ngIf="selectedOffer.id != ''">Offer {{selectedOffer.id}} Products</span>
         <span *ngIf="selectedOffer.id == ''">Offer Products</span>
-    </h3>
+    </div>
     <table class="table table-striped right-container-table">
         <thead>
         <tr>
