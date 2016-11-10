@@ -97,7 +97,7 @@ func init() {
 	loadOffers()
 }
 
-func productCategoriesAPIHandler(w http.ResponseWriter, r *http.Request) {
+func collectionsAPIHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	if r.Method == "GET" {
 		result1 := map[string]struct{}{}

@@ -42,7 +42,7 @@ func main() {
 
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("/v1/products/categories", productCategoriesAPIHandler)
+	mux.HandleFunc("/v1/collections", collectionAPIHandler)
 	mux.HandleFunc("/v1/products", productAPIHandler)
 	mux.HandleFunc("/v1/offers", offerAPIHandler)
 

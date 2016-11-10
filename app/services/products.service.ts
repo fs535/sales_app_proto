@@ -11,9 +11,14 @@ export class ProductService {
     constructor(private http: Http, private settings: Settings) {
     }
 
-    getProductsByOffer(offer: Offer): Promise<Product[]> {
+    getProductsByOffer(offer: Offer, productNameSearch: string,
+                       productCategory1: string, productCategory2: string, productCategory3: string): Promise<Product[]> {
         let params: URLSearchParams = new URLSearchParams();
-        params.set('offer', offer.id);
+        params.set('offerId', offer.id);
+        params.set('category1', productCategory1);
+        params.set('category2', productCategory2);
+        params.set('category3', productCategory3);
+        params.set('nameSearch', productNameSearch);
 
         return this.http.get(`${this.settings.hub_url}/products`,{
             search: params
@@ -25,7 +30,7 @@ export class ProductService {
     }
 
 
-    getProductCategories(): Promise<Categories> {
+    getCollections(): Promise<Categories> {
         return this.http.get(`${this.settings.hub_url}/products/categories`)
             .toPromise()
             .then(response => {

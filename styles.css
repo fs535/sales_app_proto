@@ -21,6 +21,7 @@ td input.datepicker__input, td input[type="text"], td input[type="date"], td sel
   font-family: Cambria, Georgia !important;
   background-color: transparent !important;
   border: 0px solid !important;
+  font-size:12px;
 }
 
 .text-muted {
@@ -189,8 +190,8 @@ table.top-container-table th.thall, table.top-container-table td.tdall {
 
 
 .left-container {
-    width: 75%;
-    min-width: 750px;
+    width: 60%;
+    min-width: 600px;
 }
 
 table.left-container-table {
@@ -214,30 +215,75 @@ table.left-container-table tr {
 }
 
 table.left-container-table th.th1, table.left-container-table td.td1 {
-    width: 6.65%;
+    width: 16.67%;
 }
 table.left-container-table th.th2, table.left-container-table td.td2 {
-    width: 20.075%;
+    width: 14.66%;
 }
 table.left-container-table th.th3, table.left-container-table td.td3 {
-    width: 13.3%;
+    width: 14.66%;
 }
 table.left-container-table th.th4, table.left-container-table td.td4 {
-    width: 13.3%;
+    width: 14.66%;
 }
 table.left-container-table th.th5, table.left-container-table td.td5 {
-    width: 13.3%;
+    width: 8.33%;
 }
 table.left-container-table th.th6, table.left-container-table td.td6 {
-    width: 6.65%;
-}
-table.left-container-table th.th7, table.left-container-table td.td7 {
-    width: 20.075%;
+    width: 22.67%;
 }
 table.left-container-table th.thlast, table.left-container-table td.tdlast {
-    width: 6.65%;
+    width: 8.33%;
 }
 table.left-container-table th.thall, table.left-container-table td.tdall {
     width: 100%;
     text-align: center;
 }
+
+
+.right-container {
+    width: 40%;
+    min-width: 400px;
+    float: right;
+}
+
+table.right-container-table {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+}
+table.right-container-table thead, table.right-container-table tbody {
+    float: left;
+    width: 100%;
+}
+table.right-container-table tbody {
+    overflow-y: auto;
+    height: 200px;
+}
+table.right-container-table tr {
+    width: 100%;
+    display: table;
+    table-layout: fixed;
+    text-align: left;
+}
+
+table.right-container-table th.th1, table.right-container-table td.td1 {
+    width: 25%;
+}
+table.right-container-table th.th2, table.right-container-table td.td2 {
+    width: 22%;
+}
+table.right-container-table th.th3, table.right-container-table td.td3 {
+    width: 22%;
+}
+table.right-container-table th.th4, table.right-container-table td.td4 {
+    width: 22%;
+}
+table.right-container-table th.thlast, table.right-container-table td.tdlast {
+    width: 9%;
+}
+table.right-container-table th.thall, table.right-container-table td.tdall {
+    width: 100%;
+    text-align: center;
+}
+

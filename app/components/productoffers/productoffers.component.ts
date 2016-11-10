@@ -46,6 +46,11 @@ export class ProductOffersComponent implements OnInit {
     productCategory2: string = "";
     productCategory3: string = "";
 
+    selectedOfferProductNameSearch: string = "";
+    selectedOfferProductCategory1: string = "";
+    selectedOfferProductCategory2: string = "";
+    selectedOfferProductCategory3: string = "";
+
     productOfferNameSearch: string = "";
     productOfferIdSearch: string = "";
     productOfferAssigned: string = "";
@@ -83,9 +88,9 @@ export class ProductOffersComponent implements OnInit {
                 private offerService: OfferService) {
     }
 
-    getProductCategories(): Promise<Categories> {
+    getCollections(): Promise<Categories> {
         return this.productService
-            .getProductCategories()
+            .getCollections()
             .then(result => {
                 this.category1values = result.category1values;
                 this.category2values = result.category2values;
@@ -129,7 +134,9 @@ export class ProductOffersComponent implements OnInit {
         this.offerProducts = [];
         if(this.selectedOffer.id != '') {
             return this.productService
-                .getProductsByOffer(this.selectedOffer)
+                .getProductsByOffer(this.selectedOffer, this.selectedOfferProductNameSearch,
+                                    this.selectedOfferProductCategory1, this.selectedOfferProductCategory2, this.selectedOfferProductCategory3
+                )
                 .then(products => {
                     this.offerProducts = products;
                     return this.offerProducts;
@@ -197,6 +204,32 @@ export class ProductOffersComponent implements OnInit {
         return result;
     }
 
+    getProductWith() {
+        var result = "with:";
+        if(this.productIdSearch != '') {
+            result += " "+this.productIdSearch
+        }
+        if(this.productNameSearch != '') {
+            result += " "+this.productNameSearch
+        }
+        if(this.productCategory1 != '') {
+            result += " "+this.productCategory1
+        }
+        if(this.productCategory2 != '') {
+            result += " "+this.productCategory2
+        }
+        if(this.productCategory3 != '') {
+            result += " "+this.productCategory3
+        }
+        if(this.productOfferIdSearch != '') {
+            result += " "+this.productOfferIdSearch
+        }
+        if(this.productOfferNameSearch != '') {
+            result += " "+this.productOfferNameSearch
+        }
+        return result;
+    }
+
     canGetOffers(): boolean {
         return this.offerType == 'New' || this.offerSize != ''  || this.offerPrice != '' || this.offerBrand != '' ||
                            this.offerCategory1 != '' || this.offerCategory2 != '' || this.offerCategory3 != '' ||
@@ -246,7 +279,7 @@ export class ProductOffersComponent implements OnInit {
 
     ngOnInit() {
         this.error = '';
-        this.getProductCategories()
+        this.getCollections()
     }
 
     onProductIdSearch(item: string) {
@@ -281,6 +314,24 @@ export class ProductOffersComponent implements OnInit {
         this.productOfferAssigned = item.id
         this.getProducts();
     }
+
+    onSelectedOfferProductNameSearch(item: string) {
+        this.selectedOfferProductNameSearch = item
+        this.getOfferProducts();
+    }
+    onSelectedOfferProductCategory1Search(item: SelectItem) {
+        this.selectedOfferProductCategory1 = item.id
+        this.getOfferProducts();
+    }
+    onSelectedOfferProductCategory2Search(item: SelectItem) {
+        this.selectedOfferProductCategory2 = item.id
+        this.getOfferProducts();
+    }
+    onSelectedOfferProductCategory3Search(item: SelectItem) {
+        this.selectedOfferProductCategory3 = item.id
+        this.getOfferProducts();
+    }
+
 
     onOfferCategory1Select(category1: SelectItem) {
         this.offerCategory1 = category1.id;
