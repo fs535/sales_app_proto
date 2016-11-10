@@ -220,20 +220,33 @@ func findOfferByName(offerId string) *Offer {
 func productAPIHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	if r.Method == "GET" {
-		offer := r.URL.Query().Get("offer")
+		id := r.URL.Query().Get("id")
+		name := r.URL.Query().Get("name")
 		category1 := r.URL.Query().Get("category1")
 		category2 := r.URL.Query().Get("category2")
 		category3 := r.URL.Query().Get("category3")
-		brand := r.URL.Query().Get("brand")
-		price := r.URL.Query().Get("price")
-		size := r.URL.Query().Get("size")
-
-		offered := r.URL.Query().Get("offered")
-		text := r.URL.Query().Get("text")
+		offerNameSearch := r.URL.Query().Get("offerNameSearch")
+		offerId := r.URL.Query().Get("offerId")
+		offerAssigned := r.URL.Query().Get("offerAssigned")
 
 		result := map[string]Product{}
 		for _, p := range products {
 			result[p.Id] = p
+		}
+
+		if (id != "") {
+			for i, p := range result {
+				if p.Id != id {
+					delete(result, i)
+				}
+			}
+		}
+		if (name != "") {
+			for i, p := range result {
+				if p.Name != name {
+					delete(result, i)
+				}
+			}
 		}
 
 		if (category1 != "") {
@@ -257,60 +270,29 @@ func productAPIHandler(w http.ResponseWriter, r *http.Request) {
 				}
 			}
 		}
-		if (brand != "") {
+
+		if (offerAssigned != "") {
 			for i, p := range result {
-				if p.Brand != brand {
+				if (p.Offer == "" && offerAssigned == "1") || p.Offer != "" && offerAssigned == "0" {
 					delete(result, i)
 				}
 			}
 		}
-		if (price != "") {
+		if (offerId != "") {
 			for i, p := range result {
-				if p.Price != price {
+				if (p.Offer != offerId) {
 					delete(result, i)
 				}
 			}
 		}
-		if (size != "") {
+		if (offerNameSearch != "") {
 			for i, p := range result {
-				if p.Size != size {
+				if (p.OfferId != "" && !strings.HasPrefix(strings.ToLower(findOfferById(p.OfferId).Name), strings.ToLower(offerNameSearch))) {
 					delete(result, i)
 				}
 			}
 		}
 
-		if (offered != "") {
-			for i, p := range result {
-				if (p.Offer == "" && offered == "1") || p.Offer != "" && offered == "0" {
-					delete(result, i)
-				}
-			}
-		}
-		if (offer != "") {
-			for i, p := range result {
-				if (p.Offer != offer) {
-					delete(result, i)
-				}
-			}
-		}
-
-		if (text != "") {
-			for i, p := range result {
-				if (!strings.HasPrefix(strings.ToLower(p.Offer), strings.ToLower(text)) &&
-					!strings.HasPrefix(strings.ToLower(p.Name), strings.ToLower(text)) &&
-					!strings.HasPrefix(strings.ToLower(p.Category1), strings.ToLower(text)) &&
-					!strings.HasPrefix(strings.ToLower(p.Category2), strings.ToLower(text)) &&
-					!strings.HasPrefix(strings.ToLower(p.Category3), strings.ToLower(text)) &&
-					!strings.HasPrefix(strings.ToLower(p.Price), strings.ToLower(text)) &&
-					!strings.HasPrefix(strings.ToLower(p.Size), strings.ToLower(text)) &&
-					!strings.HasPrefix(strings.ToLower(p.OfferId), strings.ToLower(text)) &&
-					!strings.HasPrefix(strings.ToLower(p.PictureUrl), strings.ToLower(text)) &&
-					!strings.HasPrefix(strings.ToLower(p.Description), strings.ToLower(text)) &&
-					!strings.HasPrefix(strings.ToLower(p.Brand), strings.ToLower(text))) {
-					delete(result, i)
-				}
-			}
-		}
 
 		var res []Product
 		for _, p := range result {
@@ -558,12 +540,12 @@ func offerAPIHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		if (suspended != "") {
 			for i, o := range offerIds {
-				if(suspended == "1") {
+				if (suspended == "1") {
 					if o.Suspended != true {
 						delete(offerIds, i)
 					}
 				}
-				if(suspended == "0") {
+				if (suspended == "0") {
 					if o.Suspended != false {
 						delete(offerIds, i)
 					}

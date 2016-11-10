@@ -37,13 +37,18 @@ export class ProductOffersComponent implements OnInit {
 
     yesno: any = [{id:"", text:""},{id:"1", text:"Yes"}, {id:"", text:"No"}];
 
+    productIdSearch: string = "";
+    productNameSearch: string = "";
+    productCategory1Selected: any[] = [];
+    productCategory2Selected: any[] = [];
+    productCategory3Selected: any[] = [];
+    productCategory1: string = "";
+    productCategory2: string = "";
+    productCategory3: string = "";
 
-    category1: string = "";
-    category2: string = "";
-    category3: string = "";
-    brand: string = "";
-    price: string = "";
-    size: string = "";
+    productOfferNameSearch: string = "";
+    productOfferIdSearch: string = "";
+    productOfferAssigned: string = "";
 
     offerCategory1: string = "";
     offerCategory2: string = "";
@@ -64,7 +69,6 @@ export class ProductOffersComponent implements OnInit {
     offerValidTo: string = "";
     offerSuspended: string = "";
 
-    unoffered: boolean = false;
     newOffers: Offer[]
     offers: Offer[]
 
@@ -100,13 +104,19 @@ export class ProductOffersComponent implements OnInit {
             .catch(error => this.error += error);
     }
 
+    canGetProducts(): boolean {
+        return this.productIdSearch != ''  || this.productNameSearch != '' || this.productCategory1 != '' ||
+                           this.productCategory2 != '' || this.productCategory3 != '' ||
+                           this.productOfferNameSearch != '' || this.productOfferIdSearch != '' || this.productOfferAssigned == 'No'
+    }
 
     getProducts(): Promise<Product[]> {
         this.products = [];
-        if(this.category1 != '' || this.unoffered) {
+        if(this.canGetProducts()) {
             return this.productService
-                .getProducts(this.category1,this.category1,this.category1,
-                             this.brand, this.price, this.size, this.unoffered, '')
+                .getProducts(this.productIdSearch, this.productNameSearch,
+                             this.productCategory1, this.productCategory2, this.productCategory3,
+                             this.productOfferNameSearch, this.productOfferIdSearch, this.productOfferAssigned)
                 .then(products => {
                     this.products = products;
                     return this.products;
@@ -239,44 +249,44 @@ export class ProductOffersComponent implements OnInit {
         this.getProductCategories()
     }
 
-    onCategory1Select(category1: SelectItem) {
-        this.category1 = category1.id;
+    onProductIdSearch(item: string) {
+        this.productIdSearch = item
         this.getProducts();
-        this.getOffers();
     }
-
-    onCategory2Select(category2: SelectItem) {
-        this.category2 = category2.id;
+    onProductNameSearch(item: string) {
+        this.productNameSearch = item
         this.getProducts();
-        this.getOffers();
     }
-
-    onCategory3Select(category3: SelectItem) {
-        this.category3 = category3.id;
+    onProductCategory1Search(item: SelectItem) {
+        this.productCategory1 = item.id
         this.getProducts();
-        this.getOffers();
     }
-
-    onBrandSelect(brand: SelectItem) {
-        this.brand = brand.id;
+    onProductCategory2Search(item: SelectItem) {
+        this.productCategory2 = item.id
         this.getProducts();
-        this.getOffers();
     }
-    onPriceSelect(price: SelectItem) {
-        this.price = price.id;
+    onProductCategory3Search(item: SelectItem) {
+        this.productCategory3 = item.id
         this.getProducts();
-        this.getOffers();
     }
-    onSizeSelect(size: SelectItem) {
-        this.size = size.id;
+    onProductOfferIdSearch(item: string) {
+        this.productOfferIdSearch = item
         this.getProducts();
-        this.getOffers();
+    }
+    onProductOfferNameSearch(item: string) {
+        this.productOfferNameSearch = item
+        this.getProducts();
+    }
+    onProductOfferAssignedSearch(item: SelectItem) {
+        this.productOfferAssigned = item.id
+        this.getProducts();
     }
 
     onOfferCategory1Select(category1: SelectItem) {
         this.offerCategory1 = category1.id;
-        if(!this.category1) {
-            this.category1 = category1.id;
+        if(!this.productCategory1) {
+            this.productCategory1 = category1.id;
+            this.productCategory1Selected = [{"id": category1.id, "text": category1.text}];
         }
         this.getProducts();
         this.getOffers();
@@ -284,8 +294,9 @@ export class ProductOffersComponent implements OnInit {
 
     onOfferCategory2Select(category2: SelectItem) {
         this.offerCategory2 = category2.id;
-        if(!this.category2) {
-            this.category2 = category2.id;
+        if(!this.productCategory2) {
+            this.productCategory2 = category2.id;
+            this.productCategory2Selected = [{"id": category2.id, "text": category2.text}];
         }
         this.getProducts();
         this.getOffers();
@@ -293,8 +304,9 @@ export class ProductOffersComponent implements OnInit {
 
     onOfferCategory3Select(category3: SelectItem) {
         this.offerCategory3 = category3.id;
-        if(!this.category3) {
-            this.category3 = category3.id;
+        if(!this.productCategory3) {
+            this.productCategory3 = category3.id;
+            this.productCategory3Selected = [{"id": category3.id, "text": category3.text}];
         }
         this.getProducts();
         this.getOffers();
@@ -302,27 +314,18 @@ export class ProductOffersComponent implements OnInit {
 
     onOfferBrandSelect(brand: SelectItem) {
         this.offerBrand = brand.id;
-        if(!this.brand) {
-            this.brand = brand.id;
-        }
         this.getProducts();
         this.getOffers();
     }
 
     onOfferPriceSelect(price: SelectItem) {
         this.offerPrice = price.id;
-        if(!this.price) {
-            this.price = price.id;
-        }
         this.getProducts();
         this.getOffers();
     }
 
     onOfferSizeSelect(size: SelectItem) {
         this.offerSize = size.id;
-        if(!this.size) {
-            this.size = size.id;
-        }
         this.getProducts();
         this.getOffers();
     }
@@ -336,13 +339,6 @@ export class ProductOffersComponent implements OnInit {
 
     onOfferTypeSelect(item: SelectItem) {
         this.offerType = item.id;
-        this.getOffers();
-    }
-
-
-    onUnofferedSelect(unoffered: boolean) {
-        this.unoffered = unoffered;
-        this.getProducts();
         this.getOffers();
     }
 

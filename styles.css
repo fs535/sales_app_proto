@@ -186,3 +186,58 @@ table.top-container-table th.thall, table.top-container-table td.tdall {
     width: 100%;
     text-align: center;
 }
+
+
+.left-container {
+    width: 75%;
+    min-width: 750px;
+}
+
+table.left-container-table {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+}
+table.left-container-table thead, table.left-container-table tbody {
+    float: left;
+    width: 100%;
+}
+table.left-container-table tbody {
+    overflow-y: auto;
+    height: 200px;
+}
+table.left-container-table tr {
+    width: 100%;
+    display: table;
+    table-layout: fixed;
+    text-align: left;
+}
+
+table.left-container-table th.th1, table.left-container-table td.td1 {
+    width: 6.65%;
+}
+table.left-container-table th.th2, table.left-container-table td.td2 {
+    width: 20.075%;
+}
+table.left-container-table th.th3, table.left-container-table td.td3 {
+    width: 13.3%;
+}
+table.left-container-table th.th4, table.left-container-table td.td4 {
+    width: 13.3%;
+}
+table.left-container-table th.th5, table.left-container-table td.td5 {
+    width: 13.3%;
+}
+table.left-container-table th.th6, table.left-container-table td.td6 {
+    width: 6.65%;
+}
+table.left-container-table th.th7, table.left-container-table td.td7 {
+    width: 20.075%;
+}
+table.left-container-table th.thlast, table.left-container-table td.tdlast {
+    width: 6.65%;
+}
+table.left-container-table th.thall, table.left-container-table td.tdall {
+    width: 100%;
+    text-align: center;
+}

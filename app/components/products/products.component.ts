@@ -58,9 +58,8 @@ export class ProductsComponent implements OnInit {
     getProducts(): Promise<Product[]> {
         this.products = [];
         return this.productService
-            .getProducts(this.category1, this.category1, this.category1,
-                         this.brand, this.price, this.size,
-                         this.unoffered, this.productSearch)
+            .getProducts('', '', this.category1, this.category1, this.category1,
+                         '', '', '')
             .then(products => {
                 this.products = products;
                 return this.products;

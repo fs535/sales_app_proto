@@ -47,19 +47,21 @@ export class ProductService {
             .catch(this.handleError);
     }
 
-    getProducts(category1: string, category2: string, category3: string,
-                brand: string, price: string, size: string,
-                unoffered: boolean, text: string): Promise<Product[]> {
+    getProducts(productId: string, productNameSearch: string, category1: string, category2: string, category3: string,
+                offerNameSearch: string, offerIdearch: string, offerAssigned: string): Promise<Product[]> {
         let params: URLSearchParams = new URLSearchParams();
+        params.set('id', productId);
+        params.set('nameSearch', productNameSearch);
         params.set('category1', category1);
         params.set('category2', category2);
         params.set('category3', category3);
-        params.set('brand', brand);
-        params.set('price', price);
-        params.set('size', size);
-
-        params.set('offered', unoffered ? "0" : "");
-        params.set('text', text);
+        params.set('offerNameSearch', offerNameSearch);
+        params.set('offerId', offerIdearch);
+        if(offerAssigned == 'No') {
+            params.set('offerAssigned', '0');
+        } else if(offerAssigned == 'Yes') {
+            params.set('offerAssigned', '1');
+        }
 
         return this.http.get(`${this.settings.hub_url}/products`,{
             search: params
