@@ -36,7 +36,7 @@ export class ProductOffersComponent implements OnInit {
     discounts: string[];
     combMaxs: string[];
 
-    yesno: any = [{id:"", text:""},{id:"1", text:"Yes"}, {id:"", text:"No"}];
+    yesno: any = [{id:"", text:""},{id:"1", text:"Yes"}, {id:"0", text:"No"}];
 
     productIdSearch: string = "";
     productNameSearch: string = "";
@@ -122,6 +122,8 @@ export class ProductOffersComponent implements OnInit {
             return this.productService
                 .getProducts(this.productIdSearch, this.productNameSearch,
                              this.productCategory1, this.productCategory2, this.productCategory3,
+                             '', '', '',
+                             '', '', '',
                              this.productOfferNameSearch, this.productOfferIdSearch, this.productOfferAssigned)
                 .then(products => {
                     this.products = products;
@@ -258,12 +260,26 @@ export class ProductOffersComponent implements OnInit {
 
 
     assignSelectedOffer(product: Product) {
-        product.offerId = this.selectedOffer.id
-        var self = this;
-        this.saveProduct(product).then((product) => {
-            self.getOffers()
-            self.getOfferProducts()
-        })
+        if(this.addingOffer) {
+            this.offerProducts.push(product);
+        } else {
+            product.offerName = this.selectedOffer.name
+            var self = this;
+            this.saveProduct(product).then((product) => {
+                self.getOffers()
+                self.getOfferProducts()
+            })
+        }
+    }
+
+    newOfferFromProduct(product: Product) {
+        this.addOffer();
+        this.offer.name = "Offer for "+product.name;
+        this.offer.validFrom = new Date();
+        var next = new Date();
+        next.setDate(next.getDate() + 30);
+        this.offer.validTo = next;
+        this.offerProducts = [product];
     }
 
     addOffer() {
@@ -451,16 +467,32 @@ export class ProductOffersComponent implements OnInit {
 
     saveOffer(offer: Offer) {
         var isNew: boolean = (offer.id == '');
+        var hadProducts = this.offerProducts.length > 0;
         this.error = '';
         this.offerService.save(offer).then((offer) => {
             if (isNew) {
                 this.addingOffer = false;
                 this.selectedOffer = offer;
-                this.offerType = "New"
-                this.offerTypeSelected = [{id:"New", text:"New"}];
+                if(!hadProducts) {
+                    this.offerType = "New"
+                    this.offerTypeSelected = [{id:"New", text:"New"}];
+                }
                 this.getOffers();
-                this.getOfferProducts();
-                this.getProducts()
+                this.getProducts();
+                // Save selected products with new offer
+                var expected = this.offerProducts.length;
+                if(expected <= 0) {
+                    this.getOfferProducts();
+                } else {
+                    for(let p of this.offerProducts) {
+                        p.offerName = offer.name
+                        this.saveProduct(p).then((product) => {
+                           if(--expected <= 0) {
+                              this.getOfferProducts();
+                           }
+                        })
+                    }
+                }
             }
             return '';
         }).catch((err) => {
@@ -471,10 +503,8 @@ export class ProductOffersComponent implements OnInit {
     saveProduct(product: Product): Promise<Product> {
         this.error = '';
         var self = this;
-        // Clear both attributes
-        if(product.offerName == '') {
-            product.offerId = '';
-        }
+        // Clear Offer Id
+        product.offerId = '';
         return this.productService.save(product).then((product) => {
             for (var item of self.products) {
                 if(item.id == product.id) {

@@ -53,6 +53,8 @@ export class ProductService {
     }
 
     getProducts(productId: string, productNameSearch: string, category1: string, category2: string, category3: string,
+                price: string, brand: string, size: string,
+                activatedPim: string, pictureUrl: string, description: string,
                 offerNameSearch: string, offerIdearch: string, offerAssigned: string): Promise<Product[]> {
         let params: URLSearchParams = new URLSearchParams();
         params.set('id', productId);
@@ -60,6 +62,13 @@ export class ProductService {
         params.set('category1', category1);
         params.set('category2', category2);
         params.set('category3', category3);
+        params.set('price', price);
+        params.set('brand', brand);
+        params.set('size', size);
+        params.set('activatedPim', activatedPim);
+        params.set('pictureUrlSearch', pictureUrl);
+        params.set('descriptionSearch', description);
+
         params.set('offerNameSearch', offerNameSearch);
         params.set('offerId', offerIdearch);
         if(offerAssigned == 'No') {

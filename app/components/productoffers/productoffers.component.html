@@ -203,10 +203,10 @@
                        [(ngModel)]="offer.combMax"/>
             </td>
             <td class="td9">
-                <material-datepicker (blur)="saveOffer(offer)" [(date)]="offer.validFrom"></material-datepicker>
+                <material-datepicker (onSelect)="saveOffer(offer)" [(date)]="offer.validFrom"></material-datepicker>
             </td>
             <td class="td10">
-                <material-datepicker (blur)="saveOffer(offer)" [(date)]="offer.validTo"></material-datepicker>
+                <material-datepicker (onSelect)="saveOffer(offer)" [(date)]="offer.validTo"></material-datepicker>
             </td>
             <td class="tdlast">
                 <md-slide-toggle [class.selected]="offer.id === selectedOffer.id" [(ngModel)]="offer.suspended"
@@ -372,7 +372,8 @@
                        [(ngModel)]="product.offerName"/>
             </td>
             <td class="tdlast">
-
+                <a style="float:right;" title="Move this product into {{selectedOffer.id}} offer!" *ngIf="selectedOffer.id != '' && selectedOffer.id != product.offerId" (click)="assignSelectedOffer(product)"><span class="glyphicon glyphicon-triangle-right"></span></a>
+                <a style="float:right;" title="Create New Offer based on this product" *ngIf="product.offerId == '' && addingOffer == false" (click)="newOfferFromProduct(product)"><span class="glyphicon glyphicon-asterisk"></span></a>
             </td>
         </tr>
         <tr *ngIf="!canGetProducts()">
@@ -383,8 +384,9 @@
 </div>
 <div class="right-container">
     <div>
-        <span *ngIf="selectedOffer.id != ''">Offer {{selectedOffer.id}} Products</span>
-        <span *ngIf="selectedOffer.id == ''">Offer Products</span>
+        <span *ngIf="addingOffer == true">New Offer Products</span>
+        <span *ngIf="addingOffer == false && selectedOffer.id != ''">Offer {{selectedOffer.id}} Products</span>
+        <span *ngIf="addingOffer == false && selectedOffer.id == ''">Offer Products</span>
     </div>
     <table class="table table-striped right-container-table">
         <thead>
@@ -448,7 +450,7 @@
 
             </td>
         </tr>
-        <tr *ngIf="selectedOffer.id == ''">
+        <tr *ngIf="selectedOffer.id == '' && addingOffer == false">
             <td class="tdall" colspan="5">Select offer from list above...</td>
         </tr>
         </tbody>

@@ -55,13 +55,19 @@ export class ProductsComponent implements OnInit {
     discounts: string[];
     combMaxs: string[];
 
-    yesno: any = [{id:"", text:""},{id:"1", text:"Yes"}, {id:"", text:"No"}];
+    yesno: any = [{id:"", text:""},{id:"1", text:"Yes"}, {id:"0", text:"No"}];
 
     productIdSearch: string = "";
     productNameSearch: string = "";
     productCategory1: string = "";
     productCategory2: string = "";
     productCategory3: string = "";
+    productPrice: string = "";
+    productBrand: string = "";
+    productSize: string = "";
+    productActivatedPim: string = "";
+    productPictureUrlSearch: string = "";
+    productDescriptionSearch: string = "";
 
     constructor(private router: Router,
                 private productService: ProductService,
@@ -94,6 +100,8 @@ export class ProductsComponent implements OnInit {
         return this.productService
             .getProducts(this.productIdSearch, this.productNameSearch,
                          this.productCategory1, this.productCategory2, this.productCategory3,
+                         this.productPrice, this.productBrand, this.productSize,
+                         this.productActivatedPim, this.productPictureUrlSearch, this.productDescriptionSearch,
                          this.offerName, this.offerId, this.offerAssigned)
             .then(products => {
                 this.products = products;
@@ -111,10 +119,8 @@ export class ProductsComponent implements OnInit {
     saveProduct(product: Product) {
         this.error = '';
         var self = this;
-        // Clear both attributes
-        if(product.offerName == '') {
-            product.offerId = '';
-        }
+        // Clear offer Id attribute
+        product.offerId = '';
         return this.productService.save(product).then((product) => {
             for (var p of this.products) {
                 if(p.id == product.id) {
@@ -127,10 +133,6 @@ export class ProductsComponent implements OnInit {
         });
     }
 
-    onProductActivatedPimChange(active: boolean, product: Product) {
-          product.activatedPim = active;
-          this.saveProduct(product);
-    }
     onProductIdSearch(item: string) {
         this.productIdSearch = item
         this.getProducts();
@@ -151,9 +153,38 @@ export class ProductsComponent implements OnInit {
         this.productCategory3 = item.id
         this.getProducts();
     }
+    onProductPriceSearch(item: SelectItem) {
+        this.productPrice = item.id
+        this.getProducts();
+    }
+    onProductBrandSearch(item: SelectItem) {
+        this.productBrand = item.id
+        this.getProducts();
+    }
+    onProductSizeSearch(item: SelectItem) {
+        this.productSize = item.id
+        this.getProducts();
+    }
+    onProductActivatedPimSearch(item: SelectItem) {
+        this.productActivatedPim = item.id
+        this.getProducts();
+    }
+    onProductActivatedPimChange(activated: MdSlideToggleChange, product: Product) {
+          product.activatedPim = activated.checked;
+          this.saveProduct(product);
+    }
+    onProductPictureUrlSearch(item: string) {
+        this.productPictureUrlSearch = item
+        this.getProducts();
+    }
+    onProductDescriptionSearch(item: string) {
+        this.productDescriptionSearch = item
+        this.getProducts();
+    }
+
     onOfferSuspendedChange(suspended: MdSlideToggleChange, offer: Offer) {
           offer.suspended = suspended.checked;
-          this.saveOffer(null, null, offer);
+          this.saveOffer(offer);
     }
     onProductSelect(product: Product) {
         this.selectedProduct = product
@@ -203,36 +234,7 @@ export class ProductsComponent implements OnInit {
         this.getProducts();
     }
 
-    saveOffer(value: any, field: string, offer: Offer) {
-        this.error = '';
-        // apply change first
-        switch (field)
-        {
-          case 'combType':
-            offer.combType = value;
-            break;
-          case 'demandId':
-            offer.demandId = value;
-            break;
-          case 'demandCount':
-            offer.demandCount = value;
-            break;
-          case 'benefitId':
-            offer.benefitId = value;
-            break;
-          case 'discount':
-            offer.discount = value;
-            break;
-          case 'combMax':
-            offer.combMax = value;
-            break;
-          case 'validFrom':
-            offer.validFrom = value;
-            break;
-          case 'validTo':
-            offer.validTo = value;
-            break;
-        }
+    saveOffer(offer: Offer) {
         this.error = '';
         this.offerService.save(offer).then((offer) => {
             for (var p of this.products) {

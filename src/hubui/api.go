@@ -235,13 +235,22 @@ func productAPIHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	if r.Method == "GET" {
 		id := r.URL.Query().Get("id")
-		name := r.URL.Query().Get("name")
+		name := r.URL.Query().Get("nameSearch")
 		category1 := r.URL.Query().Get("category1")
 		category2 := r.URL.Query().Get("category2")
 		category3 := r.URL.Query().Get("category3")
+		price := r.URL.Query().Get("price")
+		brand := r.URL.Query().Get("brand")
+		size := r.URL.Query().Get("size")
+		activatedPim := r.URL.Query().Get("activatedPim")
+		pictureUrl := r.URL.Query().Get("pictureUrlSearch")
+		description := r.URL.Query().Get("descriptionSearch")
+
+
 		offerNameSearch := r.URL.Query().Get("offerNameSearch")
 		offerId := r.URL.Query().Get("offerId")
 		offerAssigned := r.URL.Query().Get("offerAssigned")
+
 
 		result := map[string]Product{}
 		for _, p := range products {
@@ -257,7 +266,7 @@ func productAPIHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		if (name != "") {
 			for i, p := range result {
-				if p.Name != name {
+				if !strings.HasPrefix(strings.ToLower(p.Name), strings.ToLower(name)) {
 					delete(result, i)
 				}
 			}
@@ -280,6 +289,51 @@ func productAPIHandler(w http.ResponseWriter, r *http.Request) {
 		if (category3 != "") {
 			for i, p := range result {
 				if p.Category3 != category3 {
+					delete(result, i)
+				}
+			}
+		}
+		if (price != "") {
+			for i, p := range result {
+				if p.Price != price {
+					delete(result, i)
+				}
+			}
+		}
+		if (brand != "") {
+			for i, p := range result {
+				if p.Brand != brand {
+					delete(result, i)
+				}
+			}
+		}
+		if (size != "") {
+			for i, p := range result {
+				if p.Size != size {
+					delete(result, i)
+				}
+			}
+		}
+		if (activatedPim != "") {
+			for i, p := range result {
+				if p.ActivatedPim == true && activatedPim == "0" {
+					delete(result, i)
+				}
+				if p.ActivatedPim == false && activatedPim == "1" {
+					delete(result, i)
+				}
+			}
+		}
+		if (pictureUrl != "") {
+			for i, p := range result {
+				if !strings.HasPrefix(strings.ToLower(p.PictureUrl), strings.ToLower(pictureUrl)) {
+					delete(result, i)
+				}
+			}
+		}
+		if (description != "") {
+			for i, p := range result {
+				if !strings.HasPrefix(strings.ToLower(p.Description), strings.ToLower(description)) {
 					delete(result, i)
 				}
 			}
@@ -401,6 +455,7 @@ func productAPIHandler(w http.ResponseWriter, r *http.Request) {
 				prod.Category3 = p.Category3
 				prod.Price = p.Price
 				prod.Brand = p.Brand
+				prod.Size = p.Size
 				prod.PictureUrl = p.PictureUrl
 				prod.Description = p.Description
 				prod.ActivatedPim = p.ActivatedPim
