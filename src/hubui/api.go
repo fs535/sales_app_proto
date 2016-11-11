@@ -9,6 +9,7 @@ import (
 	"github.com/satori/go.uuid"
 	"strings"
 	"time"
+	"sort"
 )
 
 var products []Product = []Product{}
@@ -55,12 +56,25 @@ type Product struct {
 	Price        string `json:"price"`
 	Size         string `json:"size"`
 	Brand        string `json:"brand"`
-	Offer        string `json:"offer"`
+	Offer        Offer `json:"offer"`
 	OfferId      string `json:"offerId"`
+	OfferName    string `json:"offerName"`
 	ActivatedPim bool `json:"activatedPim"`
 	PictureUrl   string `json:"pictureUrl"`
 	Description  string `json:"description"`
 }
+
+
+
+type ProductById []Product
+func (a ProductById) Len() int           { return len(a) }
+func (a ProductById) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
+func (a ProductById) Less(i, j int) bool { return a[i].Id < a[j].Id }
+
+type OfferById []Offer
+func (a OfferById) Len() int           { return len(a) }
+func (a OfferById) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
+func (a OfferById) Less(i, j int) bool { return a[i].Id < a[j].Id }
 
 func loadProducts() {
 	if (len(products) == 0) {
@@ -273,14 +287,14 @@ func productAPIHandler(w http.ResponseWriter, r *http.Request) {
 
 		if (offerAssigned != "") {
 			for i, p := range result {
-				if (p.Offer == "" && offerAssigned == "1") || p.Offer != "" && offerAssigned == "0" {
+				if (p.OfferId == "" && offerAssigned == "1") || p.OfferId != "" && offerAssigned == "0" {
 					delete(result, i)
 				}
 			}
 		}
 		if (offerId != "") {
 			for i, p := range result {
-				if (p.Offer != offerId) {
+				if (p.OfferId != offerId) {
 					delete(result, i)
 				}
 			}
@@ -297,13 +311,14 @@ func productAPIHandler(w http.ResponseWriter, r *http.Request) {
 		var res []Product
 		for _, p := range result {
 			// output names instead of ids
-			of := findOfferById(p.Offer)
+			of := findOfferById(p.OfferId)
 			if (of != nil) {
-				res = append(res, Product{Id: p.Id, Name:p.Name, Brand:p.Brand, Description:p.Description, PictureUrl:p.PictureUrl, Size:p.Size, Price:p.Price, Category1:p.Category1, Category2:p.Category2, Category3:p.Category3, Offer:of.Name, OfferId:of.Id, ActivatedPim:p.ActivatedPim})
+				res = append(res, Product{Id: p.Id, Name:p.Name, Brand:p.Brand, Description:p.Description, PictureUrl:p.PictureUrl, Size:p.Size, Price:p.Price, Category1:p.Category1, Category2:p.Category2, Category3:p.Category3, Offer:*of, OfferName:of.Name, OfferId:of.Id, ActivatedPim:p.ActivatedPim})
 			} else {
-				res = append(res, Product{Id: p.Id, Name:p.Name, Brand:p.Brand, Description:p.Description, PictureUrl:p.PictureUrl, Size:p.Size, Price:p.Price, Category1:p.Category1, Category2:p.Category2, Category3:p.Category3, Offer:"", OfferId:"", ActivatedPim:p.ActivatedPim})
+				res = append(res, Product{Id: p.Id, Name:p.Name, Brand:p.Brand, Description:p.Description, PictureUrl:p.PictureUrl, Size:p.Size, Price:p.Price, Category1:p.Category1, Category2:p.Category2, Category3:p.Category3, Offer:Offer{Id:"", Name:""}, OfferName: "",OfferId:"", ActivatedPim:p.ActivatedPim})
 			}
 		}
+		sort.Sort(ProductById(res))
 		output, _ := json.Marshal(res)
 		w.Write(output); // write json to the output
 	} else if r.Method == "POST" {
@@ -316,14 +331,27 @@ func productAPIHandler(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
 
 		// validations
-		if p.Offer != "" {
-			if findOfferByName(p.Offer) == nil {
-				msg := fmt.Sprintf("Unknown Offer Name: %s", p.Offer)
+		if p.OfferName != "" {
+			if findOfferByName(p.OfferName) == nil {
+				msg := fmt.Sprintf("Unknown Offer Name: %s", p.OfferName)
 				http.Error(w, msg, http.StatusConflict)
 				log.Println(msg)
 				return
+			} else {
+				p.OfferId = findOfferByName(p.OfferName).Id;
 			}
 		}
+		if p.OfferId != "" {
+			if findOfferById(p.OfferId) == nil {
+				msg := fmt.Sprintf("Unknown Offer Id: %s", p.OfferId)
+				http.Error(w, msg, http.StatusConflict)
+				log.Println(msg)
+				return
+			} else {
+				p.OfferId = findOfferById(p.OfferId).Id;
+			}
+		}
+
 
 		p.Id = uuid.NewV4().String()
 		products = append(products, p)
@@ -340,12 +368,24 @@ func productAPIHandler(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
 
 		// validations
-		if p.Offer != "" {
-			if findOfferByName(p.Offer) == nil {
-				msg := fmt.Sprintf("Unknown Offer Name: %s", p.Offer)
+		if p.OfferName != "" {
+			if findOfferByName(p.OfferName) == nil {
+				msg := fmt.Sprintf("Unknown Offer Name: %s", p.OfferName)
 				http.Error(w, msg, http.StatusConflict)
 				log.Println(msg)
 				return
+			} else {
+				p.OfferId = findOfferByName(p.OfferName).Id;
+			}
+		}
+		if p.OfferId != "" {
+			if findOfferById(p.OfferId) == nil {
+				msg := fmt.Sprintf("Unknown Offer Id: %s", p.OfferId)
+				http.Error(w, msg, http.StatusConflict)
+				log.Println(msg)
+				return
+			} else {
+				p.OfferId = findOfferById(p.OfferId).Id;
 			}
 		}
 
@@ -360,14 +400,7 @@ func productAPIHandler(w http.ResponseWriter, r *http.Request) {
 				prod.PictureUrl = p.PictureUrl
 				prod.Description = p.Description
 				prod.ActivatedPim = p.ActivatedPim
-				off := findOfferByName(p.Offer)
-				if (off != nil) {
-					prod.Offer = off.Id
-					prod.OfferId = off.Id
-				} else {
-					prod.Offer = ""
-					prod.OfferId = ""
-				}
+				prod.OfferId = p.OfferId
 				products[pindex] = prod // update in original slice
 				output, _ := json.Marshal(prod)
 				w.Write(output);
@@ -382,7 +415,7 @@ func productAPIHandler(w http.ResponseWriter, r *http.Request) {
 
 func findInProducts(offerId string) *Product {
 	for _, p := range products {
-		if (p.Offer == offerId) {
+		if (p.OfferId == offerId) {
 			return &p
 		}
 	}
@@ -470,8 +503,8 @@ func offerAPIHandler(w http.ResponseWriter, r *http.Request) {
 		offerIds := map[string]Offer{}
 		offerResult := []Offer{} // map from Id to full object
 		for _, p := range result {
-			if p.Offer != "" {
-				offerIds[p.Offer] = *findOfferById(p.Offer)
+			if p.OfferId != "" {
+				offerIds[p.OfferId] = *findOfferById(p.OfferId)
 			}
 		}
 		if (offerType == "New") {
@@ -561,6 +594,7 @@ func offerAPIHandler(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 
+		sort.Sort(OfferById(offerResult))
 		output, _ := json.Marshal(offerResult)
 		w.Write(output); // write json to the output
 	} else if r.Method == "POST" {

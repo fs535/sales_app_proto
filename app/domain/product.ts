@@ -1,3 +1,5 @@
+import {Offer}    from './offer';
+
 export class Product {
     id: string;
     name: string;
@@ -11,8 +13,9 @@ export class Product {
     pictureUrl: string;
     description: string;
 
-    offer: string;
+    offer: Offer;
     offerId: string;
+    offerName: string;
 
     constructor(id: string) {
         this.id = id;
