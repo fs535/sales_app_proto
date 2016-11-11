@@ -1,13 +1,27 @@
 <div class="error" *ngIf="error">{{error}}</div>
+<div class="row">
+    <div class="form-group col-md-2">
+        <ng-select [allowClear]="false"
+                   [items]="groups"
+                   [active]="groupSelected"
+                   (selected)="onGroupSelect($event)"
+                   (removed)="onGroupSelect({'id':'Group1','text':'Group1'})">
+        </ng-select>
+    </div>
+</div>
 <div class="product-container">
     <table class="table table-striped product-container-table">
         <thead>
         <tr>
-            <th class="th1">
+            <th class="thtiny">
+                <input placeholder="ID" title="ID" class="form-control" type="text"
+                       (ngModelChange)="onProductIdSearch($event)" [(ngModel)]="productIdSearch"/>
+            </th>
+            <th class="thlarge">
                 <input placeholder="Name" title="Name" class="form-control" type="text"
                        (ngModelChange)="onProductNameSearch($event)" [(ngModel)]="productNameSearch"/>
             </th>
-            <th class="th2">
+            <th class="thsmall" *ngIf="group == 'Group1'">
                 <ng-select class="wide" [allowClear]="true"
                            [items]="category1values"
                            (selected)="onProductCategory1Search($event)"
@@ -15,7 +29,7 @@
                            placeholder="Category1" title="Categry1">
                 </ng-select>
             </th>
-            <th class="th3">
+            <th class="thsmall" *ngIf="group == 'Group1'">
                 <ng-select class="wide" [allowClear]="true"
                            [items]="category2values"
                            (selected)="onProductCategory2Search($event)"
@@ -23,23 +37,23 @@
                            placeholder="Category2" title="Categry2">
                 </ng-select>
             </th>
-            <th class="th4">
+            <th class="thsmall" *ngIf="group == 'Group1'">
                 <ng-select class="wide" [allowClear]="true"
                            [items]="category3values"
-                           (selected)="onProductCategor3Search($event)"
+                           (selected)="onProductCategory3Search($event)"
                            (removed)="onProductCategory3Search({'id':'','text':''})"
                            placeholder="Category3" title="Categry3">
                 </ng-select>
             </th>
-            <th class="th5">
+            <th class="thtiny" *ngIf="group == 'Group1'">
                 <input placeholder="ID" title="ID" class="form-control" type="text"
                        (ngModelChange)="onOfferIdSearch($event)" [(ngModel)]="offerIdSearch"/>
             </th>
-            <th class="th6">
+            <th class="thlarge" *ngIf="group == 'Group1'">
                 <input placeholder="Name" title="Name" class="form-control" type="text"
                        (ngModelChange)="onOfferNameSearch($event)" [(ngModel)]="offerNameSearch"/>
             </th>
-            <th class="th7">
+            <th class="thtiny" *ngIf="group == 'Group1'">
                 <ng-select class="wide" [allowClear]="true"
                            [items]="combTypes"
                            (selected)="onOfferCombTypeSearch($event)"
@@ -47,7 +61,7 @@
                            placeholder="CT" title="Combination Type">
                 </ng-select>
             </th>
-            <th class="th8">
+            <th class="thtiny" *ngIf="group == 'Group1'">
                 <ng-select class="wide" [allowClear]="true"
                            [items]="demandIds"
                            (selected)="onOfferDemandIdSearch($event)"
@@ -55,7 +69,7 @@
                            placeholder="DID" title="Demand ID">
                 </ng-select>
             </th>
-            <th class="th9">
+            <th class="thtiny" *ngIf="group == 'Group1'">
                 <ng-select class="wide" [allowClear]="true"
                            [items]="demandCounts"
                            (selected)="onOfferDemandCountSearch($event)"
@@ -63,7 +77,7 @@
                            placeholder="DCN" title="Demand Count">
                 </ng-select>
             </th>
-            <th class="th10">
+            <th class="thtiny" *ngIf="group == 'Group1'">
                 <ng-select class="wide" [allowClear]="true"
                            [items]="benefitIds"
                            (selected)="onOfferBenefitIdSearch($event)"
@@ -71,7 +85,7 @@
                            placeholder="BID" title="Benefit ID">
                 </ng-select>
             </th>
-            <th class="th11">
+            <th class="thtiny" *ngIf="group == 'Group1'">
                 <ng-select class="wide" [allowClear]="true"
                            [items]="discounts"
                            (selected)="onOfferDiscountSearch($event)"
@@ -79,7 +93,7 @@
                            placeholder="DISC" title="Discount">
                 </ng-select>
             </th>
-            <th class="th12">
+            <th class="thtiny" *ngIf="group == 'Group1'">
                 <ng-select class="wide" [allowClear]="true"
                            [items]="combMaxs"
                            (selected)="onOfferCombMaxSearch($event)"
@@ -87,17 +101,17 @@
                            placeholder="CM" title="Comb Max">
                 </ng-select>
             </th>
-            <th class="th13">
+            <th class="thsmall" *ngIf="group == 'Group1'">
                 <input placeholder="Valid From" title="Valid From" class="form-control" type="text"
                        (ngModelChange)="onOfferValidFromSearch($event)"
                        [(ngModel)]="offerValidFromSearch"/>
             </th>
-            <th class="th14">
+            <th class="thsmall" *ngIf="group == 'Group1'">
                 <input placeholder="Valid To" title="Valid To" class="form-control" type="text"
                        (ngModelChange)="onOfferValidToSearch($event)"
                        [(ngModel)]="offerValidToSearch"/>
             </th>
-            <th class="th15">
+            <th class="thtiny" *ngIf="group == 'Group1'">
                 <ng-select class="wide" [allowClear]="true"
                            [items]="yesno"
                            (selected)="onOfferSuspendedSearch($event)"
@@ -110,74 +124,79 @@
         <tbody>
         <tr *ngFor="let product of products" (mousedown)="onProductSelect(product);true"
             [class.selected]="product.id === selectedProduct.id">
-            <td class="td1">
+            <td class="tdtiny">
+                <input [class.selected]="product.id === selectedProduct.id" class="wide"
+                       type="text" readonly="true"
+                       [(ngModel)]="product.id"/>
+            </td>
+            <td class="tdlarge">
                 <input [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product)"
                        type="text"
                        [(ngModel)]="product.name"/>
             </td>
-            <td class="td2">
+            <td class="tdsmall" *ngIf="group == 'Group1'">
                 <input [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product)"
                        type="text"
                        [(ngModel)]="product.category1"/>
             </td>
-            <td class="td3">
+            <td class="tdsmall" *ngIf="group == 'Group1'">
                 <input [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product)"
                        type="text"
                        [(ngModel)]="product.category2"/>
             </td>
-            <td class="td4">
+            <td class="tdsmall" *ngIf="group == 'Group1'">
                 <input [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product)"
                        type="text"
                        [(ngModel)]="product.category3"/>
             </td>
-            <td class="td1">
-                <input [class.selected]="product.id === selectedProduct.id" class="wide"
+            <td class="tdtiny" *ngIf="group == 'Group1'">
+                <input [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product)"
+                       type="text" readonly="true"
+                       [(ngModel)]="product.offerId" readonly="true"/>
+            </td>
+            <td class="tdlarge" *ngIf="group == 'Group1'">
+                <input [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product)"
                        type="text"
-                       [(ngModel)]="offer.id" readonly="true"/>
+                       [(ngModel)]="product.offerName"/>
             </td>
-            <td class="td2">
-                <input [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveOffer(product.offer)"
+            <td class="tdtiny" *ngIf="group == 'Group1'">
+                <input [disabled]="product.offer == null" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveOffer($event, 'combType', product.offer)"
                        type="text"
-                       [(ngModel)]="offer.name"/>
+                       [ngModel]="product.offer?.combType"/>
             </td>
-            <td class="td3">
-                <input [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveOffer(product.offer)"
+            <td class="tdtiny" *ngIf="group == 'Group1'">
+                <input [disabled]="product.offer == null" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveOffer($event, 'demandId', product.offer)"
                        type="text"
-                       [(ngModel)]="offer.combType"/>
+                       [ngModel]="product.offer?.demandId"/>
             </td>
-            <td class="td4">
-                <input [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveOffer(product.offer)"
+            <td class="tdtiny" *ngIf="group == 'Group1'">
+                <input [disabled]="product.offer == null" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveOffer($event, 'demandCount', product.offer)"
                        type="text"
-                       [(ngModel)]="offer.demandId"/>
+                       [ngModel]="product.offer?.demandCount"/>
             </td>
-            <td class="td5">
-                <input [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveOffer(product.offer)"
+            <td class="tdtiny" *ngIf="group == 'Group1'">
+                <input [disabled]="product.offer == null" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveOffer($event, 'benefitId', product.offer)"
                        type="text"
-                       [(ngModel)]="offer.demandCount"/>
+                       [ngModel]="product.offer?.benefitId"/>
             </td>
-            <td class="td6">
-                <input [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveOffer(product.offer)"
+            <td class="tdtiny" *ngIf="group == 'Group1'">
+                <input [disabled]="product.offer == null" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveOffer($event, 'discount', product.offer)"
                        type="text"
-                       [(ngModel)]="offer.benefitId"/>
+                       [ngModel]="product.offer?.discount"/>
             </td>
-            <td class="td7">
-                <input [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveOffer(product.offer)"
+            <td class="tdtiny" *ngIf="group == 'Group1'">
+                <input [disabled]="product.offer == null" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveOffer($event, 'combMax', product.offer)"
                        type="text"
-                       [(ngModel)]="offer.discount"/>
+                       [ngModel]="product.offer?.combMax"/>
             </td>
-            <td class="td8">
-                <input [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveOffer(product.offer)"
-                       type="text"
-                       [(ngModel)]="offer.combMax"/>
+            <td class="tdsmall" *ngIf="group == 'Group1'">
+                <material-datepicker *ngIf="product.offer != null" (blur)="saveOffer($event, 'validFrom',product.offer)" [date]="product.offer.validFrom"></material-datepicker>
             </td>
-            <td class="td9">
-                <material-datepicker (blur)="saveOffer(product.offer)" [(date)]="product.offer.validFrom"></material-datepicker>
+            <td class="tdsmall" *ngIf="group == 'Group1'">
+                <material-datepicker *ngIf="product.offer != null" (blur)="saveOffer($event, 'validTo',product.offer)" [date]="product.offer.validTo"></material-datepicker>
             </td>
-            <td class="td10">
-                <material-datepicker (blur)="saveOffer(product.offer)" [(date)]="product.offer.validTo"></material-datepicker>
-            </td>
-            <td class="tdlast">
-                <md-slide-toggle [class.selected]="product.id === selectedProduct.id" [(ngModel)]="product.offer.suspended"
+            <td class="tdtiny" *ngIf="group == 'Group1'">
+                <md-slide-toggle *ngIf="product.offer != null" [class.selected]="product.id === selectedProduct.id" [ngModel]="product.offer?.suspended"
                                  (change)="onOfferSuspendedChange($event, offer)"></md-slide-toggle>
             </td>
         </tr>

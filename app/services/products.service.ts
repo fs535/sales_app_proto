@@ -71,9 +71,16 @@ export class ProductService {
         return this.http.get(`${this.settings.hub_url}/products`,{
             search: params
         }).toPromise()
-            .then(response =>
-            response.json()
-            )
+            .then(res => {
+                var data = res.json() || [];
+                data.forEach((d: any) => {
+                    if(d.offer) {
+                        d.offer.validFrom = new Date(d.offer.validFrom);
+                        d.offer.validTo = new Date(d.offer.validTo);
+                    }
+                });
+                return data;
+            })
             .catch(this.handleError);
     }
 
@@ -85,7 +92,14 @@ export class ProductService {
         return this.http
             .patch(url, JSON.stringify(product), {headers: headers})
             .toPromise()
-            .then((res) => res.json())
+            .then((res) => {
+                var d = res.json() || [];
+                if(d.offer) {
+                    d.offer.validFrom = new Date(d.offer.validFrom);
+                    d.offer.validTo = new Date(d.offer.validTo);
+                }
+                return d;
+            })
             .catch(this.handleError);
     }
 

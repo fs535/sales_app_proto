@@ -287,3 +287,43 @@ table.right-container-table th.thall, table.right-container-table td.tdall {
     text-align: center;
 }
 
+
+
+.product-container {
+    width: 100%;
+    min-width: 1000px;
+}
+
+table.product-container-table {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+}
+table.product-container-table thead, table.product-container-table tbody {
+    float: left;
+    width: 100%;
+}
+table.product-container-table tbody {
+    overflow-y: auto;
+    height: 100%;
+}
+table.product-container-table tr {
+    width: 100%;
+    display: table;
+    table-layout: fixed;
+    text-align: left;
+}
+
+table.product-container-table th.thtiny, table.product-container-table td.tdtiny {
+    width: 5%;
+}
+table.product-container-table th.thsmall, table.product-container-table td.tdsmall {
+    width: 10%;
+}
+table.product-container-table th.thlarge, table.product-container-table td.tdlarge {
+    width: 20%;
+}
+table.product-container-table th.thall, table.product-container-table td.tdall {
+    width: 100%;
+    text-align: center;
+}

@@ -56,7 +56,7 @@ type Product struct {
 	Price        string `json:"price"`
 	Size         string `json:"size"`
 	Brand        string `json:"brand"`
-	Offer        Offer `json:"offer"`
+	Offer        *Offer `json:"offer"`
 	OfferId      string `json:"offerId"`
 	OfferName    string `json:"offerName"`
 	ActivatedPim bool `json:"activatedPim"`
@@ -313,9 +313,9 @@ func productAPIHandler(w http.ResponseWriter, r *http.Request) {
 			// output names instead of ids
 			of := findOfferById(p.OfferId)
 			if (of != nil) {
-				res = append(res, Product{Id: p.Id, Name:p.Name, Brand:p.Brand, Description:p.Description, PictureUrl:p.PictureUrl, Size:p.Size, Price:p.Price, Category1:p.Category1, Category2:p.Category2, Category3:p.Category3, Offer:*of, OfferName:of.Name, OfferId:of.Id, ActivatedPim:p.ActivatedPim})
+				res = append(res, Product{Id: p.Id, Name:p.Name, Brand:p.Brand, Description:p.Description, PictureUrl:p.PictureUrl, Size:p.Size, Price:p.Price, Category1:p.Category1, Category2:p.Category2, Category3:p.Category3, Offer:of, OfferName:of.Name, OfferId:of.Id, ActivatedPim:p.ActivatedPim})
 			} else {
-				res = append(res, Product{Id: p.Id, Name:p.Name, Brand:p.Brand, Description:p.Description, PictureUrl:p.PictureUrl, Size:p.Size, Price:p.Price, Category1:p.Category1, Category2:p.Category2, Category3:p.Category3, Offer:Offer{Id:"", Name:""}, OfferName: "",OfferId:"", ActivatedPim:p.ActivatedPim})
+				res = append(res, Product{Id: p.Id, Name:p.Name, Brand:p.Brand, Description:p.Description, PictureUrl:p.PictureUrl, Size:p.Size, Price:p.Price, Category1:p.Category1, Category2:p.Category2, Category3:p.Category3, Offer:nil, OfferName: "",OfferId:"", ActivatedPim:p.ActivatedPim})
 			}
 		}
 		sort.Sort(ProductById(res))
@@ -356,6 +356,10 @@ func productAPIHandler(w http.ResponseWriter, r *http.Request) {
 		p.Id = uuid.NewV4().String()
 		products = append(products, p)
 
+		if(p.OfferId != "") {
+			p.OfferName = findOfferById(p.OfferId).Name
+			p.Offer = findOfferById(p.OfferId)
+		}
 		output, _ := json.Marshal(p)
 		w.Write(output);
 	} else if r.Method == "PATCH" {
@@ -402,6 +406,11 @@ func productAPIHandler(w http.ResponseWriter, r *http.Request) {
 				prod.ActivatedPim = p.ActivatedPim
 				prod.OfferId = p.OfferId
 				products[pindex] = prod // update in original slice
+
+				if(prod.OfferId != "") {
+					prod.OfferName = findOfferById(prod.OfferId).Name
+					prod.Offer = findOfferById(prod.OfferId)
+				}
 				output, _ := json.Marshal(prod)
 				w.Write(output);
 				return

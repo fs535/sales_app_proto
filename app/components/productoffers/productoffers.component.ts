@@ -4,10 +4,11 @@ import {Product}                from '../../domain/product';
 import {Offer}                from '../../domain/offer';
 import {Categories}                from '../../domain/categories';
 import {SelectItem}                from 'ng2-select/components/select/select-item';
+import {MdSlideToggleChange} from '@angular/material/slide-toggle/slide-toggle'
+
 import {ProductService}         from '../../services/products.service';
 import {OfferService}         from '../../services/offers.service';
 import {Http} from "@angular/http";
-import {MdSlideToggleChange} from '@angular/material/slide-toggle/slide-toggle'
 @Component({
     selector: 'my-productoffers',
     templateUrl: 'app/components/productoffers/productoffers.component.html'
@@ -257,7 +258,7 @@ export class ProductOffersComponent implements OnInit {
 
 
     assignSelectedOffer(product: Product) {
-        product.offer = this.selectedOffer.name
+        product.offerId = this.selectedOffer.id
         var self = this;
         this.saveProduct(product).then((product) => {
             self.getOffers()
@@ -470,6 +471,10 @@ export class ProductOffersComponent implements OnInit {
     saveProduct(product: Product): Promise<Product> {
         this.error = '';
         var self = this;
+        // Clear both attributes
+        if(product.offerName == '') {
+            product.offerId = '';
+        }
         return this.productService.save(product).then((product) => {
             for (var item of self.products) {
                 if(item.id == product.id) {
