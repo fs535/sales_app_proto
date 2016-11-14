@@ -23,9 +23,9 @@ export class ProductService {
         return this.http.get(`${this.settings.hub_url}/products`,{
             search: params
         }).toPromise()
-            .then(response =>
-            response.json()
-            )
+            .then(res => {
+                return res.json() || []
+            })
             .catch(this.handleError);
     }
 
