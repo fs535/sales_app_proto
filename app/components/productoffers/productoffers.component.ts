@@ -15,7 +15,7 @@ import {Http} from "@angular/http";
 })
 export class ProductOffersComponent implements OnInit {
     products: Product[];
-    offerProducts: Product[];
+    offerProducts: Product[] = [];
     offerTypes: any[] = [{id:"All", text:"All"}, {id:"New", text:"New"}, {id:"Assigned", text:"Assigned"}];
     offerType: string = "All";
     offerTypeSelected: any[] = [{id:"All", text:"All"}];
@@ -117,7 +117,6 @@ export class ProductOffersComponent implements OnInit {
     }
 
     getProducts(): Promise<Product[]> {
-        this.products = [];
         if(this.canGetProducts()) {
             return this.productService
                 .getProducts(this.productIdSearch, this.productNameSearch,
@@ -130,11 +129,12 @@ export class ProductOffersComponent implements OnInit {
                     return this.products;
                 })
                 .catch(error => this.error += error);
+        } else {
+            this.products = [];
         }
     }
 
     getOfferProducts(): Promise<Product[]> {
-        this.offerProducts = [];
         if(this.selectedOffer.id != '') {
             return this.productService
                 .getProductsByOffer(this.selectedOffer, this.selectedOfferProductNameSearch,
@@ -242,9 +242,7 @@ export class ProductOffersComponent implements OnInit {
                            this.offerSuspended != ''
     }
     getOffers(): Promise<Offer[]> {
-        this.offers = []
         if (this.canGetOffers()){
-            this.offers = [];
             return this.offerService
                 .getOffers(this.offerType, this.offerCategory1, this.offerCategory2, this.offerCategory3,
                 this.offerBrand, this.offerPrice, this.offerSize,'', '', this.offerId, this.offerName,
@@ -255,6 +253,8 @@ export class ProductOffersComponent implements OnInit {
                     return this.offers;
                 })
                 .catch(error => this.error += error);
+        } else {
+            this.offers = []
         }
     }
 
