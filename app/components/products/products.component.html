@@ -163,68 +163,68 @@
         </thead>
         <tbody>
         <tr *ngFor="let product of products" (mousedown)="onProductSelect(product);true"
-            [class.selected]="product.id === selectedProduct.id">
+            [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id">
             <td class="tdtiny">
-                <input [class.selected]="product.id === selectedProduct.id" class="wide"
+                <input [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide"
                        type="text" readonly="true"
                        [(ngModel)]="product.id"/>
             </td>
             <td class="tdlarge">
-                <input [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product)"
+                <input [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product)"
                        type="text"
                        [(ngModel)]="product.name"/>
             </td>
             <td class="tdsmall" *ngIf="group == 'Group1'">
-                <input [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product)"
+                <input [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product)"
                        type="text"
                        [(ngModel)]="product.category1"/>
             </td>
             <td class="tdsmall" *ngIf="group == 'Group1'">
-                <input [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product)"
+                <input [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product)"
                        type="text"
                        [(ngModel)]="product.category2"/>
             </td>
             <td class="tdsmall" *ngIf="group == 'Group1'">
-                <input [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product)"
+                <input [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product)"
                        type="text"
                        [(ngModel)]="product.category3"/>
             </td>
             <td class="tdtiny" *ngIf="group == 'Group2'">
-                <input [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product)"
+                <input [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product)"
                        type="text"
                        [(ngModel)]="product.price"/>
             </td>
             <td class="tdtiny" *ngIf="group == 'Group2'">
-                <input [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product)"
+                <input [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product)"
                        type="text"
                        [(ngModel)]="product.brand"/>
             </td>
             <td class="tdtiny" *ngIf="group == 'Group2'">
-                <input [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product)"
+                <input [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product)"
                        type="text"
                        [(ngModel)]="product.size"/>
             </td>
             <td class="tdtiny" *ngIf="group == 'Group2'">
-                <md-slide-toggle [class.selected]="product.id === selectedProduct.id" [ngModel]="product.activatedPim"
+                <md-slide-toggle [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" [ngModel]="product.activatedPim"
                                  (change)="onProductActivatedPimChange($event, product)"></md-slide-toggle>
             </td>
             <td class="tdlarge" *ngIf="group == 'Group2'">
-                <input [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product)"
+                <input [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product)"
                        type="text"
                        [(ngModel)]="product.pictureUrl"/>
             </td>
             <td class="tdlarge" *ngIf="group == 'Group2'">
-                <input [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product)"
+                <input [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product)"
                        type="text"
                        [(ngModel)]="product.description"/>
             </td>
             <td class="tdtiny" *ngIf="group == 'Group1'">
-                <input [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product)"
+                <input [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product)"
                        type="text"
                        [(ngModel)]="product.offerId" readonly="true"/>
             </td>
             <td class="tdlarge" *ngIf="group == 'Group1'">
-                <input [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product)"
+                <input [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product)"
                        type="text"
                        [(ngModel)]="product.offerName"/>
             </td>

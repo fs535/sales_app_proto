@@ -80,6 +80,10 @@ tr.selected {
   background-color: #CFD8DC !important;
 }
 
+tr.unassigned input {
+  color: #039be5 !important;
+}
+
 
 .spinner {
   top: 0;

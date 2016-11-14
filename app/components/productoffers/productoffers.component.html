@@ -340,34 +340,34 @@
         </thead>
         <tbody>
         <tr *ngFor="let product of products" (mousedown)="onProductSelect(product);true"
-            [class.selected]="product.id === selectedProduct.id">
+            [class.selected]="product.id === selectedProduct.id" [class.unassigned]="product.offerId == ''">
             <td class="td1">
-                <input [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product)"
+                <input [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product)"
                        type="text"
                        [(ngModel)]="product.name"/>
             </td>
             <td class="td2">
-                <input [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product)"
+                <input [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product)"
                        type="text"
                        [(ngModel)]="product.category1"/>
             </td>
             <td class="td3">
-                <input [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product)"
+                <input [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product)"
                        type="text"
                        [(ngModel)]="product.category2"/>
             </td>
             <td class="td4">
-                <input [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product)"
+                <input [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product)"
                        type="text"
                        [(ngModel)]="product.category3"/>
             </td>
             <td class="td5">
-                <input [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product)"
+                <input [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product)"
                        type="text" readonly="true"
                        [(ngModel)]="product.offerId"/>
             </td>
             <td class="td6">
-                <input [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product)"
+                <input [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product)"
                        type="text"
                        [(ngModel)]="product.offerName"/>
             </td>
