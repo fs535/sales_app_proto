@@ -265,7 +265,7 @@ export class ProductOffersComponent implements OnInit {
         } else {
             product.offerName = this.selectedOffer.name
             var self = this;
-            this.saveProduct(product).then((product) => {
+            this.saveProduct(product, false).then((product) => {
                 self.getOffers()
                 self.getOfferProducts()
             })
@@ -486,7 +486,7 @@ export class ProductOffersComponent implements OnInit {
                 } else {
                     for(let p of this.offerProducts) {
                         p.offerName = offer.name
-                        this.saveProduct(p).then((product) => {
+                        this.saveProduct(p, true).then((product) => {
                            if(--expected <= 0) {
                               this.getOfferProducts();
                            }
@@ -500,7 +500,7 @@ export class ProductOffersComponent implements OnInit {
         });
     }
 
-    saveProduct(product: Product): Promise<Product> {
+    saveProduct(product: Product, isOfferProduct: boolean): Promise<Product> {
         this.error = '';
         var self = this;
         // Clear Offer Id
@@ -512,9 +512,11 @@ export class ProductOffersComponent implements OnInit {
                 }
             }
             self.getOffers()
-            self.getOfferProducts()
-            self.getProducts()
-
+            if(!isOfferProduct) {
+                self.getOfferProducts()
+            } else {
+                self.getProducts()
+            }
             return product;
         }).catch((err) => {
             this.error += err;
@@ -523,7 +525,7 @@ export class ProductOffersComponent implements OnInit {
 
     onActiveChange(active: boolean, product: Product) {
           product.activatedPim = active;
-          this.saveProduct(product);
+          this.saveProduct(product, false);
     }
 
 }
