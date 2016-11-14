@@ -24,6 +24,7 @@ td input.datepicker__input, td input[type="text"], td input[type="date"], td sel
   font-size: 12px;
 }
 
+
 td input.datepicker__input:focus, td input:focus, td select:focus, td textarea:focus {
   border: 1px solid #66afe9 !important;
   border-radius: 4px;
@@ -34,9 +35,6 @@ td input.datepicker__input:focus, td input:focus, td select:focus, td textarea:f
 .text-muted {
     color: #999;
     font-weight: bold;
-}
-.table>thead>tr>th {
-padding: 3px;
 }
 
 a {
@@ -317,7 +315,7 @@ table.product-container-table thead, table.product-container-table tbody {
 }
 table.product-container-table tbody {
     overflow-y: auto;
-    height: 100%;
+    height: 500px;
 }
 table.product-container-table tr {
     width: 100%;
@@ -338,4 +336,57 @@ table.product-container-table th.thlarge, table.product-container-table td.tdlar
 table.product-container-table th.thall, table.product-container-table td.tdall {
     width: 100%;
     text-align: center;
+}
+
+
+.details-container {
+    width: 100%;
+    min-width: 1000px;
+}
+
+table.details-container-table {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+}
+table.details-container-table thead, table.details-container-table tbody {
+    float: left;
+    width: 100%;
+}
+table.details-container-table tbody {
+    height: 200px;
+}
+table.details-container-table tr {
+    width: 100%;
+    display: table;
+    table-layout: fixed;
+    text-align: left;
+}
+
+table.details-container-table th.thtiny, table.details-container-table td.tdtiny {
+    width: 5%;
+}
+table.details-container-table th.thsmall, table.details-container-table td.tdsmall {
+    width: 10%;
+}
+table.details-container-table th.thlarge, table.details-container-table td.tdlarge {
+    width: 20%;
+}
+table.details-container-table th.thall, table.details-container-table td.tdall {
+    width: 100%;
+    text-align: center;
+}
+
+
+
+.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {
+    padding-top: 2px;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-bottom: 0px;
+}
+
+h1, .h1, h2, .h2, h3, .h3 {
+    margin-top: 0px;
+    margin-bottom: 0px;
 }

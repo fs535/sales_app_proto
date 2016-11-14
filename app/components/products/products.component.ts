@@ -20,14 +20,6 @@ export class ProductsComponent implements OnInit {
 
     error: any = '';
 
-    groups: any = [{id:"Group1", text:"Group1"},{id:"Group2", text:"Group2"}, {id:"Group3", text:"Group3"}];
-    group: string = "Group1";
-    groupSelected: any[] = [{id:"Group1", text:"Group1"}];
-
-
-    onGroupSelect(item: SelectItem) {
-        this.group = item.id
-    }
 
     offerId: string = "";
     offerName: string = "";
