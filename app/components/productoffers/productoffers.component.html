@@ -203,10 +203,16 @@
                        [(ngModel)]="offer.combMax"/>
             </td>
             <td class="td9">
-                <material-datepicker (onSelect)="saveOffer(offer)" [(date)]="offer.validFrom"></material-datepicker>
+                <input [class.selected]="offer.id === selectedOffer.id" class="wide"
+                       type="text"
+                       placeholder="yyyy-mm-dd"
+                       [ngModel]="formatDate(offer.validFrom)" (change)="onOfferChangeValidFrom(offer, $event.target.value)" />
             </td>
             <td class="td10">
-                <material-datepicker (onSelect)="saveOffer(offer)" [(date)]="offer.validTo"></material-datepicker>
+                <input [class.selected]="offer.id === selectedOffer.id" class="wide"
+                       type="text"
+                       placeholder="yyyy-mm-dd"
+                       [ngModel]="formatDate(offer.validTo)" (change)="onOfferChangeValidTo(offer, $event.target.value)" />
             </td>
             <td class="tdlast">
                 <md-slide-toggle [class.selected]="offer.id === selectedOffer.id" [(ngModel)]="offer.suspended"
@@ -260,10 +266,16 @@
                        [(ngModel)]="offer.combMax"/>
             </td>
             <td class="td9">
-                <material-datepicker [(date)]="offer.validFrom"></material-datepicker>
+                <input [class.selected]="true" class="wide"
+                       type="text"
+                       placeholder="yyyy-mm-dd"
+                       [ngModel]="formatDate(offer.validFrom)" (change)="onNewOfferChangeValidFrom(offer, $event.target.value)" />
             </td>
             <td class="td10">
-                <material-datepicker [(date)]="offer.validTo"></material-datepicker>
+                <input [class.selected]="true" class="wide"
+                       type="text"
+                       placeholder="yyyy-mm-dd"
+                       [ngModel]="formatDate(offer.validTo)" (change)="onNewOfferChangeValidTo(offer, $event.target.value)" />
             </td>
             <td class="tdlast">
                 <md-slide-toggle [class.selected]="true" [(ngModel)]="offer.suspended"

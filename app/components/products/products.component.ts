@@ -74,6 +74,26 @@ export class ProductsComponent implements OnInit {
                 private offerService: OfferService) {
     }
 
+
+    formatDate(date: Date): string {
+        return date.toISOString().slice(0, 10);
+    }
+
+    onNewOfferChangeValidFrom(offer: Offer, value: string) {
+        offer.validFrom = new Date(value);
+    }
+    onNewOfferChangeValidTo(offer: Offer, value: string) {
+        offer.validTo = new Date(value);
+    }
+    onOfferChangeValidFrom(offer: Offer, value: string) {
+        offer.validFrom = new Date(value);
+        this.saveOffer(offer);
+    }
+    onOfferChangeValidTo(offer: Offer, value: string) {
+        offer.validTo = new Date(value);
+        this.saveOffer(offer);
+    }
+
     getCollections(): Promise<Categories> {
         return this.productService
             .getCollections()

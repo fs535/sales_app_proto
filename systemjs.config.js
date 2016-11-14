@@ -28,7 +28,6 @@
       'hammerjs':                   'npm:hammerjs',
       'moment':                   'npm:moment',
       'ng2-select/components': 'npm:ng2-select/components',
-      'angular2-material-datepicker': 'npm:angular2-material-datepicker',
       'angular2-perfect-scrollbar': 'npm:angular2-perfect-scrollbar'
     },
     // packages tells the System loader how to load when no filename and/or no extension
@@ -50,10 +49,6 @@
       },
       'ng2-select/components': {
         main: './select.module.js',
-        defaultExtension: 'js'
-      },
-      'angular2-material-datepicker': {
-        main: './index.js',
         defaultExtension: 'js'
       },
       'angular2-perfect-scrollbar': {

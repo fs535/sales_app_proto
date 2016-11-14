@@ -4,7 +4,6 @@ import {FormsModule}   from '@angular/forms';
 import {SelectModule} from 'ng2-select/components/select.module';
 import {HttpModule, XHRBackend, RequestOptions, Http} from '@angular/http';
 import {routing} from './app.routes';
-import { DatepickerModule } from 'angular2-material-datepicker'
 import { PerfectScrollbarModule } from 'angular2-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'angular2-perfect-scrollbar';
 
@@ -25,7 +24,7 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 var settings: Settings;
 
 @NgModule({
-    imports: [FormsModule, HttpModule, BrowserModule, routing, MaterialModule.forRoot(), SelectModule, DatepickerModule, PerfectScrollbarModule.forRoot(PERFECT_SCROLLBAR_CONFIG)],
+    imports: [FormsModule, HttpModule, BrowserModule, routing, MaterialModule.forRoot(), SelectModule, PerfectScrollbarModule.forRoot(PERFECT_SCROLLBAR_CONFIG)],
     declarations: [AppComponent, ProductsComponent, ProductOffersComponent, Autosize, SpinnerComponent],
     entryComponents: [AppComponent],
     providers: [{

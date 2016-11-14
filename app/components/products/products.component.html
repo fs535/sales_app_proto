@@ -259,10 +259,16 @@
                        [ngModel]="product.offer.combMax"/>
             </td>
             <td class="tdsmall" *ngIf="group == 'Group1'">
-                <material-datepicker *ngIf="product.offer != null" (onSelect)="saveOffer(product.offer)" [(date)]="product.offer.validFrom"></material-datepicker>
+                <input *ngIf="product.offer != null" class="wide" [class.selected]="product.id === selectedProduct.id"
+                       type="text"
+                       placeholder="yyyy-mm-dd"
+                       [ngModel]="formatDate(product.offer.validFrom)" (change)="onOfferChangeValidFrom(product.offer, $event.target.value)" />
             </td>
             <td class="tdsmall" *ngIf="group == 'Group1'">
-                <material-datepicker *ngIf="product.offer != null" (onSelect)="saveOffer(product.offer)" [(date)]="product.offer.validTo"></material-datepicker>
+                <input *ngIf="product.offer != null" class="wide" [class.selected]="product.id === selectedProduct.id"
+                       type="text"
+                       placeholder="yyyy-mm-dd"
+                       [ngModel]="formatDate(product.offer.validTo)" (change)="onOfferChangeValidTo(product.offer, $event.target.value)" />
             </td>
             <td class="tdtiny" *ngIf="group == 'Group1'">
                 <md-slide-toggle *ngIf="product.offer != null" [class.selected]="product.id === selectedProduct.id" [(ngModel)]="product.offer.suspended"

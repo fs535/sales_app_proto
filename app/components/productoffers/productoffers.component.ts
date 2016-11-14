@@ -89,6 +89,26 @@ export class ProductOffersComponent implements OnInit {
                 private offerService: OfferService) {
     }
 
+    formatDate(date: Date): string {
+        return date.toISOString().slice(0, 10);
+    }
+
+    onNewOfferChangeValidFrom(offer: Offer, value: string) {
+        offer.validFrom = new Date(value);
+    }
+    onNewOfferChangeValidTo(offer: Offer, value: string) {
+        offer.validTo = new Date(value);
+    }
+    onOfferChangeValidFrom(offer: Offer, value: string) {
+        offer.validFrom = new Date(value);
+        this.saveOffer(offer);
+    }
+    onOfferChangeValidTo(offer: Offer, value: string) {
+        offer.validTo = new Date(value);
+        this.saveOffer(offer);
+    }
+
+
     getCollections(): Promise<Categories> {
         return this.productService
             .getCollections()
@@ -275,10 +295,23 @@ export class ProductOffersComponent implements OnInit {
     newOfferFromProduct(product: Product) {
         this.addOffer();
         this.offer.name = "Offer for "+product.name;
-        this.offer.validFrom = new Date();
-        var next = new Date();
-        next.setDate(next.getDate() + 30);
-        this.offer.validTo = next;
+        var janTime = new Date();
+        janTime.setDate(1);
+        janTime.setMonth(0);
+        janTime.setHours(0);
+        janTime.setMinutes(0);
+        janTime.setSeconds(0);
+        janTime.setMilliseconds(0);
+        var decTime = new Date();
+        decTime.setDate(31);
+        decTime.setMonth(11);
+        decTime.setHours(0);
+        decTime.setMinutes(0);
+        decTime.setSeconds(0);
+        decTime.setMilliseconds(0);
+
+        this.offer.validFrom = janTime;
+        this.offer.validTo = decTime;
         this.offerProducts = [product];
     }
 
