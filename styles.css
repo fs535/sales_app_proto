@@ -199,8 +199,8 @@ table.top-container-table th.thall, table.top-container-table td.tdall {
 
 
 .left-container {
-    width: 60%;
-    min-width: 600px;
+    width: 55%;
+    min-width: 550px;
     float: left;
 }
 
@@ -223,27 +223,17 @@ table.left-container-table tr {
     table-layout: fixed;
     text-align: left;
 }
-
-table.left-container-table th.th1, table.left-container-table td.td1 {
-    width: 16.67%;
-}
-table.left-container-table th.th2, table.left-container-table td.td2 {
-    width: 14.66%;
-}
-table.left-container-table th.th3, table.left-container-table td.td3 {
-    width: 14.66%;
-}
-table.left-container-table th.th4, table.left-container-table td.td4 {
-    width: 14.66%;
-}
-table.left-container-table th.th5, table.left-container-table td.td5 {
-    width: 8.33%;
-}
-table.left-container-table th.th6, table.left-container-table td.td6 {
-    width: 22.67%;
-}
 table.left-container-table th.thlast, table.left-container-table td.tdlast {
-    width: 8.33%;
+    width: 5%;
+}
+table.left-container-table th.thtiny, table.left-container-table td.tdtiny {
+    width: 5%;
+}
+table.left-container-table th.thsmall, table.left-container-table td.tdsmall {
+    width: 10%;
+}
+table.left-container-table th.thlarge, table.left-container-table td.tdlarge {
+    width: 20%;
 }
 table.left-container-table th.thall, table.left-container-table td.tdall {
     width: 100%;
@@ -252,15 +242,16 @@ table.left-container-table th.thall, table.left-container-table td.tdall {
 
 
 .right-container {
-    width: 40%;
-    min-width: 400px;
-    margin-left: 60%;
+    width: 45%;
+    min-width: 450px;
+    margin-left: 55%;
 }
 
 table.right-container-table {
     display: table;
     table-layout: fixed;
     width: 100%;
+    border-left: solid 1px black;
 }
 table.right-container-table thead, table.right-container-table tbody {
     float: left;
@@ -276,28 +267,19 @@ table.right-container-table tr {
     table-layout: fixed;
     text-align: left;
 }
-
-table.right-container-table th.th1, table.right-container-table td.td1 {
-    width: 25%;
+table.right-container-table th.thtiny, table.right-container-table td.tdtiny {
+    width: 5%;
 }
-table.right-container-table th.th2, table.right-container-table td.td2 {
-    width: 22%;
+table.right-container-table th.thsmall, table.right-container-table td.tdsmall {
+    width: 10%;
 }
-table.right-container-table th.th3, table.right-container-table td.td3 {
-    width: 22%;
-}
-table.right-container-table th.th4, table.right-container-table td.td4 {
-    width: 22%;
-}
-table.right-container-table th.thlast, table.right-container-table td.tdlast {
-    width: 9%;
+table.right-container-table th.thlarge, table.right-container-table td.tdlarge {
+    width: 20%;
 }
 table.right-container-table th.thall, table.right-container-table td.tdall {
     width: 100%;
     text-align: center;
 }
-
-
 
 .product-container {
     width: 100%;

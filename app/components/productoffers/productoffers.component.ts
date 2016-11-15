@@ -43,14 +43,25 @@ export class ProductOffersComponent implements OnInit {
     productCategory1Selected: any[] = [];
     productCategory2Selected: any[] = [];
     productCategory3Selected: any[] = [];
+    productPriceSelected: any[] = [];
+    productBrandSelected: any[] = [];
+    productSizeSelected: any[] = [];
+
     productCategory1: string = "";
     productCategory2: string = "";
     productCategory3: string = "";
+    productPrice: string = "";
+    productBrand: string = "";
+    productSize: string = "";
+
 
     selectedOfferProductNameSearch: string = "";
     selectedOfferProductCategory1: string = "";
     selectedOfferProductCategory2: string = "";
     selectedOfferProductCategory3: string = "";
+    selectedOfferProductPrice: string = "";
+    selectedOfferProductBrand: string = "";
+    selectedOfferProductSize: string = "";
 
     productOfferNameSearch: string = "";
     productOfferIdSearch: string = "";
@@ -131,8 +142,9 @@ export class ProductOffersComponent implements OnInit {
     }
 
     canGetProducts(): boolean {
-        return this.productIdSearch != ''  || this.productNameSearch != '' || this.productCategory1 != '' ||
-                           this.productCategory2 != '' || this.productCategory3 != '' ||
+        return this.productIdSearch != ''  || this.productNameSearch != '' ||
+                           this.productCategory1 != '' || this.productCategory2 != '' || this.productCategory3 != '' ||
+                           this.productPrice != '' || this.productBrand != '' || this.productSize != '' ||
                            this.productOfferNameSearch != '' || this.productOfferIdSearch != '' || this.productOfferAssigned == 'No'
     }
 
@@ -141,7 +153,7 @@ export class ProductOffersComponent implements OnInit {
             return this.productService
                 .getProducts(this.productIdSearch, this.productNameSearch,
                              this.productCategory1, this.productCategory2, this.productCategory3,
-                             '', '', '',
+                             this.productPrice, this.productBrand, this.productSize,
                              '', '', '',
                              this.productOfferNameSearch, this.productOfferIdSearch, this.productOfferAssigned)
                 .then(products => {
@@ -158,7 +170,8 @@ export class ProductOffersComponent implements OnInit {
         if(this.selectedOffer.id != '') {
             return this.productService
                 .getProductsByOffer(this.selectedOffer, this.selectedOfferProductNameSearch,
-                                    this.selectedOfferProductCategory1, this.selectedOfferProductCategory2, this.selectedOfferProductCategory3
+                                    this.selectedOfferProductCategory1, this.selectedOfferProductCategory2, this.selectedOfferProductCategory3,
+                                    this.selectedOfferProductPrice, this.selectedOfferProductBrand, this.selectedOfferProductSize
                 )
                 .then(products => {
                     this.offerProducts = products;
@@ -292,6 +305,24 @@ export class ProductOffersComponent implements OnInit {
         }
     }
 
+    removeOffer(product: Product) {
+        if(this.addingOffer) {
+            var index = this.offerProducts.indexOf(product);
+            if (index > -1) {
+                this.offerProducts.splice(index, 1);
+            }
+        } else {
+            product.offerName = "";
+            product.offerId = "";
+            var self = this;
+            this.saveProduct(product, false).then((product) => {
+                self.getOffers()
+                self.getOfferProducts()
+            })
+        }
+    }
+
+
     newOfferFromProduct(product: Product) {
         this.addOffer();
         this.offer.name = "Offer for "+product.name;
@@ -325,6 +356,7 @@ export class ProductOffersComponent implements OnInit {
     closeOffer() {
         this.error = '';
         this.addingOffer = false;
+        this.getOfferProducts();
     }
 
     ngOnInit() {
@@ -381,7 +413,18 @@ export class ProductOffersComponent implements OnInit {
         this.selectedOfferProductCategory3 = item.id
         this.getOfferProducts();
     }
-
+    onSelectedOfferProductPriceSearch(item: SelectItem) {
+        this.selectedOfferProductPrice = item.id
+        this.getOfferProducts();
+    }
+    onSelectedOfferProductBrandSearch(item: SelectItem) {
+        this.selectedOfferProductBrand = item.id
+        this.getOfferProducts();
+    }
+    onSelectedOfferProductSizeSearch(item: SelectItem) {
+        this.selectedOfferProductSize = item.id
+        this.getOfferProducts();
+    }
 
     onOfferCategory1Select(category1: SelectItem) {
         this.offerCategory1 = category1.id;
@@ -415,18 +458,30 @@ export class ProductOffersComponent implements OnInit {
 
     onOfferBrandSelect(brand: SelectItem) {
         this.offerBrand = brand.id;
+        if(!this.productBrand) {
+            this.productBrand = brand.id;
+            this.productBrandSelected = [{"id": brand.id, "text": brand.text}];
+        }
         this.getProducts();
         this.getOffers();
     }
 
     onOfferPriceSelect(price: SelectItem) {
         this.offerPrice = price.id;
+        if(!this.productPrice) {
+            this.productPrice = price.id;
+            this.productPriceSelected = [{"id": price.id, "text": price.text}];
+        }
         this.getProducts();
         this.getOffers();
     }
 
     onOfferSizeSelect(size: SelectItem) {
         this.offerSize = size.id;
+        if(!this.productSize) {
+            this.productSize = size.id;
+            this.productSizeSelected = [{"id": size.id, "text": size.text}];
+        }
         this.getProducts();
         this.getOffers();
     }

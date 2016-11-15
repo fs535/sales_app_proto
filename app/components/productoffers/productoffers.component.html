@@ -6,6 +6,13 @@
     </h2>
     <div class="error" *ngIf="error">{{error}}</div>
     <div class="row">
+        <div class="form-group col-md-1">
+            <ng-select [allowClear]="false"
+                       [items]="offerTypes"
+                       [active]="offerTypeSelected"
+                       (selected)="onOfferTypeSelect($event)">
+            </ng-select>
+        </div>
         <div class="form-group col-md-2">
             <ng-select [allowClear]="true"
                        [items]="category1values"
@@ -58,13 +65,6 @@
                        (selected)="onOfferSizeSelect($event)"
                        (removed)="onOfferSizeSelect({'id':'','text':''})"
                        placeholder="Size...">
-            </ng-select>
-        </div>
-        <div class="form-group col-md-1">
-            <ng-select [allowClear]="false"
-                       [items]="offerTypes"
-                       [active]="offerTypeSelected"
-                       (selected)="onOfferTypeSelect($event)">
             </ng-select>
         </div>
     </div>
@@ -301,11 +301,11 @@
     <table class="table table-striped left-container-table">
         <thead>
         <tr>
-            <th class="th1">
+            <th class="thlarge">
                 <input placeholder="Name" title="Name" class="form-control" type="text"
                        (ngModelChange)="onProductNameSearch($event)" [(ngModel)]="productNameSearch"/>
             </th>
-            <th class="th2">
+            <th class="thsmall">
                 <ng-select class="wide" [allowClear]="true"
                            [items]="category1values"
                            (selected)="onProductCategory1Search($event)"
@@ -314,7 +314,7 @@
                            placeholder="Category1" title="Categry1">
                 </ng-select>
             </th>
-            <th class="th3">
+            <th class="thsmall">
                 <ng-select class="wide" [allowClear]="true"
                            [items]="category2values"
                            (selected)="onProductCategory2Search($event)"
@@ -323,7 +323,7 @@
                            placeholder="Category2" title="Categry2">
                 </ng-select>
             </th>
-            <th class="th4">
+            <th class="thsmall">
                 <ng-select class="wide" [allowClear]="true"
                            [items]="category3values"
                            (selected)="onProductCategory3Search($event)"
@@ -332,13 +332,36 @@
                            placeholder="Category3" title="Categry3">
                 </ng-select>
             </th>
-            <th class="th5">
-                <input placeholder="OID" title="Offer ID" class="form-control" type="text"
-                       (ngModelChange)="onProductOfferIdSearch($event)" [(ngModel)]="productOfferIdSearch"/>
+            <th class="thtiny">
+                <ng-select class="wide" [allowClear]="true"
+                           [items]="prices"
+                           (selected)="onProductPriceSearch($event)"
+                           [active]="productPriceSelected"
+                           (removed)="onProductPriceSearch({'id':'','text':''})"
+                           placeholder="PR" title="Price">
+                </ng-select>
             </th>
-            <th class="th6">
-                <input placeholder="Offer" title="Offer Name" class="form-control" type="text"
-                       (ngModelChange)="onProductOfferNameSearch($event)" [(ngModel)]="productOfferNameSearch"/>
+            <th class="thtiny">
+                <ng-select class="wide" [allowClear]="true"
+                           [items]="brands"
+                           (selected)="onProductBrandSearch($event)"
+                           [active]="productBrandSelected"
+                           (removed)="onProductBrandSearch({'id':'','text':''})"
+                           placeholder="BR" title="Brand">
+                </ng-select>
+            </th>
+            <th class="thtiny">
+                <ng-select class="wide" [allowClear]="true"
+                           [items]="sizes"
+                           (selected)="onProductSizeSearch($event)"
+                           [active]="productSizeSelected"
+                           (removed)="onProductSizeSearch({'id':'','text':''})"
+                           placeholder="SZ" title="Size">
+                </ng-select>
+            </th>
+            <th class="thtiny">
+                <input placeholder="OID" title="Offer ID/Offer Name" class="form-control" type="text"
+                       (ngModelChange)="onProductOfferIdSearch($event)" [(ngModel)]="productOfferIdSearch"/>
             </th>
             <th class="thlast">
                 <ng-select class="wide" [allowClear]="true"
@@ -353,35 +376,45 @@
         <tbody>
         <tr *ngFor="let product of products" (mousedown)="onProductSelect(product);true"
             [class.selected]="product.id === selectedProduct.id" [class.unassigned]="product.offerId == ''">
-            <td class="td1">
+            <td class="tdlarge">
                 <input [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, false)"
                        type="text"
                        [(ngModel)]="product.name"/>
             </td>
-            <td class="td2">
+            <td class="tdsmall">
                 <input [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, false)"
                        type="text"
                        [(ngModel)]="product.category1"/>
             </td>
-            <td class="td3">
+            <td class="tdsmall">
                 <input [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, false)"
                        type="text"
                        [(ngModel)]="product.category2"/>
             </td>
-            <td class="td4">
+            <td class="tdsmall">
                 <input [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, false)"
                        type="text"
                        [(ngModel)]="product.category3"/>
             </td>
-            <td class="td5">
+            <td class="tdtiny">
+                <input [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, false)"
+                       type="text"
+                       [(ngModel)]="product.price"/>
+            </td>
+            <td class="tdtiny">
+                <input [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, false)"
+                       type="text"
+                       [(ngModel)]="product.brand"/>
+            </td>
+            <td class="tdtiny">
+                <input [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, false)"
+                       type="text"
+                       [(ngModel)]="product.size"/>
+            </td>
+            <td class="tdtiny">
                 <input [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, false)"
                        type="text" readonly="true"
                        [(ngModel)]="product.offerId"/>
-            </td>
-            <td class="td6">
-                <input [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, false)"
-                       type="text"
-                       [(ngModel)]="product.offerName"/>
             </td>
             <td class="tdlast">
                 <a style="float:right;" title="Move this product into {{selectedOffer.id}} offer!" *ngIf="selectedOffer.id != '' && selectedOffer.id != product.offerId" (click)="assignSelectedOffer(product)"><span class="glyphicon glyphicon-triangle-right"></span></a>
@@ -397,17 +430,17 @@
 <div class="right-container">
     <h2>
         <span *ngIf="addingOffer == true">New Offer Products</span>
-        <span *ngIf="addingOffer == false && selectedOffer.id != ''">Offer {{selectedOffer.id}} Products</span>
+        <span *ngIf="addingOffer == false && selectedOffer.id != ''">Offer {{selectedOffer.id}}:{{selectedOffer.name}} Products</span>
         <span *ngIf="addingOffer == false && selectedOffer.id == ''">Offer Products</span>
     </h2>
     <table class="table table-striped right-container-table">
         <thead>
         <tr>
-            <th class="th1">
+            <th class="thlarge">
                 <input placeholder="Name" title="Name" class="form-control" type="text"
                        (ngModelChange)="onSelectedOfferProductNameSearch($event)" [(ngModel)]="selectedOfferProductNameSearch"/>
             </th>
-            <th class="th2">
+            <th class="thsmall">
                 <ng-select class="wide" [allowClear]="true"
                            [items]="category1values"
                            (selected)="onSelectedOfferProductCategory1Search($event)"
@@ -415,7 +448,7 @@
                            placeholder="Category1" title="Categry1">
                 </ng-select>
             </th>
-            <th class="th3">
+            <th class="thsmall">
                 <ng-select class="wide" [allowClear]="true"
                            [items]="category2values"
                            (selected)="onSelectedOfferProductCategory2Search($event)"
@@ -423,7 +456,7 @@
                            placeholder="Category2" title="Categry2">
                 </ng-select>
             </th>
-            <th class="th4">
+            <th class="thsmall">
                 <ng-select class="wide" [allowClear]="true"
                            [items]="category3values"
                            (selected)="onSelectedOfferProductCategor3Search($event)"
@@ -431,35 +464,70 @@
                            placeholder="Category3" title="Categry3">
                 </ng-select>
             </th>
-            <th class="thlast">
+            <th class="thtiny">
+                <ng-select class="wide" [allowClear]="true"
+                           [items]="prices"
+                           (selected)="onSelectedOfferProductPriceSearch($event)"
+                           (removed)="onSelectedOfferProductPriceSearch({'id':'','text':''})"
+                           placeholder="PR" title="Price">
+                </ng-select>
+            </th>
+            <th class="thtiny">
+                <ng-select class="wide" [allowClear]="true"
+                           [items]="brands"
+                           (selected)="onSelectedOfferProductBrandSearch($event)"
+                           (removed)="onSelectedOfferProductBrandSearch({'id':'','text':''})"
+                           placeholder="BR" title="Brand">
+                </ng-select>
+            </th>
+            <th class="thtiny">
+                <ng-select class="wide" [allowClear]="true"
+                           [items]="sizes"
+                           (selected)="onSelectedOfferProductSizeSearch($event)"
+                           (removed)="onSelectedOfferProductSizeSearch({'id':'','text':''})"
+                           placeholder="SZ" title="Size">
+                </ng-select>
             </th>
         </tr>
         </thead>
         <tbody>
         <tr *ngFor="let product of offerProducts" (mousedown)="onProductSelect(product);true"
             [class.selected]="product.id === selectedProduct.id">
-            <td class="td1">
-                <input [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, true)"
+            <td class="tdlarge">
+                <a style="float: left;" title="Remove offer {{selectedOffer.id}}:{{selectedOffer.name}} from product, and leave it unffered!" (click)="removeOffer(product)"><span class="glyphicon glyphicon-triangle-left"></span></a>
+                <input style="width: calc(100% - 16px);" [class.selected]="product.id === selectedProduct.id" (blur)="saveProduct(product, true)"
                        type="text"
                        [(ngModel)]="product.name"/>
             </td>
-            <td class="td2">
+            <td class="tdsmall">
                 <input [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, true)"
                        type="text"
                        [(ngModel)]="product.category1"/>
             </td>
-            <td class="td3">
+            <td class="tdsmall">
                 <input [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, true)"
                        type="text"
                        [(ngModel)]="product.category2"/>
             </td>
-            <td class="td4">
+            <td class="tdsmall">
                 <input [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, true)"
                        type="text"
                        [(ngModel)]="product.category3"/>
             </td>
-            <td class="tdlast">
-
+            <td class="tdtiny">
+                <input [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, true)"
+                       type="text"
+                       [(ngModel)]="product.price"/>
+            </td>
+            <td class="tdtiny">
+                <input [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, true)"
+                       type="text"
+                       [(ngModel)]="product.brand"/>
+            </td>
+            <td class="tdtiny">
+                <input [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, true)"
+                       type="text"
+                       [(ngModel)]="product.size"/>
             </td>
         </tr>
         <tr *ngIf="selectedOffer.id == '' && addingOffer == false">

@@ -12,12 +12,16 @@ export class ProductService {
     }
 
     getProductsByOffer(offer: Offer, productNameSearch: string,
-                       productCategory1: string, productCategory2: string, productCategory3: string): Promise<Product[]> {
+                       productCategory1: string, productCategory2: string, productCategory3: string,
+                       price: string, brand: string, size: string): Promise<Product[]> {
         let params: URLSearchParams = new URLSearchParams();
         params.set('offerId', offer.id);
         params.set('category1', productCategory1);
         params.set('category2', productCategory2);
         params.set('category3', productCategory3);
+        params.set('price', price);
+        params.set('brand', brand);
+        params.set('size', size);
         params.set('nameSearch', productNameSearch);
 
         return this.http.get(`${this.settings.hub_url}/products`,{
