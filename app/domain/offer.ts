@@ -13,6 +13,8 @@ export class Offer {
     combCardPrefix: string;
     combStacking: boolean;
     combExternalId: string;
+    rank: string;
+    showPicture: boolean;
 
     constructor(id: string) {
         this.id = id;

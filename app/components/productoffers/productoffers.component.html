@@ -377,43 +377,43 @@
         <tr *ngFor="let product of products" (mousedown)="onProductSelect(product);true"
             [class.selected]="product.id === selectedProduct.id" [class.unassigned]="product.offerId == ''">
             <td class="tdlarge">
-                <input [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, false)"
+                <input readonly="true" [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, false)"
                        type="text"
                        [(ngModel)]="product.name"/>
             </td>
             <td class="tdsmall">
-                <input [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, false)"
+                <input readonly="true" [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, false)"
                        type="text"
                        [(ngModel)]="product.category1"/>
             </td>
             <td class="tdsmall">
-                <input [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, false)"
+                <input readonly="true" [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, false)"
                        type="text"
                        [(ngModel)]="product.category2"/>
             </td>
             <td class="tdsmall">
-                <input [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, false)"
+                <input readonly="true" [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, false)"
                        type="text"
                        [(ngModel)]="product.category3"/>
             </td>
             <td class="tdtiny">
-                <input [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, false)"
+                <input readonly="true" [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, false)"
                        type="text"
                        [(ngModel)]="product.price"/>
             </td>
             <td class="tdtiny">
-                <input [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, false)"
+                <input readonly="true" [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, false)"
                        type="text"
                        [(ngModel)]="product.brand"/>
             </td>
             <td class="tdtiny">
-                <input [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, false)"
+                <input readonly="true" [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, false)"
                        type="text"
                        [(ngModel)]="product.size"/>
             </td>
             <td class="tdtiny">
-                <input [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, false)"
-                       type="text" readonly="true"
+                <input readonly="true" [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, false)"
+                       type="text" title="{{product.offerId}}:{{product.offerName}}"
                        [(ngModel)]="product.offerId"/>
             </td>
             <td class="tdlast">
@@ -495,37 +495,37 @@
             [class.selected]="product.id === selectedProduct.id">
             <td class="tdlarge">
                 <a style="float: left;" title="Remove offer {{selectedOffer.id}}:{{selectedOffer.name}} from product, and leave it unffered!" (click)="removeOffer(product)"><span class="glyphicon glyphicon-triangle-left"></span></a>
-                <input style="width: calc(100% - 16px);" [class.selected]="product.id === selectedProduct.id" (blur)="saveProduct(product, true)"
+                <input readonly="true" style="width: calc(100% - 16px);" [class.selected]="product.id === selectedProduct.id" (blur)="saveProduct(product, true)"
                        type="text"
                        [(ngModel)]="product.name"/>
             </td>
             <td class="tdsmall">
-                <input [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, true)"
+                <input readonly="true" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, true)"
                        type="text"
                        [(ngModel)]="product.category1"/>
             </td>
             <td class="tdsmall">
-                <input [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, true)"
+                <input readonly="true" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, true)"
                        type="text"
                        [(ngModel)]="product.category2"/>
             </td>
             <td class="tdsmall">
-                <input [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, true)"
+                <input readonly="true" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, true)"
                        type="text"
                        [(ngModel)]="product.category3"/>
             </td>
             <td class="tdtiny">
-                <input [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, true)"
+                <input readonly="true" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, true)"
                        type="text"
                        [(ngModel)]="product.price"/>
             </td>
             <td class="tdtiny">
-                <input [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, true)"
+                <input readonly="true" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, true)"
                        type="text"
                        [(ngModel)]="product.brand"/>
             </td>
             <td class="tdtiny">
-                <input [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, true)"
+                <input readonly="true" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, true)"
                        type="text"
                        [(ngModel)]="product.size"/>
             </td>

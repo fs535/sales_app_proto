@@ -75,11 +75,7 @@ export class ProductService {
 
         params.set('offerNameSearch', offerNameSearch);
         params.set('offerId', offerIdearch);
-        if(offerAssigned == 'No') {
-            params.set('offerAssigned', '0');
-        } else if(offerAssigned == 'Yes') {
-            params.set('offerAssigned', '1');
-        }
+        params.set('offerAssigned', offerAssigned);
 
         return this.http.get(`${this.settings.hub_url}/products`,{
             search: params

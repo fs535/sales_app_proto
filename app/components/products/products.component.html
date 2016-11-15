@@ -280,14 +280,14 @@
                        [(ngModel)]="selectedProduct.pictureUrl"/>
             </td>
             <td class="tdtiny">
-                <input [class.unassigned]="selectedProduct.offerId == ''" [class.selected]="true" class="wide" (blur)="saveProduct(selectedProduct)"
+                <input *ngIf="selectedProduct.offer != null" [class.unassigned]="selectedProduct.offerId == ''" [class.selected]="true" class="wide" (blur)="saveProduct(selectedProduct)"
                        type="text"
-                       [(ngModel)]="selectedProduct.rank"/>
+                       [(ngModel)]="selectedProduct.offer.rank"/>
             </td>
             <td class="tdtiny">
-                <input [class.unassigned]="selectedProduct.offerId == ''" [class.selected]="true" class="wide" (blur)="saveProduct(selectedProduct)"
+                <input *ngIf="selectedProduct.offer != null" [class.unassigned]="selectedProduct.offerId == ''" [class.selected]="true" class="wide" (blur)="saveProduct(selectedProduct)"
                        type="text"
-                       [(ngModel)]="selectedProduct.showPicture"/>
+                       [(ngModel)]="selectedProduct.offer.showPicture"/>
             </td>
         </tr>
         </tbody>

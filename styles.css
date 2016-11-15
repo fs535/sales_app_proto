@@ -366,9 +366,15 @@ table.details-container-table th.thall, table.details-container-table td.tdall {
     padding-left: 0px;
     padding-right: 0px;
     padding-bottom: 0px;
+
+}
+
+.table>thead>tr>th {
+font-size: 14px;
 }
 
 h1, .h1, h2, .h2, h3, .h3 {
     margin-top: 0px;
     margin-bottom: 0px;
 }
+

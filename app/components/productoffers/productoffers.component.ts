@@ -343,6 +343,14 @@ export class ProductOffersComponent implements OnInit {
 
         this.offer.validFrom = janTime;
         this.offer.validTo = decTime;
+        this.offer.combType = "4";
+        this.offer.demandId = "1";
+        this.offer.demandCount = "1";
+        this.offer.benefitId = "7";
+        this.offer.discount = "20%";
+        this.offer.combMax = "1";
+        this.offer.rank = "1";
+        this.offer.showPicture = true;
         this.offerProducts = [product];
     }
 
