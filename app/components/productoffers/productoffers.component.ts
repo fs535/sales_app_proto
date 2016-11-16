@@ -16,7 +16,7 @@ import {Http} from "@angular/http";
     templateUrl: 'app/components/productoffers/productoffers.component.html'
 })
 export class ProductOffersComponent implements OnInit {
-    products: Product[];
+    products: Product[] = [];
     offerProducts: Product[] = [];
     offerTypes: any[] = [{id:"All", text:"All"}, {id:"New", text:"New"}, {id:"Assigned", text:"Assigned"}];
     offerType: string = "All";
@@ -88,8 +88,7 @@ export class ProductOffersComponent implements OnInit {
     offerValidTo: string = "";
     offerSuspended: string = "";
 
-    newOffers: Offer[]
-    offers: Offer[]
+    offers: Offer[] = [];
     invalidOfferMap: { [key:string]:InvalidOffer; } = {};
 
     offer: Offer = new Offer("");
@@ -170,29 +169,18 @@ export class ProductOffersComponent implements OnInit {
             .catch(error => this.error += error);
     }
 
-    canGetProducts(): boolean {
-        return this.productIdSearch != ''  || this.productNameSearch != '' ||
-                           this.productCategory1 != '' || this.productCategory2 != '' || this.productCategory3 != '' ||
-                           this.productPrice != '' || this.productBrand != '' || this.productSize != '' ||
-                           this.productOfferNameSearch != '' || this.productOfferIdSearch != '' || this.productOfferAssigned == 'No'
-    }
-
     getProducts(): Promise<Product[]> {
-        if(this.canGetProducts()) {
-            return this.productService
-                .getProducts(this.productIdSearch, this.productNameSearch,
-                             this.productCategory1, this.productCategory2, this.productCategory3,
-                             this.productPrice, this.productBrand, this.productSize,
-                             '', '', '',
-                             this.productOfferNameSearch, this.productOfferIdSearch, this.productOfferAssigned)
-                .then(products => {
-                    this.products = products;
-                    return this.products;
-                })
-                .catch(error => this.error += error);
-        } else {
-            this.products = [];
-        }
+        return this.productService
+            .getProducts(this.productIdSearch, this.productNameSearch,
+                         this.productCategory1, this.productCategory2, this.productCategory3,
+                         this.productPrice, this.productBrand, this.productSize,
+                         '', '', '',
+                         this.productOfferNameSearch, this.productOfferIdSearch, this.productOfferAssigned)
+            .then(products => {
+                this.products = products;
+                return this.products;
+            })
+            .catch(error => this.error += error);
     }
 
     getOfferProducts(): Promise<Product[]> {
@@ -295,33 +283,18 @@ export class ProductOffersComponent implements OnInit {
         return result;
     }
 
-    canGetOffers(): boolean {
-        return this.offerType == 'New' || this.offerSize != ''  || this.offerPrice != '' || this.offerBrand != '' ||
-                           this.offerCategory1 != '' || this.offerCategory2 != '' || this.offerCategory3 != '' ||
-                           this.offerId != '' || this.offerName != '' || this.offerCombType != '' || this.offerDemandId != '' ||
-                           this.offerDemandCount != '' || this.offerBenefitId != '' || this.offerDiscount != '' ||
-                           this.offerCombMax != '' || this.offerValidFrom != '' || this.offerValidTo != '' ||
-                           this.offerSuspended != ''
-    }
     getOffers(): Promise<Offer[]> {
-        if (this.canGetOffers()){
-            return this.offerService
-                .getOffers(this.offerType, this.offerCategory1, this.offerCategory2, this.offerCategory3,
-                this.offerBrand, this.offerPrice, this.offerSize,'', '', this.offerId, this.offerName,
-                this.offerCombType, this.offerDemandId, this.offerCombMax, this.offerValidFrom, this.offerValidTo, this.offerSuspended)
-
-                .then(offers => {
-                    this.offers = offers;
-                    this.invalidOfferMap = {};
-                    return this.offers;
-                })
-                .catch(error => this.error += error);
-        } else {
-            this.offers = []
-            this.invalidOfferMap = {};
-        }
+        return this.offerService
+            .getOffers(this.offerType, this.offerCategory1, this.offerCategory2, this.offerCategory3,
+            this.offerBrand, this.offerPrice, this.offerSize,'', '', this.offerId, this.offerName,
+            this.offerCombType, this.offerDemandId, this.offerCombMax, this.offerValidFrom, this.offerValidTo, this.offerSuspended)
+            .then(offers => {
+                this.offers = offers;
+                this.invalidOfferMap = {};
+                return this.offers;
+            })
+            .catch(error => this.error += error);
     }
-
 
     assignSelectedOffer(product: Product) {
         if(this.addingOffer) {
@@ -387,7 +360,9 @@ export class ProductOffersComponent implements OnInit {
 
     ngOnInit() {
         this.error = '';
-        this.getCollections()
+        this.getCollections();
+        this.getOffers();
+        this.getProducts();
     }
 
     onProductIdSearch(item: string) {
@@ -410,6 +385,19 @@ export class ProductOffersComponent implements OnInit {
         this.productCategory3 = item.id
         this.getProducts();
     }
+    onProductPriceSearch(item: SelectItem) {
+        this.productPrice = item.id
+        this.getProducts();
+    }
+    onProductBrandSearch(item: SelectItem) {
+        this.productBrand = item.id
+        this.getProducts();
+    }
+    onProductSizeSearch(item: SelectItem) {
+        this.productSize = item.id
+        this.getProducts();
+    }
+
     onProductOfferIdSearch(item: string) {
         this.productOfferIdSearch = item
         this.getProducts();
@@ -422,6 +410,7 @@ export class ProductOffersComponent implements OnInit {
         this.productOfferAssigned = item.id
         this.getProducts();
     }
+
 
     onSelectedOfferProductNameSearch(item: string) {
         this.selectedOfferProductNameSearch = item

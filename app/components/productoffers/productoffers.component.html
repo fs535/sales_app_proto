@@ -1,8 +1,7 @@
 <div class="top-container">
     <h2>
         <span *ngIf="offerType == 'New'">New Offers</span>
-        <span *ngIf="offerType != 'New'">Offers</span>
-        <span *ngIf="canGetOffers()">{{getOfferWith()}}</span>
+        <span *ngIf="offerType != 'New'">Offers {{getOfferWith()}}</span>
     </h2>
     <div class="error" *ngIf="error">{{error}}</div>
     <div class="row">
@@ -222,9 +221,6 @@
                                  (change)="onOfferSuspendedChange($event, offer)"></md-slide-toggle>
             </td>
         </tr>
-        <tr *ngIf="!canGetOffers()">
-            <td class="tdall" colspan="11">Select at least one filter above...</td>
-        </tr>
         </tbody>
         <tbody *ngIf="addingOffer">
         <tr [class.selected]="true">
@@ -299,9 +295,7 @@
 </div>
 <div class="left-container">
     <h2>
-        <span *ngIf="offerType == 'New'">Non-Assigned Products</span>
-        <span *ngIf="offerType != 'New'">Products</span>
-        <span *ngIf="canGetProducts()">{{getProductWith()}}</span>
+        <span>Products {{getProductWith()}}</span>
     </h2>
     <table class="table table-striped left-container-table">
         <thead>
@@ -425,9 +419,6 @@
                 <a style="float:right;" title="Move this product into {{selectedOffer.id}} offer!" *ngIf="selectedOffer.id != '' && selectedOffer.id != product.offerId" (click)="assignSelectedOffer(product)"><span class="glyphicon glyphicon-triangle-right"></span></a>
                 <a style="float:right;" title="Create New Offer based on this product" *ngIf="product.offerId == '' && addingOffer == false" (click)="newOfferFromProduct(product)"><span class="glyphicon glyphicon-asterisk"></span></a>
             </td>
-        </tr>
-        <tr *ngIf="!canGetProducts()">
-            <td class="tdall" colspan="8">Select at least one filter above...</td>
         </tr>
         </tbody>
     </table>
