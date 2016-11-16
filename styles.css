@@ -63,6 +63,7 @@ nav a:hover {
 }
 nav a.active {
   color: #039be5;
+  background-color: #CFD8DC;
 }
 
 .wide {
@@ -77,6 +78,7 @@ nav a.active {
 
 tr.selected {
   background-color: #CFD8DC !important;
+  font-weight: bold;
 }
 
 tr.unassigned input {
