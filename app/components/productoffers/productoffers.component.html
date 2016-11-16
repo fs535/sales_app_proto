@@ -161,49 +161,59 @@
         </thead>
         <tbody *ngIf="!addingOffer">
         <tr *ngFor="let offer of offers" (mousedown)="onOfferSelect(offer);true"
-            [class.selected]="offer.id === selectedOffer.id">
+            [class.selected]="offer.id === selectedOffer.id"
+            [class.unassigned]="offer.assigned == false">
             <td class="td1">
                 <input [class.selected]="offer.id === selectedOffer.id" class="wide"
+                       [class.unassigned]="offer.assigned == false"
                        type="text"
                        [ngModel]="offer.id" readonly="true"/>
             </td>
             <td class="td2">
                 <input [class.selected]="offer.id === selectedOffer.id" class="wide" (blur)="saveOffer(offer)"
+                       [class.unassigned]="offer.assigned == false"
                        type="text"
                        [(ngModel)]="offer.name"/>
             </td>
             <td class="td3">
                 <input readonly="true" [class.selected]="offer.id === selectedOffer.id" class="wide"
+                       [class.unassigned]="offer.assigned == false"
                        type="text"
                        [ngModel]="offer.combType"/>
             </td>
             <td class="td4">
                 <input readonly="true" [class.selected]="offer.id === selectedOffer.id" class="wide"
+                       [class.unassigned]="offer.assigned == false"
                        type="text"
                        [ngModel]="offer.demandId"/>
             </td>
             <td class="td5">
                 <input [class.selected]="offer.id === selectedOffer.id" class="wide" (blur)="saveOffer(offer)"
+                       [class.unassigned]="offer.assigned == false"
                        type="text"
                        [(ngModel)]="offer.demandCount"/>
             </td>
             <td class="td6">
                 <input readonly="true" [class.selected]="offer.id === selectedOffer.id" class="wide"
+                       [class.unassigned]="offer.assigned == false"
                        type="text"
                        [ngModel]="offer.benefitId"/>
             </td>
             <td class="td7">
                 <input [class.selected]="offer.id === selectedOffer.id" class="wide" (blur)="saveOffer(offer)"
+                       [class.unassigned]="offer.assigned == false"
                        type="text"
                        [(ngModel)]="offer.discount"/>
             </td>
             <td class="td8">
                 <input [class.selected]="offer.id === selectedOffer.id" class="wide" (blur)="saveOffer(offer)"
+                       [class.unassigned]="offer.assigned == false"
                        type="text"
                        [(ngModel)]="offer.combMax"/>
             </td>
             <td class="td9">
                 <input [class.selected]="offer.id === selectedOffer.id" class="wide"
+                       [class.unassigned]="offer.assigned == false"
                        type="text"
                        placeholder="yyyy-mm-dd"
                        [class.invalid]="invalidOfferMap[offer.id]?.validFrom != null" title="invalidOfferMap[offer.id]?.validFrom"
@@ -211,13 +221,16 @@
             </td>
             <td class="td10">
                 <input [class.selected]="offer.id === selectedOffer.id" class="wide"
+                       [class.unassigned]="offer.assigned == false"
                        type="text"
                        placeholder="yyyy-mm-dd"
                        [class.invalid]="invalidOfferMap[offer.id]?.validTo" title="invalidOfferMap[offer.id]?.validTo"
                        [ngModel]="formatDate(offer.validTo)" (change)="onOfferChangeValidTo(offer, $event.target.value, false)" />
             </td>
             <td class="tdlast">
-                <md-slide-toggle [class.selected]="offer.id === selectedOffer.id" [(ngModel)]="offer.suspended"
+                <md-slide-toggle [class.selected]="offer.id === selectedOffer.id"
+                                 [class.unassigned]="offer.assigned == false"
+                                 [(ngModel)]="offer.suspended"
                                  (change)="onOfferSuspendedChange($event, offer)"></md-slide-toggle>
             </td>
         </tr>

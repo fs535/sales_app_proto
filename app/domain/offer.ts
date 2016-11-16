@@ -15,6 +15,7 @@ export class Offer {
     combExternalId: string;
     rank: string;
     showPicture: boolean;
+    assigned: boolean;
 
     constructor(id: string) {
         this.id = id;

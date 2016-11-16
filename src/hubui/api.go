@@ -45,6 +45,7 @@ type Offer struct {
 	CombCardPrefix string `json:"combCardPrefix"`
 	CombStacking   bool `json:"combStacking"`
 	CombExternalId string `json:"combExternalId"`
+	Assigned       bool `json:"assigned"`
 }
 
 type Product struct {
@@ -629,6 +630,7 @@ func offerAPIHandler(w http.ResponseWriter, r *http.Request) {
 		for i := range offerIds {
 			for _, o := range offers {
 				if o.Id == i {
+					o.Assigned = findInProducts(o.Id) != nil
 					offerResult = append(offerResult, o)
 				}
 			}
