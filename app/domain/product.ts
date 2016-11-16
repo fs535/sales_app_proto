@@ -15,8 +15,6 @@ export class Product {
 
     offer: Offer;
     offerId: string;
-    offerName: string;
-
     constructor(id: string) {
         this.id = id;
     }

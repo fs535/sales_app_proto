@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Router}            from '@angular/router';
 import {Product}                from '../../domain/product';
 import {Offer}                from '../../domain/offer';
+import {InvalidOffer}                from '../../domain/invalid.offer';
+
 import {Categories}                from '../../domain/categories';
 import {SelectItem}                from 'ng2-select/components/select/select-item';
 import {MdSlideToggleChange} from '@angular/material/slide-toggle/slide-toggle'
@@ -88,6 +90,7 @@ export class ProductOffersComponent implements OnInit {
 
     newOffers: Offer[]
     offers: Offer[]
+    invalidOfferMap: { [key:string]:InvalidOffer; } = {};
 
     offer: Offer = new Offer("");
 
@@ -104,21 +107,47 @@ export class ProductOffersComponent implements OnInit {
         return date.toISOString().slice(0, 10);
     }
 
-    onNewOfferChangeValidFrom(offer: Offer, value: string) {
-        offer.validFrom = new Date(value);
-    }
-    onNewOfferChangeValidTo(offer: Offer, value: string) {
-        offer.validTo = new Date(value);
-    }
-    onOfferChangeValidFrom(offer: Offer, value: string) {
-        offer.validFrom = new Date(value);
-        this.saveOffer(offer);
-    }
-    onOfferChangeValidTo(offer: Offer, value: string) {
-        offer.validTo = new Date(value);
-        this.saveOffer(offer);
+    onOfferChangeValidFrom(offer: Offer, value: string, n: boolean) {
+        var d = Date.parse(value);
+        if(this.invalidOfferMap[offer.id] == null) {
+            this.invalidOfferMap[offer.id] = new InvalidOffer();
+        }
+        if(!d) {
+            this.invalidOfferMap[offer.id].validFrom = "Failed to parse: "+value;
+            return;
+        } else {
+            this.invalidOfferMap[offer.id].validFrom = null;
+        }
+        if(offer.validTo.getTime() <= d) {
+            this.invalidOfferMap[offer.id].validFrom = "ValidFrom is AFTER ValidTo";
+            return;
+        }
+        offer.validFrom = new Date(d);
+        if(!n) {
+            this.saveOffer(offer);
+        }
     }
 
+    onOfferChangeValidTo(offer: Offer, value: string, n: boolean) {
+        var d = Date.parse(value);
+        if(this.invalidOfferMap[offer.id] == null) {
+            this.invalidOfferMap[offer.id] = new InvalidOffer();
+        }
+        if(!d) {
+            this.invalidOfferMap[offer.id].validTo = "Failed to parse: "+value;
+            return;
+        } else {
+            this.invalidOfferMap[offer.id].validTo = null;
+        }
+        if(offer.validFrom.getTime() >= d) {
+            this.invalidOfferMap[offer.id].validTo = "ValidFrom is AFTER ValidTo";
+            return;
+        }
+        offer.validTo = new Date(d);
+        if(!n) {
+            this.saveOffer(offer);
+        }
+    }
 
     getCollections(): Promise<Categories> {
         return this.productService
@@ -283,11 +312,13 @@ export class ProductOffersComponent implements OnInit {
 
                 .then(offers => {
                     this.offers = offers;
+                    this.invalidOfferMap = {};
                     return this.offers;
                 })
                 .catch(error => this.error += error);
         } else {
             this.offers = []
+            this.invalidOfferMap = {};
         }
     }
 
@@ -296,7 +327,7 @@ export class ProductOffersComponent implements OnInit {
         if(this.addingOffer) {
             this.offerProducts.push(product);
         } else {
-            product.offerName = this.selectedOffer.name
+            product.offerId = this.selectedOffer.id
             var self = this;
             this.saveProduct(product, false).then((product) => {
                 self.getOffers()
@@ -312,7 +343,6 @@ export class ProductOffersComponent implements OnInit {
                 this.offerProducts.splice(index, 1);
             }
         } else {
-            product.offerName = "";
             product.offerId = "";
             var self = this;
             this.saveProduct(product, false).then((product) => {
@@ -326,21 +356,17 @@ export class ProductOffersComponent implements OnInit {
     newOfferFromProduct(product: Product) {
         this.addOffer();
         this.offer.name = "Offer for "+product.name;
-        var janTime = new Date();
-        janTime.setDate(1);
-        janTime.setMonth(0);
-        janTime.setHours(0);
-        janTime.setMinutes(0);
-        janTime.setSeconds(0);
-        janTime.setMilliseconds(0);
-        var decTime = new Date();
-        decTime.setDate(31);
-        decTime.setMonth(11);
-        decTime.setHours(0);
-        decTime.setMinutes(0);
-        decTime.setSeconds(0);
-        decTime.setMilliseconds(0);
+        this.offerProducts = [product];
+    }
 
+    addOffer() {
+        this.offer = new Offer("");
+        this.addingOffer = true;
+        this.selectedProduct = new Product("");
+        this.selectedOffer = new Offer("");
+        this.offer.name = "New Offer"
+        var janTime = new Date(Date.UTC((new Date()).getFullYear(),0,1));
+        var decTime = new Date(Date.UTC((new Date()).getFullYear(),11,31));
         this.offer.validFrom = janTime;
         this.offer.validTo = decTime;
         this.offer.combType = "4";
@@ -351,14 +377,6 @@ export class ProductOffersComponent implements OnInit {
         this.offer.combMax = "1";
         this.offer.rank = "1";
         this.offer.showPicture = true;
-        this.offerProducts = [product];
-    }
-
-    addOffer() {
-        this.offer = new Offer("");
-        this.addingOffer = true;
-        this.selectedProduct = new Product("");
-        this.selectedOffer = new Offer("");
     }
 
     closeOffer() {
@@ -581,7 +599,7 @@ export class ProductOffersComponent implements OnInit {
                     this.getOfferProducts();
                 } else {
                     for(let p of this.offerProducts) {
-                        p.offerName = offer.name
+                        p.offerId = offer.id
                         this.saveProduct(p, true).then((product) => {
                            if(--expected <= 0) {
                               this.getOfferProducts();
@@ -599,8 +617,6 @@ export class ProductOffersComponent implements OnInit {
     saveProduct(product: Product, isOfferProduct: boolean): Promise<Product> {
         this.error = '';
         var self = this;
-        // Clear Offer Id
-        product.offerId = '';
         return this.productService.save(product).then((product) => {
             for (var item of self.products) {
                 if(item.id == product.id) {

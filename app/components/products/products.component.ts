@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router}            from '@angular/router';
 import {Product}                from '../../domain/product';
 import {Offer}                from '../../domain/offer';
+import {InvalidOffer}                from '../../domain/invalid.offer';
 import {Categories}                from '../../domain/categories';
 import {SelectItem}                from 'ng2-select/components/select/select-item';
 import {ProductService}         from '../../services/products.service';
@@ -14,7 +15,8 @@ import {Http} from "@angular/http";
     templateUrl: 'app/components/products/products.component.html'
 })
 export class ProductsComponent implements OnInit {
-    products: Product[];
+    products: Product[] = [];
+    invalidOfferMap: { [key:string]:InvalidOffer; } = {};
 
     selectedProduct: Product = new Product("");
 
@@ -70,20 +72,46 @@ export class ProductsComponent implements OnInit {
     formatDate(date: Date): string {
         return date.toISOString().slice(0, 10);
     }
+    onOfferChangeValidFrom(offer: Offer, value: string, n: boolean) {
+        var d = Date.parse(value);
+        if(this.invalidOfferMap[offer.id] == null) {
+            this.invalidOfferMap[offer.id] = new InvalidOffer();
+        }
+        if(!d) {
+            this.invalidOfferMap[offer.id].validFrom = "Failed to parse: "+value;
+            return;
+        } else {
+            this.invalidOfferMap[offer.id].validFrom = null;
+        }
+        if(offer.validTo.getTime() <= d) {
+            this.invalidOfferMap[offer.id].validFrom = "ValidFrom is AFTER ValidTo";
+            return;
+        }
+        offer.validFrom = new Date(d);
+        if(!n) {
+            this.saveOffer(offer);
+        }
+    }
 
-    onNewOfferChangeValidFrom(offer: Offer, value: string) {
-        offer.validFrom = new Date(value);
-    }
-    onNewOfferChangeValidTo(offer: Offer, value: string) {
-        offer.validTo = new Date(value);
-    }
-    onOfferChangeValidFrom(offer: Offer, value: string) {
-        offer.validFrom = new Date(value);
-        this.saveOffer(offer);
-    }
-    onOfferChangeValidTo(offer: Offer, value: string) {
-        offer.validTo = new Date(value);
-        this.saveOffer(offer);
+    onOfferChangeValidTo(offer: Offer, value: string, n: boolean) {
+        var d = Date.parse(value);
+        if(this.invalidOfferMap[offer.id] == null) {
+            this.invalidOfferMap[offer.id] = new InvalidOffer();
+        }
+        if(!d) {
+            this.invalidOfferMap[offer.id].validTo = "Failed to parse: "+value;
+            return;
+        } else {
+            this.invalidOfferMap[offer.id].validTo = null;
+        }
+        if(offer.validFrom.getTime() >= d) {
+            this.invalidOfferMap[offer.id].validTo = "ValidFrom is AFTER ValidTo";
+            return;
+        }
+        offer.validTo = new Date(d);
+        if(!n) {
+            this.saveOffer(offer);
+        }
     }
 
     getCollections(): Promise<Categories> {
@@ -108,7 +136,6 @@ export class ProductsComponent implements OnInit {
     }
 
     getProducts(): Promise<Product[]> {
-        this.products = [];
         return this.productService
             .getProducts(this.productIdSearch, this.productNameSearch,
                          this.productCategory1, this.productCategory2, this.productCategory3,
@@ -117,6 +144,7 @@ export class ProductsComponent implements OnInit {
                          this.offerName, this.offerId, this.offerAssigned)
             .then(products => {
                 this.products = products;
+                this.invalidOfferMap = {};
                 return this.products;
             })
             .catch(error => this.error += error);
@@ -131,8 +159,6 @@ export class ProductsComponent implements OnInit {
     saveProduct(product: Product) {
         this.error = '';
         var self = this;
-        // Clear offer Id attribute
-        product.offerId = '';
         return this.productService.save(product).then((product) => {
             for (var p of this.products) {
                 if(p.id == product.id) {

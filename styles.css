@@ -370,7 +370,7 @@ table.details-container-table th.thall, table.details-container-table td.tdall {
 }
 
 .table>thead>tr>th {
-font-size: 14px;
+font-size: 12px;
 }
 
 h1, .h1, h2, .h2, h3, .h3 {
@@ -378,3 +378,6 @@ h1, .h1, h2, .h2, h3, .h3 {
     margin-bottom: 0px;
 }
 
+.invalid {
+    outline: solid 1px red !important;
+}

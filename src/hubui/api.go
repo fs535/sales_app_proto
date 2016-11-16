@@ -58,7 +58,6 @@ type Product struct {
 	Brand        string `json:"brand"`
 	Offer        *Offer `json:"offer"`
 	OfferId      string `json:"offerId"`
-	OfferName    string `json:"offerName"`
 	ActivatedPim bool `json:"activatedPim"`
 	PictureUrl   string `json:"pictureUrl"`
 	Description  string `json:"description"`
@@ -367,9 +366,9 @@ func productAPIHandler(w http.ResponseWriter, r *http.Request) {
 			// output names instead of ids
 			of := findOfferById(p.OfferId)
 			if (of != nil) {
-				res = append(res, Product{Id: p.Id, Name:p.Name, Brand:p.Brand, Description:p.Description, PictureUrl:p.PictureUrl, Size:p.Size, Price:p.Price, Category1:p.Category1, Category2:p.Category2, Category3:p.Category3, Offer:of, OfferName:of.Name, OfferId:of.Id, ActivatedPim:p.ActivatedPim})
+				res = append(res, Product{Id: p.Id, Name:p.Name, Brand:p.Brand, Description:p.Description, PictureUrl:p.PictureUrl, Size:p.Size, Price:p.Price, Category1:p.Category1, Category2:p.Category2, Category3:p.Category3, Offer:of,  OfferId:of.Id, ActivatedPim:p.ActivatedPim})
 			} else {
-				res = append(res, Product{Id: p.Id, Name:p.Name, Brand:p.Brand, Description:p.Description, PictureUrl:p.PictureUrl, Size:p.Size, Price:p.Price, Category1:p.Category1, Category2:p.Category2, Category3:p.Category3, Offer:nil, OfferName: "",OfferId:"", ActivatedPim:p.ActivatedPim})
+				res = append(res, Product{Id: p.Id, Name:p.Name, Brand:p.Brand, Description:p.Description, PictureUrl:p.PictureUrl, Size:p.Size, Price:p.Price, Category1:p.Category1, Category2:p.Category2, Category3:p.Category3, Offer:nil, OfferId:"", ActivatedPim:p.ActivatedPim})
 			}
 		}
 		sort.Sort(ProductById(res))
@@ -384,17 +383,6 @@ func productAPIHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		defer r.Body.Close()
 
-		// validations
-		if p.OfferName != "" {
-			if findOfferByName(p.OfferName) == nil {
-				msg := fmt.Sprintf("Unknown Offer Name: %s", p.OfferName)
-				http.Error(w, msg, http.StatusConflict)
-				log.Println(msg)
-				return
-			} else {
-				p.OfferId = findOfferByName(p.OfferName).Id;
-			}
-		}
 		if p.OfferId != "" {
 			if findOfferById(p.OfferId) == nil {
 				msg := fmt.Sprintf("Unknown Offer Id: %s", p.OfferId)
@@ -406,12 +394,10 @@ func productAPIHandler(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 
-
 		p.Id = uuid.NewV4().String()
 		products = append(products, p)
 
 		if(p.OfferId != "") {
-			p.OfferName = findOfferById(p.OfferId).Name
 			p.Offer = findOfferById(p.OfferId)
 		}
 		output, _ := json.Marshal(p)
@@ -426,16 +412,6 @@ func productAPIHandler(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
 
 		// validations
-		if p.OfferName != "" {
-			if findOfferByName(p.OfferName) == nil {
-				msg := fmt.Sprintf("Unknown Offer Name: %s", p.OfferName)
-				http.Error(w, msg, http.StatusConflict)
-				log.Println(msg)
-				return
-			} else {
-				p.OfferId = findOfferByName(p.OfferName).Id;
-			}
-		}
 		if p.OfferId != "" {
 			if findOfferById(p.OfferId) == nil {
 				msg := fmt.Sprintf("Unknown Offer Id: %s", p.OfferId)
@@ -463,7 +439,7 @@ func productAPIHandler(w http.ResponseWriter, r *http.Request) {
 				products[pindex] = prod // update in original slice
 
 				if(prod.OfferId != "") {
-					prod.OfferName = findOfferById(prod.OfferId).Name
+					prod.OfferId = findOfferById(prod.OfferId).Id
 					prod.Offer = findOfferById(prod.OfferId)
 				}
 				output, _ := json.Marshal(prod)
