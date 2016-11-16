@@ -342,14 +342,17 @@ export class ProductOffersComponent implements OnInit {
         var decTime = new Date(Date.UTC((new Date()).getFullYear(),11,31));
         this.offer.validFrom = janTime;
         this.offer.validTo = decTime;
-        this.offer.combType = "4";
+        this.offer.combType = "32";
         this.offer.demandId = "1";
         this.offer.demandCount = "1";
         this.offer.benefitId = "7";
         this.offer.discount = "20%";
         this.offer.combMax = "1";
-        this.offer.rank = "1";
+        this.offer.rank = "";
         this.offer.showPicture = true;
+        this.offer.combCardPrefix = "1";
+        this.offer.combStacking = false;
+        this.offer.combExternalId = "0";
     }
 
     closeOffer() {

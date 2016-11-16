@@ -169,14 +169,14 @@
                 <input *ngIf="product.offer != null" class="wide" [class.selected]="product.id === selectedProduct.id"
                        type="text"
                        placeholder="yyyy-mm-dd"
-                       [class.invalid]="invalidOfferMap[product.offer.id]?.validFrom" title="invalidOfferMap[product.offer.id]?.validFrom"
+                       [class.invalid]="invalidOfferMap[product.offer.id]?.validFrom" title="{{invalidOfferMap[product.offer.id]?.validFrom}}"
                        [ngModel]="formatDate(product.offer.validFrom)" (change)="onOfferChangeValidFrom(product.offer, $event.target.value, false)" />
             </td>
             <td class="tdsmall">
                 <input *ngIf="product.offer != null" class="wide" [class.selected]="product.id === selectedProduct.id"
                        type="text"
                        placeholder="yyyy-mm-dd"
-                       [class.invalid]="invalidOfferMap[product.offer.id]?.validTo" title="invalidOfferMap[product.offer.id]?.validTo"
+                       [class.invalid]="invalidOfferMap[product.offer.id]?.validTo" title="{{invalidOfferMap[product.offer.id]?.validTo}}"
                        [ngModel]="formatDate(product.offer.validTo)" (change)="onOfferChangeValidTo(product.offer, $event.target.value, false)" />
             </td>
             <td class="tdtiny">

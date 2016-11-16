@@ -223,7 +223,7 @@
                        [class.unassigned]="offer.assigned == false"
                        type="text"
                        placeholder="yyyy-mm-dd"
-                       [class.invalid]="invalidOfferMap[offer.id]?.validFrom != null" title="invalidOfferMap[offer.id]?.validFrom"
+                       [class.invalid]="invalidOfferMap[offer.id]?.validFrom != null" title="{{invalidOfferMap[offer.id]?.validFrom}}"
                        [ngModel]="formatDate(offer.validFrom)" (change)="onOfferChangeValidFrom(offer, $event.target.value, false)" />
             </td>
             <td class="td10">
@@ -231,7 +231,7 @@
                        [class.unassigned]="offer.assigned == false"
                        type="text"
                        placeholder="yyyy-mm-dd"
-                       [class.invalid]="invalidOfferMap[offer.id]?.validTo" title="invalidOfferMap[offer.id]?.validTo"
+                       [class.invalid]="invalidOfferMap[offer.id]?.validTo" title="{{invalidOfferMap[offer.id]?.validTo}}"
                        [ngModel]="formatDate(offer.validTo)" (change)="onOfferChangeValidTo(offer, $event.target.value, false)" />
             </td>
             <td class="tdlast">
@@ -288,14 +288,14 @@
                 <input [class.selected]="true" class="wide"
                        type="text"
                        placeholder="yyyy-mm-dd"
-                       [class.invalid]="invalidOfferMap[offer.id]?.validTo" title="invalidOfferMap[offer.id]?.validTo"
+                       [class.invalid]="invalidOfferMap[offer.id]?.validTo" title="{{invalidOfferMap[offer.id]?.validTo}}"
                        [ngModel]="formatDate(offer.validFrom)" (change)="onOfferChangeValidFrom(offer, $event.target.value, true)" />
             </td>
             <td class="td10">
                 <input [class.selected]="true" class="wide"
                        type="text"
                        placeholder="yyyy-mm-dd"
-                       [class.invalid]="invalidOfferMap[offer.id]?.validTo" title="invalidOfferMap[offer.id]?.validTo"
+                       [class.invalid]="invalidOfferMap[offer.id]?.validTo" title="{{invalidOfferMap[offer.id]?.validTo}}"
                        [ngModel]="formatDate(offer.validTo)" (change)="onOfferChangeValidTo(offer, $event.target.value, true)" />
             </td>
             <td class="tdlast">
@@ -510,7 +510,7 @@
         <tr *ngFor="let product of offerProducts" (mousedown)="onProductSelect(product);true"
             [class.selected]="product.id === selectedProduct.id">
             <td class="tdlarge">
-                <a style="float: left;" title="Remove offer {{selectedOffer.id}}: {{selectedOffer.name}} from product, and leave it unffered!" (click)="removeOffer(product)"><span class="glyphicon glyphicon-triangle-left"></span></a>
+                <a style="float: left;" *ngIf="!addingOffer" title="Remove offer {{selectedOffer.id}}: {{selectedOffer.name}} from product, and leave it unffered!" (click)="removeOffer(product)"><span class="glyphicon glyphicon-triangle-left"></span></a>
                 <input [disabled]="addingOffer" readonly="true" style="width: calc(100% - 16px);" [class.selected]="product.id === selectedProduct.id" (blur)="saveProduct(product, true)"
                        type="text"
                        [(ngModel)]="product.name"/>
