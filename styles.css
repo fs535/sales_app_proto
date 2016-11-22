@@ -44,7 +44,8 @@ a {
 
 /* Navigation link styles */
 nav {
-float: right;
+    text-align: right;
+    margin-bottom: 10px;
 }
 nav a {
   padding: 5px 10px;
