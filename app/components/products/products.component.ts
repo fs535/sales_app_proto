@@ -118,9 +118,9 @@ export class ProductsComponent implements OnInit {
         return this.productService
             .getCollections()
             .then(result => {
-                this.category1values = result.category1values;
-                this.category2values = result.category2values;
-                this.category3values = result.category3values;
+                this.category1values = result.category1Values;
+                this.category2values = result.category2Values;
+                this.category3values = result.category3Values;
                 this.brands = result.brands;
                 this.prices = result.prices;
                 this.sizes = result.sizes;

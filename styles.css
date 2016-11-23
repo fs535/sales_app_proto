@@ -160,6 +160,7 @@ table.top-container-table tr {
     display: table;
     table-layout: fixed;
     text-align: left;
+    height: 24px;
 }
 
 table.top-container-table th.th1, table.top-container-table td.td1 {
@@ -225,6 +226,7 @@ table.left-container-table tr {
     display: table;
     table-layout: fixed;
     text-align: left;
+    height: 24px;
 }
 table.left-container-table th.thlast, table.left-container-table td.tdlast {
     width: 5%;
@@ -269,6 +271,7 @@ table.right-container-table tr {
     display: table;
     table-layout: fixed;
     text-align: left;
+    height: 24px;
 }
 table.right-container-table th.thtiny, table.right-container-table td.tdtiny {
     width: 5%;
@@ -307,6 +310,7 @@ table.product-container-table tr {
     display: table;
     table-layout: fixed;
     text-align: left;
+    height: 24px;
 }
 
 table.product-container-table th.thtiny, table.product-container-table td.tdtiny {
@@ -346,6 +350,7 @@ table.details-container-table tr {
     display: table;
     table-layout: fixed;
     text-align: left;
+    height: 24px;
 }
 
 table.details-container-table th.thtiny, table.details-container-table td.tdtiny {

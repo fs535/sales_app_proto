@@ -2,15 +2,15 @@ import {Offer}    from './offer';
 
 export class Product {
     id: string;
-    name: string;
-    category1: string;
-    category2: string;
-    category3: string;
+    productName: string;
+    productCategory1Name: string;
+    productCategory2Name: string;
+    productCategory3Name: string;
     brand: string;
-    price: string;
-    size: string;
+    ecomPrice: string;
+    packageSize: string;
     activatedPim: boolean;
-    pictureUrl: string;
+    pimPicture: string;
     description: string;
 
     offer: Offer;

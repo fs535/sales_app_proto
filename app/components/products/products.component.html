@@ -114,27 +114,27 @@
             <td class="tdlarge">
                 <input readonly="true" [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide"
                        type="text"
-                       [ngModel]="product.name"/>
+                       [ngModel]="product.productName"/>
             </td>
             <td class="tdsmall">
                 <input readonly="true" [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide"
                        type="text"
-                       [ngModel]="product.category1"/>
+                       [ngModel]="product.productCategory1Name"/>
             </td>
             <td class="tdsmall">
                 <input readonly="true" [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide"
                        type="text"
-                       [ngModel]="product.category2"/>
+                       [ngModel]="product.productCategory2Name"/>
             </td>
             <td class="tdsmall">
                 <input readonly="true" [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide"
                        type="text"
-                       [ngModel]="product.category3"/>
+                       [ngModel]="product.productCategory3Name"/>
             </td>
             <td class="tdtiny">
                 <input readonly="true" [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide"
                        type="text"
-                       [ngModel]="product.price"/>
+                       [ngModel]="product.ecomPrice"/>
             </td>
             <td class="tdtiny">
                 <input readonly="true" [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide"
@@ -144,7 +144,7 @@
             <td class="tdtiny">
                 <input readonly="true" [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide"
                        type="text"
-                       [ngModel]="product.size"/>
+                       [ngModel]="product.packageSize"/>
             </td>
             <td class="tdtiny">
                 <input *ngIf="product.offer != null" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveOffer(product.offer)"
@@ -279,7 +279,7 @@
             <td class="tdlarge">
                 <input readonly="true" [class.unassigned]="selectedProduct.offerId == ''" [class.selected]="true" class="wide"
                        type="text"
-                       [ngModel]="selectedProduct.pictureUrl"/>
+                       [ngModel]="selectedProduct.pimPicture"/>
             </td>
             <td class="tdtiny">
                 <input readonly="true" *ngIf="selectedProduct.offer != null" [class.unassigned]="selectedProduct.offerId == ''" [class.selected]="true" class="wide"

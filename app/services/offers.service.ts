@@ -13,33 +13,69 @@ export class OfferService {
               offerId: string, offerName: string, offerCombType: string, offerDemandId: string, offerCombMax: string,
               offerValidFrom: string, offerValidTo: string, offerSuspended: string): Promise<Offer[]> {
         let params: URLSearchParams = new URLSearchParams();
+
+        //params.set('page', '0');
+        //params.set('size', '10');
+        //params.set('sort', offerType);
+
         params.set('type', offerType);
-        params.set('category1', category1);
-        params.set('category2', category2);
-        params.set('category3', category3);
-        params.set('brand', brand);
-        params.set('price', price);
-        params.set('size', size);
-        params.set('product', product);
-        params.set('id', offerId);
-        params.set('nameSearch', offerName);
-        params.set('combType', offerCombType);
-        params.set('demandId', offerDemandId);
-        params.set('combMax', offerCombMax);
-        params.set('validFrom', offerValidFrom);
-        params.set('validTo', offerValidTo);
-        params.set('suspended', offerSuspended);
+
+        if (category1){
+            params.set('category1', category1);
+        }
+        if (category2){
+            params.set('category2', category2);
+        }
+        if (category3){
+            params.set('category3', category3);
+        }
+        if (brand){
+            params.set('brand', brand);
+        }
+        if (price){
+            params.set('price', price);
+        }
+        if (size){
+            params.set('packageSize', size);
+        }
+        if (product){
+            params.set('productId', product);
+        }
+        if (offerId){
+            params.set('id', offerId);
+        }
+        if (offerName){
+            params.set('nameSearch', offerName);
+        }
+        if (offerCombType){
+            params.set('combType', offerCombType);
+        }
+        if (offerDemandId){
+            params.set('demandId', offerDemandId);
+        }
+        if (offerCombMax){
+            params.set('combMax', offerCombMax);
+        }
+        if (offerValidFrom){
+            params.set('validFrom', offerValidFrom);
+        }
+        if (offerValidTo){
+            params.set('validTo', offerValidTo);
+        }
+        if (offerSuspended !== ''){
+            params.set('suspended', offerSuspended);
+        }
 
         return this.http.get(`${this.settings.hub_url}/offers`,{
              search: params
         }).toPromise()
             .then(res =>  {
-                var data = res.json() || [];
-                data.forEach((d: any) => {
+                let data:any = res.json() || [];
+                data.content.forEach((d: any) => {
                     d.validFrom = new Date(d.validFrom);
                     d.validTo = new Date(d.validTo);
                 });
-                return data;
+                return data.content;
             })
             .catch(this.handleError);
     }
@@ -56,7 +92,8 @@ export class OfferService {
     private patch(offer: Offer): Promise<Offer> {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        let url = `${this.settings.hub_url}/offers`;
+        let url = `${this.settings.hub_url}/offer/${offer.id}`;
+
         return this.http
             .patch(url, JSON.stringify(offer), {headers: headers})
             .toPromise()

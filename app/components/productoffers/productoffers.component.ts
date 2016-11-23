@@ -152,9 +152,9 @@ export class ProductOffersComponent implements OnInit {
         return this.productService
             .getCollections()
             .then(result => {
-                this.category1values = result.category1values;
-                this.category2values = result.category2values;
-                this.category3values = result.category3values;
+                this.category1values = result.category1Values;
+                this.category2values = result.category2Values;
+                this.category3values = result.category3Values;
                 this.brands = result.brands;
                 this.prices = result.prices;
                 this.sizes = result.sizes;
@@ -303,8 +303,8 @@ export class ProductOffersComponent implements OnInit {
             product.offerId = this.selectedOffer.id
             var self = this;
             this.saveProduct(product, false).then((product) => {
-                self.getOffers()
-                self.getOfferProducts()
+                self.getOffers();
+                self.getOfferProducts();
             })
         }
     }
@@ -319,8 +319,8 @@ export class ProductOffersComponent implements OnInit {
             product.offerId = "";
             var self = this;
             this.saveProduct(product, false).then((product) => {
-                self.getOffers()
-                self.getOfferProducts()
+                self.getOffers();
+                self.getOfferProducts();
             })
         }
     }
@@ -328,7 +328,7 @@ export class ProductOffersComponent implements OnInit {
 
     newOfferFromProduct(product: Product) {
         this.addOffer();
-        this.offer.name = "Offer for "+product.name;
+        this.offer.name = "Offer for "+product.productName;
         this.offerProducts = [product];
     }
 
