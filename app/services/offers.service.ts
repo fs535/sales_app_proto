@@ -71,11 +71,11 @@ export class OfferService {
         }).toPromise()
             .then(res =>  {
                 let data:any = res.json() || [];
-                data.content.forEach((d: any) => {
-                    d.validFrom = new Date(d.validFrom);
-                    d.validTo = new Date(d.validTo);
+                (data.content as Array<any>).forEach((d:any) => {
+                    d.validFrom = new Date(d['validFrom']);
+                    d.validTo = new Date(d['validTo']);
                 });
-                return data.content;
+                return data.content as Offer[];
             })
             .catch(this.handleError);
     }
@@ -98,9 +98,9 @@ export class OfferService {
             .patch(url, JSON.stringify(offer), {headers: headers})
             .toPromise()
             .then((res) => {
-                var data = res.json();
-                data.validFrom = new Date(data.validFrom);
-                data.validTo = new Date(data.validTo);
+                let data:any = res.json();
+                data.validFrom = new Date(data['validFrom']);
+                data.validTo = new Date(data['validTo']);
                 return data;
             })
             .catch(this.handleError);
@@ -110,14 +110,14 @@ export class OfferService {
     private post(offer: Offer): Promise<Offer> {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        let url = `${this.settings.hub_url}/offers`;
+        let url = `${this.settings.hub_url}/offer`;
         return this.http
             .post(url, JSON.stringify(offer), {headers: headers})
             .toPromise()
             .then((res) => {
-                var data = res.json();
-                data.validFrom = new Date(data.validFrom);
-                data.validTo = new Date(data.validTo);
+                let data:any = res.json();
+                data.validFrom = new Date(data['validFrom']);
+                data.validTo = new Date(data['validTo']);
                 return data;
             })
             .catch(this.handleError);

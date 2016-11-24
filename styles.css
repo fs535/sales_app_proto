@@ -140,6 +140,10 @@ md-slide-toggle {
 .top-container {
     width: 100%;
     min-width: 1000px;
+    border: 1px solid silver;
+    border-radius: 3px;
+    padding: 5px 5px 0 5px;
+    margin-bottom: 2px;
 }
 
 table.top-container-table {
@@ -203,9 +207,12 @@ table.top-container-table th.thall, table.top-container-table td.tdall {
 
 
 .left-container {
-    width: 55%;
+    width: 54.9%;
     min-width: 550px;
     float: left;
+    border: 1px solid silver;
+    border-radius: 3px;
+    padding: 5px 5px 0 5px;
 }
 
 table.left-container-table {
@@ -250,13 +257,15 @@ table.left-container-table th.thall, table.left-container-table td.tdall {
     width: 45%;
     min-width: 450px;
     margin-left: 55%;
+    border: 1px solid silver;
+    border-radius: 3px;
+    padding: 5px 5px 0 5px;
 }
 
 table.right-container-table {
     display: table;
     table-layout: fixed;
     width: 100%;
-    border-left: solid 1px black;
 }
 table.right-container-table thead, table.right-container-table tbody {
     float: left;
@@ -290,6 +299,10 @@ table.right-container-table th.thall, table.right-container-table td.tdall {
 .product-container {
     width: 100%;
     min-width: 1000px;
+    border: 1px solid silver;
+    border-radius: 3px;
+    padding: 5px 5px 0 5px;
+    margin-bottom: 2px;
 }
 
 table.product-container-table {
@@ -331,6 +344,10 @@ table.product-container-table th.thall, table.product-container-table td.tdall {
 .details-container {
     width: 100%;
     min-width: 1000px;
+    border: 1px solid silver;
+    border-radius: 3px;
+    padding: 5px 5px 0 5px;
+    min-height: 100px;
 }
 
 table.details-container-table {
@@ -366,15 +383,11 @@ table.details-container-table th.thall, table.details-container-table td.tdall {
     width: 100%;
     text-align: center;
 }
-
-
-
 .table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {
     padding-top: 2px;
     padding-left: 0px;
     padding-right: 0px;
     padding-bottom: 0px;
-
 }
 
 .table>thead>tr>th {
@@ -388,4 +401,20 @@ h1, .h1, h2, .h2, h3, .h3 {
 
 .invalid {
     outline: solid 1px red !important;
+}
+
+.btn.btn-default>span.ui-select-match-text{
+    width: 100%;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    overflow: hidden;
+    padding-right: 20px;
+}
+
+.btn.btn-default>a.btn.btn-xs{
+    position: absolute;
+    right: 5px;
+}
+.btn.btn-default>i.caret.pull-right{
+    right: 5px !important;
 }

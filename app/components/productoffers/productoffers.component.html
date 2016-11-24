@@ -394,50 +394,50 @@
         </thead>
         <tbody>
         <tr *ngFor="let product of products" (mousedown)="onProductSelect(product);true"
-            [class.selected]="product.id === selectedProduct.id" [class.unassigned]="product.offerId == ''">
+            [class.selected]="product.id === selectedProduct.id" [class.unassigned]="!product.offerId">
             <td class="tdlarge">
-                <input [disabled]="addingOffer" readonly="true" [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide"
+                <input [disabled]="addingOffer" readonly="true" [class.unassigned]="!product.offerId" [class.selected]="product.id === selectedProduct.id" class="wide"
                        type="text"
                        [ngModel]="product.productName"/>
             </td>
             <td class="tdsmall">
-                <input [disabled]="addingOffer" readonly="true" [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide"
+                <input [disabled]="addingOffer" readonly="true" [class.unassigned]="!product.offerId" [class.selected]="product.id === selectedProduct.id" class="wide"
                        type="text"
                        [ngModel]="product.productCategory1Name"/>
             </td>
             <td class="tdsmall">
-                <input [disabled]="addingOffer" readonly="true" [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide"
+                <input [disabled]="addingOffer" readonly="true" [class.unassigned]="!product.offerId" [class.selected]="product.id === selectedProduct.id" class="wide"
                        type="text"
                        [ngModel]="product.productCategory2Name"/>
             </td>
             <td class="tdsmall">
-                <input [disabled]="addingOffer" readonly="true" [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide"
+                <input [disabled]="addingOffer" readonly="true" [class.unassigned]="!product.offerId" [class.selected]="product.id === selectedProduct.id" class="wide"
                        type="text"
                        [ngModel]="product.productCategory3Name"/>
             </td>
             <td class="tdtiny">
-                <input [disabled]="addingOffer" readonly="true" [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide"
+                <input [disabled]="addingOffer" readonly="true" [class.unassigned]="!product.offerId" [class.selected]="product.id === selectedProduct.id" class="wide"
                        type="text"
                        [ngModel]="product.ecomPrice"/>
             </td>
             <td class="tdtiny">
-                <input [disabled]="addingOffer" readonly="true" [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide"
+                <input [disabled]="addingOffer" readonly="true" [class.unassigned]="!product.offerId" [class.selected]="product.id === selectedProduct.id" class="wide"
                        type="text"
                        [ngModel]="product.brand"/>
             </td>
             <td class="tdtiny">
-                <input [disabled]="addingOffer" readonly="true" [class.unassigned]="product.offerId == ''" [class.selected]="product.id === selectedProduct.id" class="wide"
+                <input [disabled]="addingOffer" readonly="true" [class.unassigned]="!product.offerId" [class.selected]="product.id === selectedProduct.id" class="wide"
                        type="text"
                        [ngModel]="product.packageSize"/>
             </td>
             <td class="tdtiny">
-                <input [disabled]="addingOffer" readonly="true" *ngIf="product.offer != null" [class.selected]="product.id === selectedProduct.id" class="wide"
+                <input [disabled]="addingOffer" readonly="true" *ngIf="product.offer" [class.selected]="product.id === selectedProduct.id" class="wide"
                        type="text" title="{{product.offerId}}: {{product.offer.name}}"
                        [ngModel]="product.offerId"/>
             </td>
             <td class="tdlast">
-                <a style="float:right;" title="Move this product into {{selectedOffer.id}} offer!" *ngIf="selectedOffer.id != '' && selectedOffer.id != product.offerId && !addingOffer" (click)="assignSelectedOffer(product)"><span class="glyphicon glyphicon-triangle-right"></span></a>
-                <a style="float:right;" title="Create New Offer based on this product" *ngIf="product.offerId == '' && !addingOffer" (click)="newOfferFromProduct(product)"><span class="glyphicon glyphicon-asterisk"></span></a>
+                <a style="float:right;" title="Move this product into {{selectedOffer.id}} offer!" *ngIf="selectedOffer.id && selectedOffer.id != product.offerId && !addingOffer" (click)="assignSelectedOffer(product)"><span class="glyphicon glyphicon-triangle-right"></span></a>
+                <a style="float:right;" title="Create New Offer based on this product" *ngIf="!product.offerId && !addingOffer" (click)="newOfferFromProduct(product)"><span class="glyphicon glyphicon-asterisk"></span></a>
             </td>
         </tr>
         </tbody>

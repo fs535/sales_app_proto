@@ -300,7 +300,8 @@ export class ProductOffersComponent implements OnInit {
         if(this.addingOffer) {
             this.offerProducts.push(product);
         } else {
-            product.offerId = this.selectedOffer.id
+            product.offerId = this.selectedOffer.id;
+            product.offer = this.selectedOffer;
             var self = this;
             this.saveProduct(product, false).then((product) => {
                 self.getOffers();
@@ -316,7 +317,7 @@ export class ProductOffersComponent implements OnInit {
                 this.offerProducts.splice(index, 1);
             }
         } else {
-            product.offerId = "";
+            product.offerId = '0';
             var self = this;
             this.saveProduct(product, false).then((product) => {
                 self.getOffers();
@@ -346,10 +347,8 @@ export class ProductOffersComponent implements OnInit {
         this.offer.demandId = "1";
         this.offer.demandCount = "1";
         this.offer.benefitId = "7";
-        this.offer.discount = "20%";
+        this.offer.discount = "0.2";
         this.offer.combMax = "1";
-        this.offer.rank = "";
-        this.offer.showPicture = true;
         this.offer.combCardPrefix = "1";
         this.offer.combStacking = false;
         this.offer.combExternalId = "0";
