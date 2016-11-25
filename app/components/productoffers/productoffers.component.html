@@ -177,7 +177,7 @@
                        [ngModel]="offer.id" readonly="true"/>
             </td>
             <td class="td2">
-                <input [class.selected]="offer.id === selectedOffer.id" class="wide" (blur)="saveOffer(offer)"
+                <input [class.selected]="offer.id === selectedOffer.id" class="wide" (blur)="checkAndSaveOffer('name', offer)" (focus)="focusOnOffer('name', offer.name)"
                        [class.unassigned]="offer.assigned == false"
                        type="text"
                        [(ngModel)]="offer.name"/>
@@ -195,7 +195,7 @@
                        [ngModel]="offer.demandId"/>
             </td>
             <td class="td5">
-                <input [class.selected]="offer.id === selectedOffer.id" class="wide" (blur)="saveOffer(offer)"
+                <input [class.selected]="offer.id === selectedOffer.id" class="wide" (blur)="checkAndSaveOffer('demandCount', offer)" (focus)="focusOnOffer('demandCount', offer.demandCount)"
                        [class.unassigned]="offer.assigned == false"
                        type="text"
                        [(ngModel)]="offer.demandCount"/>
@@ -207,13 +207,13 @@
                        [ngModel]="offer.benefitId"/>
             </td>
             <td class="td7">
-                <input [class.selected]="offer.id === selectedOffer.id" class="wide" (blur)="saveOffer(offer)"
+                <input [class.selected]="offer.id === selectedOffer.id" class="wide" (blur)="checkAndSaveOffer('discount', offer)" (focus)="focusOnOffer('discount', offer.discount)"
                        [class.unassigned]="offer.assigned == false"
                        type="text"
                        [(ngModel)]="offer.discount"/>
             </td>
             <td class="td8">
-                <input [class.selected]="offer.id === selectedOffer.id" class="wide" (blur)="saveOffer(offer)"
+                <input [class.selected]="offer.id === selectedOffer.id" class="wide" (blur)="checkAndSaveOffer('combMax', offer)" (focus)="focusOnOffer('combMax', offer.combMax)"
                        [class.unassigned]="offer.assigned == false"
                        type="text"
                        [(ngModel)]="offer.combMax"/>
@@ -511,37 +511,37 @@
             [class.selected]="product.id === selectedProduct.id">
             <td class="tdlarge">
                 <a style="float: left;" *ngIf="!addingOffer" title="Remove offer {{selectedOffer.id}}: {{selectedOffer.name}} from product, and leave it unffered!" (click)="removeOffer(product)"><span class="glyphicon glyphicon-triangle-left"></span></a>
-                <input [disabled]="addingOffer" readonly="true" style="width: calc(100% - 16px);" [class.selected]="product.id === selectedProduct.id" (blur)="saveProduct(product, true)"
+                <input [disabled]="addingOffer" readonly="true" style="width: calc(100% - 16px);" [class.selected]="product.id === selectedProduct.id" (focus)="focusOnProduct('productName', product.productName)" (blur)="checkAndSaveProduct('productName', product, true)"
                        type="text"
                        [(ngModel)]="product.productName"/>
             </td>
             <td class="tdsmall">
-                <input [disabled]="addingOffer" readonly="true" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, true)"
+                <input [disabled]="addingOffer" readonly="true" [class.selected]="product.id === selectedProduct.id" class="wide" (focus)="focusOnProduct('productCategory1Name', product.productCategory1Name)" (blur)="checkAndSaveProduct('productCategory1Name', product, true)"
                        type="text"
                        [(ngModel)]="product.productCategory1Name"/>
             </td>
             <td class="tdsmall">
-                <input [disabled]="addingOffer" readonly="true" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, true)"
+                <input [disabled]="addingOffer" readonly="true" [class.selected]="product.id === selectedProduct.id" class="wide" (focus)="focusOnProduct('productCategory2Name', product.productCategory2Name)" (blur)="checkAndSaveProduct('productCategory2Name', product, true)"
                        type="text"
                        [(ngModel)]="product.productCategory2Name"/>
             </td>
             <td class="tdsmall">
-                <input [disabled]="addingOffer" readonly="true" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, true)"
+                <input [disabled]="addingOffer" readonly="true" [class.selected]="product.id === selectedProduct.id" class="wide" (focus)="focusOnProduct('productCategory3Name', product.productCategory3Name)" (blur)="checkAndSaveProduct('productCategory3Name', product, true)"
                        type="text"
                        [(ngModel)]="product.productCategory3Name"/>
             </td>
             <td class="tdtiny">
-                <input [disabled]="addingOffer" readonly="true" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, true)"
+                <input [disabled]="addingOffer" readonly="true" [class.selected]="product.id === selectedProduct.id" class="wide" (focus)="focusOnProduct('ecomPrice', product.ecomPrice)" (blur)="checkAndSaveProduct('ecomPrice', product, true)"
                        type="text"
                        [(ngModel)]="product.ecomPrice"/>
             </td>
             <td class="tdtiny">
-                <input [disabled]="addingOffer" readonly="true" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, true)"
+                <input [disabled]="addingOffer" readonly="true" [class.selected]="product.id === selectedProduct.id" class="wide" (focus)="focusOnProduct('brand', product.brand)" (blur)="checkAndSaveProduct('brand', product, true)"
                        type="text"
                        [(ngModel)]="product.brand"/>
             </td>
             <td class="tdtiny">
-                <input [disabled]="addingOffer" readonly="true" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product, true)"
+                <input [disabled]="addingOffer" readonly="true" [class.selected]="product.id === selectedProduct.id" class="wide" (focus)="focusOnProduct('packageSize', product.packageSize)" (blur)="checkAndSaveProduct('packageSize', product, true)"
                        type="text"
                        [(ngModel)]="product.packageSize"/>
             </td>

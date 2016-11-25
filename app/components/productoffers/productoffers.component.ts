@@ -97,6 +97,9 @@ export class ProductOffersComponent implements OnInit {
     addingOffer = false;
     error: any = '';
 
+    checkOffer:Offer = new Offer("");
+    checkProduct:Product = new Product("");
+
     constructor(private router: Router,
                 private productService: ProductService,
                 private offerService: OfferService) {
@@ -516,13 +519,17 @@ export class ProductOffersComponent implements OnInit {
     }
 
     onProductSelect(product: Product) {
-        this.selectedProduct = product
+        if (this.selectedProduct != product){
+            this.selectedProduct = product;
+        }
     }
 
     onOfferSelect(offer: Offer) {
-        this.selectedOffer = offer;
-        this.addingOffer = false;
-        this.getOfferProducts()
+        if (this.selectedOffer != offer){
+            this.selectedOffer = offer;
+            this.addingOffer = false;
+            this.getOfferProducts()
+        }
     }
 
     onOfferIdSearch(item: string) {
@@ -570,6 +577,17 @@ export class ProductOffersComponent implements OnInit {
         this.getOffers();
     }
 
+    focusOnOffer(field:string, value:any){
+        // save previous value
+        this.checkOffer[field] = value;
+    }
+
+    checkAndSaveOffer(field:string, offer:Offer){
+        if (this.checkOffer[field] != offer[field]){
+            this.saveOffer(offer);
+        }
+    }
+
     saveOffer(offer: Offer) {
         var isNew: boolean = (offer.id == '');
         var hadProducts = this.offerProducts.length > 0;
@@ -603,6 +621,17 @@ export class ProductOffersComponent implements OnInit {
         }).catch((err) => {
             this.error += err;
         });
+    }
+
+    focusOnProduct(field:string, value: Product){
+        // save previous value
+        this.checkProduct[field] = value;
+    }
+
+    checkAndSaveProduct(field:string, product: Product, isOfferProduct: boolean){
+        if (this.checkProduct[field] != product[field]){
+            this.saveProduct(product, isOfferProduct);
+        }
     }
 
     saveProduct(product: Product, isOfferProduct: boolean): Promise<Product> {
