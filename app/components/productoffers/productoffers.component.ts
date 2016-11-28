@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Input, Output} from '@angular/core';
 import {Router}            from '@angular/router';
 import {Product}                from '../../domain/product';
 import {Offer}                from '../../domain/offer';
@@ -11,6 +11,8 @@ import {MdSlideToggleChange} from '@angular/material/slide-toggle/slide-toggle'
 import {ProductService}         from '../../services/products.service';
 import {OfferService}         from '../../services/offers.service';
 import {Http} from "@angular/http";
+
+
 @Component({
     selector: 'my-productoffers',
     templateUrl: 'app/components/productoffers/productoffers.component.html'
@@ -37,6 +39,17 @@ export class ProductOffersComponent implements OnInit {
     benefitIds: string[];
     discounts: string[];
     combMaxs: string[];
+
+    offersTotalItems:number = 0;
+    offersCurrentPage:number = 1;
+
+    productsTotalItems:number = 0;
+    productsCurrentPage:number = 1;
+
+    offerProductsTotalItems: number = 0;
+    offerProductsCurrentPage:number = 1;
+
+    pageSize:number = 10;
 
     yesno: any = [{id:"", text:""},{id:"1", text:"Yes"}, {id:"0", text:"No"}];
 
@@ -172,29 +185,33 @@ export class ProductOffersComponent implements OnInit {
             .catch(error => this.error += error);
     }
 
-    getProducts(): Promise<Product[]> {
+    getProducts(): Promise<Object> {
         return this.productService
             .getProducts(this.productIdSearch, this.productNameSearch,
                          this.productCategory1, this.productCategory2, this.productCategory3,
                          this.productPrice, this.productBrand, this.productSize,
                          '', '', '',
-                         this.productOfferNameSearch, this.productOfferIdSearch, this.productOfferAssigned)
-            .then(products => {
-                this.products = products;
+                         this.productOfferNameSearch, this.productOfferIdSearch, this.productOfferAssigned, this.productsCurrentPage)
+            .then(response => {
+                this.productsTotalItems = response['totalElements'];
+                this.products = response['content'];
                 return this.products;
             })
             .catch(error => this.error += error);
     }
 
-    getOfferProducts(): Promise<Product[]> {
+    getOfferProducts(): Promise<Object> {
         if(this.selectedOffer.id != '') {
             return this.productService
                 .getProductsByOffer(this.selectedOffer, this.selectedOfferProductNameSearch,
                                     this.selectedOfferProductCategory1, this.selectedOfferProductCategory2, this.selectedOfferProductCategory3,
-                                    this.selectedOfferProductPrice, this.selectedOfferProductBrand, this.selectedOfferProductSize
+                                    this.selectedOfferProductPrice, this.selectedOfferProductBrand, this.selectedOfferProductSize, this.offerProductsCurrentPage
                 )
-                .then(products => {
-                    this.offerProducts = products;
+                .then(response => {
+
+                    this.offerProductsTotalItems = response['totalElements'];
+                    this.offerProducts = response['content'];
+
                     return this.offerProducts;
                 })
                 .catch(error => this.error += error);
@@ -286,13 +303,14 @@ export class ProductOffersComponent implements OnInit {
         return result;
     }
 
-    getOffers(): Promise<Offer[]> {
+    getOffers(): Promise<Object> {
         return this.offerService
             .getOffers(this.offerType, this.offerCategory1, this.offerCategory2, this.offerCategory3,
             this.offerBrand, this.offerPrice, this.offerSize,'', '', this.offerId, this.offerName,
-            this.offerCombType, this.offerDemandId, this.offerCombMax, this.offerValidFrom, this.offerValidTo, this.offerSuspended)
-            .then(offers => {
-                this.offers = offers;
+            this.offerCombType, this.offerDemandId, this.offerCombMax, this.offerValidFrom, this.offerValidTo, this.offerSuspended, this.offersCurrentPage)
+            .then(response => {
+                this.offersTotalItems = response['totalElements'];
+                this.offers = response['content'];
                 this.invalidOfferMap = {};
                 return this.offers;
             })
@@ -658,6 +676,21 @@ export class ProductOffersComponent implements OnInit {
     onActiveChange(active: boolean, product: Product) {
           product.activatedPim = active;
           this.saveProduct(product, false);
+    }
+
+    offerPageChanged(event:any){
+        this.offersCurrentPage = event;
+        this.getOffers();
+    }
+
+    productsPageChanged(event:any){
+        this.productsCurrentPage = event;
+        this.getProducts();
+    }
+
+    offerProductsPageChanged(event:any){
+        this.offerProductsCurrentPage = event;
+        this.getOfferProducts();
     }
 
 }

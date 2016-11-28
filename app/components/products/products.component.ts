@@ -49,6 +49,10 @@ export class ProductsComponent implements OnInit {
     discounts: string[];
     combMaxs: string[];
 
+    productsTotalItems:number = 0;
+    productsCurrentPage:number = 1;
+    pageSize:number = 10;
+
     yesno: any = [{id:"", text:""},{id:"1", text:"Yes"}, {id:"0", text:"No"}];
 
     productIdSearch: string = "";
@@ -135,15 +139,17 @@ export class ProductsComponent implements OnInit {
             .catch(error => this.error += error);
     }
 
-    getProducts(): Promise<Product[]> {
+    getProducts(): Promise<Object> {
         return this.productService
             .getProducts(this.productIdSearch, this.productNameSearch,
                          this.productCategory1, this.productCategory2, this.productCategory3,
                          this.productPrice, this.productBrand, this.productSize,
                          this.productActivatedPim, this.productPictureUrlSearch, this.productDescriptionSearch,
-                         this.offerName, this.offerId, this.offerAssigned)
-            .then(products => {
-                this.products = products;
+                         this.offerName, this.offerId, this.offerAssigned, this.productsCurrentPage)
+            .then(response => {
+                this.productsTotalItems = response['totalElements'];
+                this.products = response['content'];
+
                 this.invalidOfferMap = {};
                 return this.products;
             })
@@ -284,5 +290,10 @@ export class ProductsComponent implements OnInit {
         }).catch((err) => {
             this.error += err;
         });
+    }
+
+    productsPageChanged(event:any){
+        this.productsCurrentPage = event;
+        this.getProducts();
     }
 }

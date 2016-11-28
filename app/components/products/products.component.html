@@ -104,7 +104,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let product of products" (mousedown)="onProductSelect(product);true"
+        <tr *ngFor="let product of products | paginate: { id: 'productsPagination', itemsPerPage: pageSize, currentPage: productsCurrentPage, totalItems: productsTotalItems }" (mousedown)="onProductSelect(product);true"
             [class.unassigned]="!product.offerId" [class.selected]="product.id === selectedProduct.id">
             <td class="tdtiny">
                 <input readonly="true" [class.unassigned]="!product.offerId" [class.selected]="product.id === selectedProduct.id" class="wide"
@@ -186,6 +186,11 @@
         </tr>
         </tbody>
     </table>
+
+    <div class="pagination-block">
+        <pagination-controls id="productsPagination" directionLinks="true" (pageChange)="productsPageChanged($event)"></pagination-controls>
+    </div>
+
 </div>
 <div class="details-container">
     <table class="table table-striped details-container-table">

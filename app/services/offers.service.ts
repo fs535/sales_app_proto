@@ -11,11 +11,11 @@ export class OfferService {
     getOffers(offerType: string,category1: string, category2: string, category3: string,
               brand: string, price: string, size: string, product: string, text: string,
               offerId: string, offerName: string, offerCombType: string, offerDemandId: string, offerCombMax: string,
-              offerValidFrom: string, offerValidTo: string, offerSuspended: string): Promise<Offer[]> {
+              offerValidFrom: string, offerValidTo: string, offerSuspended: string, currentPage:number, pageSize:number = 10): Promise<Object> {
         let params: URLSearchParams = new URLSearchParams();
 
-        //params.set('page', '0');
-        //params.set('size', '10');
+        params.set('page', String(currentPage - 1));
+        params.set('size', String(pageSize));
         //params.set('sort', offerType);
 
         params.set('type', offerType);
@@ -75,7 +75,7 @@ export class OfferService {
                     d.validFrom = new Date(d['validFrom']);
                     d.validTo = new Date(d['validTo']);
                 });
-                return data.content as Offer[];
+                return data;
             })
             .catch(this.handleError);
     }

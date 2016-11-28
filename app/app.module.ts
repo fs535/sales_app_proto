@@ -16,6 +16,8 @@ import {SpinnerComponent} from "./components/spinner/spinner.component";
 import {CustomHttp} from "./services/custom.http";
 import "hammerjs"
 import { MaterialModule } from '@angular/material';
+//import {PaginationDirective} from 'angular2-bootstrap-pagination/directives/pagination.directive';
+import {Ng2PaginationModule} from 'ng2-pagination';
 
 const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -24,7 +26,7 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 var settings: Settings;
 
 @NgModule({
-    imports: [FormsModule, HttpModule, BrowserModule, routing, MaterialModule.forRoot(), SelectModule, PerfectScrollbarModule.forRoot(PERFECT_SCROLLBAR_CONFIG)],
+    imports: [FormsModule, HttpModule, BrowserModule, routing, MaterialModule.forRoot(), SelectModule, PerfectScrollbarModule.forRoot(PERFECT_SCROLLBAR_CONFIG), Ng2PaginationModule],
     declarations: [AppComponent, ProductsComponent, ProductOffersComponent, Autosize, SpinnerComponent],
     entryComponents: [AppComponent],
     providers: [{

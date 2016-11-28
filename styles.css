@@ -418,3 +418,12 @@ h1, .h1, h2, .h2, h3, .h3 {
 .btn.btn-default>i.caret.pull-right{
     right: 5px !important;
 }
+.pagination-block{
+    text-align: center;
+    height: 26px;
+}
+.new-offer-btn{
+    position: absolute;
+    top: 30px;
+    left: 10px;
+}

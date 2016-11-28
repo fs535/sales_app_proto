@@ -74,11 +74,11 @@
             </ng-select>
         </div>
     </div>
-    <div class="row">
-        <div class="form-group col-md-2">
-            <button class="btn btn-default" (click)="addOffer()">New Offer</button>
-        </div>
+
+    <div class="form-group col-md-2 new-offer-btn">
+        <button class="btn btn-default" (click)="addOffer()">New Offer</button>
     </div>
+
     <table class="table table-striped top-container-table">
         <thead>
         <tr>
@@ -167,7 +167,7 @@
         </tr>
         </thead>
         <tbody *ngIf="!addingOffer">
-        <tr *ngFor="let offer of offers" (mousedown)="onOfferSelect(offer);true"
+        <tr *ngFor="let offer of offers | paginate: { id: 'offersPagination', itemsPerPage: pageSize, currentPage: offersCurrentPage, totalItems: offersTotalItems }" (mousedown)="onOfferSelect(offer);true"
             [class.selected]="offer.id === selectedOffer.id"
             [class.unassigned]="offer.assigned == false">
             <td class="td1">
@@ -312,6 +312,11 @@
         </tr>
         </tbody>
     </table>
+
+    <div class="pagination-block">
+        <pagination-controls id="offersPagination" directionLinks="true" (pageChange)="offerPageChanged($event)"></pagination-controls>
+    </div>
+
 </div>
 <div class="left-container">
     <h2>
@@ -393,7 +398,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let product of products" (mousedown)="onProductSelect(product);true"
+        <tr *ngFor="let product of products | paginate: { id: 'productsPagination', itemsPerPage: pageSize, currentPage: productsCurrentPage, totalItems: productsTotalItems }" (mousedown)="onProductSelect(product);true"
             [class.selected]="product.id === selectedProduct.id" [class.unassigned]="!product.offerId">
             <td class="tdlarge">
                 <input [disabled]="addingOffer" readonly="true" [class.unassigned]="!product.offerId" [class.selected]="product.id === selectedProduct.id" class="wide"
@@ -442,6 +447,11 @@
         </tr>
         </tbody>
     </table>
+
+    <div class="pagination-block">
+        <pagination-controls id="productsPagination" directionLinks="true" (pageChange)="productsPageChanged($event)"></pagination-controls>
+    </div>
+
 </div>
 <div class="right-container">
     <h2>
@@ -507,7 +517,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let product of offerProducts" (mousedown)="onProductSelect(product);true"
+        <tr *ngFor="let product of offerProducts | paginate: { id: 'offerProductsPagination', itemsPerPage: pageSize, currentPage: offerProductsCurrentPage, totalItems: offerProductsTotalItems}" (mousedown)="onProductSelect(product);true"
             [class.selected]="product.id === selectedProduct.id">
             <td class="tdlarge">
                 <a style="float: left;" *ngIf="!addingOffer" title="Remove offer {{selectedOffer.id}}: {{selectedOffer.name}} from product, and leave it unffered!" (click)="removeOffer(product)"><span class="glyphicon glyphicon-triangle-left"></span></a>
@@ -551,5 +561,10 @@
         </tr>
         </tbody>
     </table>
+
+    <div class="pagination-block">
+        <pagination-controls id="offerProductsPagination" directionLinks="true" (pageChange)="offerProductsPageChanged($event)"></pagination-controls>
+    </div>
+
 </div>
 

@@ -13,8 +13,12 @@ export class ProductService {
 
     getProductsByOffer(offer: Offer, productNameSearch: string,
                        productCategory1: string, productCategory2: string, productCategory3: string,
-                       price: string, brand: string, size: string): Promise<Product[]> {
+                       price: string, brand: string, size: string, currentPage:number, pageSize:number = 10): Promise<Object> {
         let params: URLSearchParams = new URLSearchParams();
+
+        params.set('page', String(currentPage - 1));
+        params.set('size', String(pageSize));
+        //params.set('sort', offerType);
 
         if (offer.id){
             params.set('offerId', offer.id);
@@ -47,7 +51,7 @@ export class ProductService {
         }).toPromise()
             .then(res => {
                 let result:any = res.json();
-                return result!.content || []
+                return result;
             })
             .catch(this.handleError);
     }
@@ -92,8 +96,12 @@ export class ProductService {
     getProducts(productId: string, productNameSearch: string, category1: string, category2: string, category3: string,
                 price: string, brand: string, size: string,
                 activatedPim: string, pictureUrl: string, description: string,
-                offerNameSearch: string, offerIdearch: string, offerAssigned: string): Promise<Product[]> {
+                offerNameSearch: string, offerIdearch: string, offerAssigned: string, currentPage:number, pageSize:number = 10): Promise<Object> {
         let params: URLSearchParams = new URLSearchParams();
+
+        params.set('page', String(currentPage - 1));
+        params.set('size', String(pageSize));
+        //params.set('sort', offerType);
 
         if (productId){
             params.set('id', productId);
@@ -149,7 +157,7 @@ export class ProductService {
                         d.offer.validTo = new Date(d.offer.validTo);
                     }
                 });
-                return data.content;
+                return data;
             })
             .catch(this.handleError);
     }
