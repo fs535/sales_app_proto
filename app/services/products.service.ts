@@ -96,7 +96,7 @@ export class ProductService {
     getProducts(productId: string, productNameSearch: string, category1: string, category2: string, category3: string,
                 price: string, brand: string, size: string,
                 activatedPim: string, pictureUrl: string, description: string,
-                offerNameSearch: string, offerIdearch: string, offerAssigned: string, currentPage:number, pageSize:number = 10): Promise<Object> {
+                offerNameSearch: string, offerIdearch: string, offerAssigned: string, offerActive:string, currentPage:number, pageSize:number = 10): Promise<Object> {
         let params: URLSearchParams = new URLSearchParams();
 
         params.set('page', String(currentPage - 1));
@@ -144,6 +144,9 @@ export class ProductService {
         }
         if (offerAssigned){
             params.set('offered', offerAssigned);
+        }
+        if (offerActive){
+            params.set('offerActive', offerActive);
         }
 
         return this.http.get(`${this.settings.hub_url}/products`,{

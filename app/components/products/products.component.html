@@ -96,8 +96,8 @@
             <th class="thtiny">
                 <ng-select class="wide" [allowClear]="true"
                            [items]="yesno"
-                           (selected)="offerActive($event)"
-                           (removed)="offerActive({'id':'','text':''})"
+                           (selected)="onOfferActiveSearch($event)"
+                           (removed)="onOfferActiveSearch({'id':'','text':''})"
                            placeholder="ACT" title="Active">
                 </ng-select>
             </th>

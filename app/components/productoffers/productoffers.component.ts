@@ -191,7 +191,7 @@ export class ProductOffersComponent implements OnInit {
                          this.productCategory1, this.productCategory2, this.productCategory3,
                          this.productPrice, this.productBrand, this.productSize,
                          '', '', '',
-                         this.productOfferNameSearch, this.productOfferIdSearch, this.productOfferAssigned, this.productsCurrentPage)
+                         this.productOfferNameSearch, this.productOfferIdSearch, this.productOfferAssigned, '', this.productsCurrentPage)
             .then(response => {
                 this.productsTotalItems = response['totalElements'];
                 this.products = response['content'];
