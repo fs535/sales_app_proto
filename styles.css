@@ -422,8 +422,13 @@ h1, .h1, h2, .h2, h3, .h3 {
     text-align: center;
     height: 26px;
 }
-.new-offer-btn{
+.offer-btn-group{
     position: absolute;
-    top: 30px;
+    top: 35px;
     left: 10px;
+}
+.caption-header{
+    font-size: 1.3em;
+    font-weight: bold;
+    margin-bottom: 4px;
 }

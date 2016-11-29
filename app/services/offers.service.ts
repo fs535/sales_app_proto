@@ -11,7 +11,7 @@ export class OfferService {
     getOffers(offerType: string,category1: string, category2: string, category3: string,
               brand: string, price: string, size: string, product: string, text: string,
               offerId: string, offerName: string, offerCombType: string, offerDemandId: string, offerCombMax: string,
-              offerValidFrom: string, offerValidTo: string, offerSuspended: string, currentPage:number, pageSize:number = 10): Promise<Object> {
+              offerValidFrom: string, offerValidTo: string, offerActive: string, currentPage:number, pageSize:number = 10): Promise<Object> {
         let params: URLSearchParams = new URLSearchParams();
 
         params.set('page', String(currentPage - 1));
@@ -62,8 +62,8 @@ export class OfferService {
         if (offerValidTo){
             params.set('validTo', offerValidTo);
         }
-        if (offerSuspended !== ''){
-            params.set('suspended', offerSuspended);
+        if (offerActive !== ''){
+            params.set('active', offerActive);
         }
 
         return this.http.get(`${this.settings.hub_url}/offers`,{

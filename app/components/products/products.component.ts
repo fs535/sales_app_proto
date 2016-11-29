@@ -33,7 +33,7 @@ export class ProductsComponent implements OnInit {
     offerCombMax: string = "";
     offerValidFrom: string = "";
     offerValidTo: string = "";
-    offerSuspended: string = "";
+    offerActive: string = "";
     offerAssigned: string = "";
 
     category1values: string[];
@@ -226,8 +226,8 @@ export class ProductsComponent implements OnInit {
         this.getProducts();
     }
 
-    onOfferSuspendedChange(suspended: MdSlideToggleChange, offer: Offer) {
-          offer.suspended = suspended.checked;
+    onOfferActiveChange(active: MdSlideToggleChange, offer: Offer) {
+          offer.active = active.checked;
           this.saveOffer(offer);
     }
     onProductSelect(product: Product) {
@@ -273,8 +273,8 @@ export class ProductsComponent implements OnInit {
         this.offerValidTo = item;
         this.getProducts();
     }
-    onOfferSuspendedSearch(item: SelectItem) {
-        this.offerSuspended = item.id;
+    onOfferActiveSearch(item: SelectItem) {
+        this.offerActive = item.id;
         this.getProducts();
     }
 

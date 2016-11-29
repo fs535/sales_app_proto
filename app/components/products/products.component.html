@@ -96,9 +96,9 @@
             <th class="thtiny">
                 <ng-select class="wide" [allowClear]="true"
                            [items]="yesno"
-                           (selected)="onOfferSuspendedSearch($event)"
-                           (removed)="onOfferSuspendedSearch({'id':'','text':''})"
-                           placeholder="SUS" title="Suspended">
+                           (selected)="offerActive($event)"
+                           (removed)="offerActive({'id':'','text':''})"
+                           placeholder="ACT" title="Active">
                 </ng-select>
             </th>
         </tr>
@@ -180,8 +180,8 @@
                        [ngModel]="formatDate(product.offer.validTo)" (change)="onOfferChangeValidTo(product.offer, $event.target.value, false)" />
             </td>
             <td class="tdtiny">
-                <md-slide-toggle *ngIf="product.offer != null" [class.selected]="product.id === selectedProduct.id" [(ngModel)]="product.offer.suspended"
-                                 (change)="onOfferSuspendedChange($event, product.offer)"></md-slide-toggle>
+                <md-slide-toggle *ngIf="product.offer != null" [class.selected]="product.id === selectedProduct.id" [(ngModel)]="product.offer.active"
+                                 (change)="onOfferActiveChange($event, product.offer)"></md-slide-toggle>
             </td>
         </tr>
         </tbody>

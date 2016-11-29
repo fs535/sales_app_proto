@@ -1,8 +1,8 @@
 <div class="top-container">
-    <h2>
+    <div class="caption-header">
         <span *ngIf="offerType == 'New'">New Offers</span>
         <span *ngIf="offerType != 'New'">Offers {{getOfferWith()}}</span>
-    </h2>
+    </div>
     <div class="error" *ngIf="error">{{error}}</div>
     <div class="row">
         <div class="form-group col-md-1">
@@ -75,8 +75,9 @@
         </div>
     </div>
 
-    <div class="form-group col-md-2 new-offer-btn">
+    <div class="form-group col-md-2 offer-btn-group">
         <button class="btn btn-default" (click)="addOffer()">New Offer</button>
+        <button class="btn btn-primary" (click)="sendToSelligent()">Send to Selligent</button>
     </div>
 
     <table class="table table-striped top-container-table">
@@ -159,9 +160,9 @@
                 <ng-select class="wide" [allowClear]="true"
                            [disabled]="addingOffer"
                            [items]="yesno"
-                           (selected)="onOfferSuspendedSearch($event)"
-                           (removed)="onOfferSuspendedSearch({'id':'','text':''})"
-                           placeholder="SUS" title="Suspended">
+                           (selected)="offerActive($event)"
+                           (removed)="offerActive({'id':'','text':''})"
+                           placeholder="ACT" title="Active">
                 </ng-select>
             </th>
         </tr>
@@ -237,8 +238,8 @@
             <td class="tdlast">
                 <md-slide-toggle [class.selected]="offer.id === selectedOffer.id"
                                  [class.unassigned]="offer.assigned == false"
-                                 [(ngModel)]="offer.suspended"
-                                 (change)="onOfferSuspendedChange($event, offer)"></md-slide-toggle>
+                                 [(ngModel)]="offer.active"
+                                 (change)="onOfferActiveChange($event, offer)"></md-slide-toggle>
             </td>
         </tr>
         </tbody>
@@ -299,8 +300,8 @@
                        [ngModel]="formatDate(offer.validTo)" (change)="onOfferChangeValidTo(offer, $event.target.value, true)" />
             </td>
             <td class="tdlast">
-                <md-slide-toggle [class.selected]="true" [(ngModel)]="offer.suspended"
-                                 (change)="onNewOfferSuspendedChange($event, offer)">
+                <md-slide-toggle [class.selected]="true" [(ngModel)]="offer.active"
+                                 (change)="onNewOfferActiveChange($event, offer)">
                 </md-slide-toggle>
             </td>
         </tr>
@@ -319,9 +320,9 @@
 
 </div>
 <div class="left-container">
-    <h2>
+    <div class="caption-header">
         <span>Products {{getProductWith()}}</span>
-    </h2>
+    </div>
     <table class="table table-striped left-container-table">
         <thead>
         <tr>
@@ -454,11 +455,11 @@
 
 </div>
 <div class="right-container">
-    <h2>
+    <div class="caption-header">
         <span *ngIf="addingOffer == true">New Offer Products</span>
         <span *ngIf="addingOffer == false && selectedOffer.id != ''">Offer {{selectedOffer.id}} Products</span>
         <span *ngIf="addingOffer == false && selectedOffer.id == ''">Offer Products</span>
-    </h2>
+    </div>
     <table class="table table-striped right-container-table">
         <thead>
         <tr>

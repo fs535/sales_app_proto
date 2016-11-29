@@ -8,8 +8,8 @@ import {Http} from "@angular/http";
     template: `
     <nav>
       <my-spinner [isRunning]="customHttp.isRunning"></my-spinner>
-      <a [routerLink]="['/productoffers']" routerLinkActive="active">Product Offers</a>
-      <a [routerLink]="['/products']" routerLinkActive="active">Products</a>
+      <a [routerLink]="['/productoffers']" routerLinkActive="active" class="btn">Product Offers</a>
+      <a [routerLink]="['/products']" routerLinkActive="active" class="btn">Products</a>
     </nav>
     <router-outlet></router-outlet>
   `,
