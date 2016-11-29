@@ -49,6 +49,7 @@ export class AppModule {
             if (this.readyState == 4 && this.status == 200) {
                 var config = JSON.parse(this.responseText);
                 settings.hub_url = config.hub_url;
+                settings.integration_url = config.integration_url;
 				app.bootstrap(AppComponent);
             }
         };

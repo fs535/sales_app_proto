@@ -123,6 +123,16 @@ export class OfferService {
             .catch(this.handleError);
     }
 
+    sendToSeelinger(): Promise<Object> {
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        let url = `${this.settings.integration_url}/offers`;
+        return this.http.get(url).toPromise()
+            .then(res =>  {
+                return res.json();
+            })
+            .catch(this.handleError);
+    }
 
     private handleError(error: any) {
         if (error.headers.get('Content-Type') == 'application/json') {

@@ -182,7 +182,7 @@ export class ProductOffersComponent implements OnInit {
                 this.combMaxs = result.combMaxs;
                 return result;
             })
-            .catch(error => this.error += error);
+            .catch((err) => this.showMessage(err));
     }
 
     getProducts(): Promise<Object> {
@@ -197,7 +197,7 @@ export class ProductOffersComponent implements OnInit {
                 this.products = response['content'];
                 return this.products;
             })
-            .catch(error => this.error += error);
+            .catch((err) => this.showMessage(err));
     }
 
     getOfferProducts(): Promise<Object> {
@@ -214,7 +214,7 @@ export class ProductOffersComponent implements OnInit {
 
                     return this.offerProducts;
                 })
-                .catch(error => this.error += error);
+                .catch((err) => this.showMessage(err));
         }
     }
 
@@ -329,7 +329,7 @@ export class ProductOffersComponent implements OnInit {
                 this.invalidOfferMap = {};
                 return this.offers;
             })
-            .catch(error => this.error += error);
+            .catch((err) => this.showMessage(err));
     }
 
     assignSelectedOffer(product: Product) {
@@ -695,7 +695,7 @@ export class ProductOffersComponent implements OnInit {
             }
             return product;
         }).catch((err) => {
-            this.error += err;
+            this.showMessage(err);
         });
     }
 
@@ -720,7 +720,20 @@ export class ProductOffersComponent implements OnInit {
     }
 
     sendToSelligent(){
-
+        return this.offerService
+            .sendToSeelinger()
+            .then(response => {
+                this.showMessage(response['message']);
+            })
+            .catch((err) => this.showMessage(err));
     }
+
+    showMessage(msg:string){
+        this.error = msg;
+        setTimeout(() => {
+            this.error = "";
+        }, 5000);
+    }
+
 
 }
