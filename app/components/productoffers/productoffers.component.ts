@@ -10,7 +10,7 @@ import {MdSlideToggleChange} from '@angular/material/slide-toggle/slide-toggle'
 
 import {ProductService}         from '../../services/products.service';
 import {OfferService}         from '../../services/offers.service';
-import {Http} from "@angular/http";
+import {Message} from "../../domain/message";
 
 
 @Component({
@@ -108,7 +108,7 @@ export class ProductOffersComponent implements OnInit {
 
 
     addingOffer = false;
-    error: any = '';
+    message: Message = null;
 
     checkOffer:Offer = new Offer("");
     checkProduct:Product = new Product("");
@@ -390,13 +390,13 @@ export class ProductOffersComponent implements OnInit {
     }
 
     closeOffer() {
-        this.error = '';
+        this.message = null;
         this.addingOffer = false;
         this.getOfferProducts();
     }
 
     ngOnInit() {
-        this.error = '';
+        this.message = null;
         this.getCollections();
         this.getOffers();
         this.getProducts();
@@ -635,11 +635,18 @@ export class ProductOffersComponent implements OnInit {
     saveOffer(offer: Offer) {
         var isNew: boolean = (offer.id == '');
         var hadProducts = this.offerProducts.length > 0;
-        this.error = '';
-        this.offerService.save(offer).then((offer) => {
+        this.message = null;
+
+        this.offerService.save(offer).then((response) => {
+
+            if (response['statusCode'] > 0){
+                this.showMessage(response['message']);
+                return;
+            }
+
             if (isNew) {
                 this.addingOffer = false;
-                this.selectedOffer = offer;
+                this.selectedOffer = response;
                 if(!hadProducts) {
                     this.offerType = "New"
                     this.offerTypeSelected = [{id:"New", text:"New"}];
@@ -652,7 +659,7 @@ export class ProductOffersComponent implements OnInit {
                     this.getOfferProducts();
                 } else {
                     for(let p of this.offerProducts) {
-                        p.offerId = offer.id
+                        p.offerId = response.id
                         this.saveProduct(p, true).then((product) => {
                            if(--expected <= 0) {
                               this.getOfferProducts();
@@ -663,7 +670,7 @@ export class ProductOffersComponent implements OnInit {
             }
             return '';
         }).catch((err) => {
-            this.error += err;
+            this.showMessage(err);
         });
     }
 
@@ -679,7 +686,8 @@ export class ProductOffersComponent implements OnInit {
     }
 
     saveProduct(product: Product, isOfferProduct: boolean): Promise<Product> {
-        this.error = '';
+        this.message = null;
+
         var self = this;
         return this.productService.save(product).then((product) => {
             for (var item of self.products) {
@@ -723,16 +731,13 @@ export class ProductOffersComponent implements OnInit {
         return this.offerService
             .sendToSeelinger()
             .then(response => {
-                this.showMessage(response['message']);
+                this.showMessage(response['message'], response['statusCode'] > 0 ? true : false);
             })
             .catch((err) => this.showMessage(err));
     }
 
-    showMessage(msg:string){
-        this.error = msg;
-        setTimeout(() => {
-            this.error = "";
-        }, 5000);
+    showMessage(msg:string, isError:boolean = true){
+        this.message = new Message(msg, isError);
     }
 
 

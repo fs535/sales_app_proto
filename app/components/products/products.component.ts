@@ -10,6 +10,7 @@ import {OfferService}         from '../../services/offers.service';
 import {MdSlideToggleChange} from '@angular/material/slide-toggle/slide-toggle'
 
 import {Http} from "@angular/http";
+import {Message} from "../../domain/message";
 @Component({
     selector: 'my-products',
     templateUrl: 'app/components/products/products.component.html'
@@ -20,8 +21,7 @@ export class ProductsComponent implements OnInit {
 
     selectedProduct: Product = new Product("");
 
-    error: any = '';
-
+    message:Message = null;
 
     offerId: string = "";
     offerName: string = "";
@@ -157,18 +157,23 @@ export class ProductsComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.error = '';
+        this.message = null;
         this.getCollections()
         this.getProducts()
     }
 
     saveProduct(product: Product) {
-        this.error = '';
+        this.message = null;
         var self = this;
-        return this.productService.save(product).then((product) => {
+        return this.productService.save(product).then((response) => {
+            if (response['statusCode'] > 0){
+                this.showMessage(response['message']);
+                return;
+            }
+
             for (var p of this.products) {
-                if(p.id == product.id) {
-                    Object.assign(p, product)
+                if(p.id == response.id) {
+                    Object.assign(p, response)
                 }
             }
             return '';
@@ -279,11 +284,15 @@ export class ProductsComponent implements OnInit {
     }
 
     saveOffer(offer: Offer) {
-        this.error = '';
-        this.offerService.save(offer).then((offer) => {
+        this.message = null;
+        this.offerService.save(offer).then((response) => {
+            if (response['statusCode'] > 0){
+                this.showMessage(response['message']);
+                return;
+            }
             for (var p of this.products) {
-                if(p.offer && p.offer.id == offer.id) {
-                    Object.assign(p.offer, offer)
+                if(p.offer && p.offer.id == response.id) {
+                    Object.assign(p.offer, response)
                 }
             }
             return '';
@@ -297,10 +306,7 @@ export class ProductsComponent implements OnInit {
         this.getProducts();
     }
 
-    showMessage(msg:string){
-        this.error = msg;
-        setTimeout(() => {
-            this.error = "";
-        }, 5000);
+    showMessage(msg:string, isError:boolean = true){
+        this.message = new Message(msg, isError);
     }
 }

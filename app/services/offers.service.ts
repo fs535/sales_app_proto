@@ -99,8 +99,15 @@ export class OfferService {
             .toPromise()
             .then((res) => {
                 let data:any = res.json();
+                // something bad happened
+                if (data['statusCode']){
+                    return data;
+                }
+                
                 data.validFrom = new Date(data['validFrom']);
                 data.validTo = new Date(data['validTo']);
+                //update version
+                offer.version = data.version;
                 return data;
             })
             .catch(this.handleError);
@@ -116,8 +123,15 @@ export class OfferService {
             .toPromise()
             .then((res) => {
                 let data:any = res.json();
+                // something bad happened
+                if (data['statusCode']){
+                    return data;
+                }
+
                 data.validFrom = new Date(data['validFrom']);
                 data.validTo = new Date(data['validTo']);
+                //update version
+                offer.version = data.version;
                 return data;
             })
             .catch(this.handleError);

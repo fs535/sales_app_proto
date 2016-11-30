@@ -1,5 +1,4 @@
-.error {
-    color: red;
+.message-box {
     position: fixed;
     top: 10px;
     background: white;
@@ -8,6 +7,10 @@
     border: 1px solid silver;
     left: 20%;
     right: 20%;
+}
+
+.message-box.error{
+    color: red;
 }
 
 /* Master Styles */
@@ -394,12 +397,20 @@ table.details-container-table th.thall, table.details-container-table td.tdall {
     width: 100%;
     text-align: center;
 }
-.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {
+.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tfoot>tr>td {
     padding-top: 2px;
     padding-left: 0px;
     padding-right: 0px;
     padding-bottom: 0px;
 }
+
+.table>tbody>tr>td{
+    padding-top: 2px;
+    padding-left: 2px;
+    padding-right: 5px;
+    padding-bottom: 0px;
+}
+
 
 .table>thead>tr>th {
     font-size: 12px;
@@ -460,4 +471,9 @@ table{
 }
 table thead{
     margin-bottom: 1px !important;
+}
+.close-btn{
+    position: absolute;
+    right: 10px;
+    top: 5px;
 }

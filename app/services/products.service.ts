@@ -175,10 +175,18 @@ export class ProductService {
             .toPromise()
             .then((res) => {
                 var d = res.json() || [];
+                // something bad happened
+                if (d['statusCode']){
+                    return d;
+                }
+
                 if(d.offer) {
                     d.offer.validFrom = new Date(d.offer.validFrom);
                     d.offer.validTo = new Date(d.offer.validTo);
                 }
+                // update product version
+                product.version = d.version;
+
                 return d;
             })
             .catch(this.handleError);

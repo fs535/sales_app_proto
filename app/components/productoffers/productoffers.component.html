@@ -4,7 +4,14 @@
         <span *ngIf="offerType == 'New'">New Offers</span>
         <span *ngIf="offerType != 'New'">Offers {{getOfferWith()}}</span>
     </div>
-    <div class="error" *ngIf="error">{{error}}</div>
+
+    <div class="message-box" *ngIf="message" [class.error]="message.isError">
+        <button type="button" class="close close-btn" aria-label="Close" (click)="message = null;">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        {{message.text}}
+    </div>
+
     <div class="row">
         <div class="form-group col-md-1">
             <label>Offer Types</label><br>

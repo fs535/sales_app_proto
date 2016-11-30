@@ -1,4 +1,10 @@
-<div class="error" *ngIf="error">{{error}}</div>
+<div class="message-box" *ngIf="message" [class.error]="message.isError">
+    <button type="button" class="close close-btn" aria-label="Close" (click)="message = null;">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    {{message.text}}
+</div>
+
 <div class="product-container">
     <table class="table table-striped product-container-table">
         <thead>

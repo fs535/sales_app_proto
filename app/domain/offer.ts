@@ -16,6 +16,7 @@ export class Offer {
     rank: string;
     showPicture: boolean;
     assigned: boolean;
+    version:number;
 
     constructor(id: string) {
         this.id = id;

@@ -12,6 +12,7 @@ export class Product {
     activatedPim: boolean;
     pimPicture: string;
     description: string;
+    version:number;
 
     offer: Offer;
     offerId: string;
