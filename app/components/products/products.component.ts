@@ -136,7 +136,7 @@ export class ProductsComponent implements OnInit {
                 this.combMaxs = result.combMaxs;
                 return result;
             })
-            .catch(error => this.error += error);
+            .catch(error => this.showMessage(error));
     }
 
     getProducts(): Promise<Object> {
@@ -153,7 +153,7 @@ export class ProductsComponent implements OnInit {
                 this.invalidOfferMap = {};
                 return this.products;
             })
-            .catch(error => this.error += error);
+            .catch(error => this.showMessage(error));
     }
 
     ngOnInit() {
@@ -173,7 +173,7 @@ export class ProductsComponent implements OnInit {
             }
             return '';
         }).catch((err) => {
-            this.error += err;
+            this.showMessage(err);
         });
     }
 
@@ -288,12 +288,19 @@ export class ProductsComponent implements OnInit {
             }
             return '';
         }).catch((err) => {
-            this.error += err;
+            this.showMessage(err);
         });
     }
 
     productsPageChanged(event:any){
         this.productsCurrentPage = event;
         this.getProducts();
+    }
+
+    showMessage(msg:string){
+        this.error = msg;
+        setTimeout(() => {
+            this.error = "";
+        }, 5000);
     }
 }
