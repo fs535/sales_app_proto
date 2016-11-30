@@ -51,7 +51,7 @@ export class ProductsComponent implements OnInit {
 
     productsTotalItems:number = 0;
     productsCurrentPage:number = 1;
-    pageSize:number = 10;
+    pageSize:number = 20;
 
     yesno: any = [{id:"", text:""},{id:"1", text:"Yes"}, {id:"0", text:"No"}];
 
@@ -145,7 +145,7 @@ export class ProductsComponent implements OnInit {
                          this.productCategory1, this.productCategory2, this.productCategory3,
                          this.productPrice, this.productBrand, this.productSize,
                          this.productActivatedPim, this.productPictureUrlSearch, this.productDescriptionSearch,
-                         this.offerName, this.offerId, this.offerAssigned, this.offerActive, this.productsCurrentPage, 20)
+                         this.offerName, this.offerId, this.offerAssigned, this.offerActive, this.productsCurrentPage, this.pageSize)
             .then(response => {
                 this.productsTotalItems = response['totalElements'];
                 this.products = response['content'];
