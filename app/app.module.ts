@@ -17,6 +17,7 @@ import {CustomHttp} from "./services/custom.http";
 import "hammerjs"
 import { MaterialModule } from '@angular/material';
 import {Ng2PaginationModule} from 'ng2-pagination';
+import {MessageBox} from "./components/templates/message-box";
 
 const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -26,7 +27,7 @@ var settings: Settings;
 
 @NgModule({
     imports: [FormsModule, HttpModule, BrowserModule, routing, MaterialModule.forRoot(), SelectModule, PerfectScrollbarModule.forRoot(PERFECT_SCROLLBAR_CONFIG), Ng2PaginationModule],
-    declarations: [AppComponent, ProductsComponent, ProductOffersComponent, Autosize, SpinnerComponent],
+    declarations: [AppComponent, ProductsComponent, ProductOffersComponent, Autosize, SpinnerComponent, MessageBox],
     entryComponents: [AppComponent],
     providers: [{
         provide: Settings, useFactory: () => {
