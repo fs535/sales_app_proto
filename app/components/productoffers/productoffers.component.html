@@ -151,13 +151,24 @@
             <th class="th9">
                 <input placeholder="Valid From" title="Valid From" class="form-control" type="text"
                        [disabled]="addingOffer" (ngModelChange)="onOfferValidFromSearch($event)"
-                       [(ngModel)]="offerValidFromSearch"
-                />
+                       [(ngModel)]="offerValidFromSearch"/>
             </th>
             <th class="th10">
                 <input placeholder="Valid To" title="Valid To" class="form-control" type="text"
                        [disabled]="addingOffer" (ngModelChange)="onOfferValidToSearch($event)"
                        [(ngModel)]="offerValidToSearch"/>
+            </th>
+            <th class="th11">
+                <ng-select class="wide" [allowClear]="true"
+                           [disabled]="addingOffer"
+                           [items]="offerRates"
+                           (selected)="onOfferRateSearch($event)"
+                           (removed)="onOfferRateSearch({'id':'','text':''})"
+                           placeholder="Rate" title="Offer Rate">
+                </ng-select>
+            </th>
+            <th class="th12">
+                <input readonly title="PIM" class="form-control" type="text" value="PIM"/>
             </th>
             <th class="thlast">
                 <ng-select class="wide" [allowClear]="true"
@@ -240,6 +251,21 @@
                                    placeholder="yyyy-mm-dd"
                                    [class.invalid]="invalidOfferMap[offer.id]?.validTo" title="{{invalidOfferMap[offer.id]?.validTo}}"
                                    [ngModel]="formatDate(offer.validTo)" (change)="onOfferChangeValidTo(offer, $event.target.value, false)" />
+                        </td>
+                        <td class="td11">
+                            <select [class.selected]="offer.id === selectedOffer.id" class="wide"
+                                    [class.unassigned]="offer.assigned == false"
+                                    [(ngModel)]="offer.rate" (ngModelChange)="saveOffer(offer)">
+                                <option [value]="rate" *ngFor="let rate of offerRates">{{rate}}</option>
+                            </select>
+                        </td>
+                        <td class="td12">
+                            <select *ngIf="offer.productIds && offer.productIds.length"
+                                    [class.selected]="offer.id === selectedOffer.id" class="wide"
+                                    [class.unassigned]="offer.assigned == false"
+                                    [(ngModel)]="offer.primaryProduct" (ngModelChange)="saveOffer(offer)">
+                                <option [value]="pid" *ngFor="let pid of offer.productIds">{{pid}}</option>
+                            </select>
                         </td>
                         <td class="tdlast">
                             <md-slide-toggle [class.selected]="offer.id === selectedOffer.id"

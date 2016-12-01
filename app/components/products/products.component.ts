@@ -66,12 +66,13 @@ export class ProductsComponent implements OnInit {
     productActivatedPim: string = "";
     productPictureUrlSearch: string = "";
     productDescriptionSearch: string = "";
+    checkProduct:Product = new Product("");
+    checkOffer:Offer = new Offer("");
 
     constructor(private router: Router,
                 private productService: ProductService,
                 private offerService: OfferService) {
     }
-
 
     formatDate(date: Date): string {
         return date.toISOString().slice(0, 10);
@@ -304,6 +305,28 @@ export class ProductsComponent implements OnInit {
     productsPageChanged(event:any){
         this.productsCurrentPage = event;
         this.getProducts();
+    }
+
+    focusOnOffer(field:string, value:any){
+        // save previous value
+        this.checkOffer[field] = value;
+    }
+
+    checkAndSaveOffer(field:string, offer:Offer){
+        if (this.checkOffer[field] != offer[field]){
+            this.saveOffer(offer);
+        }
+    }
+
+    focusOnProduct(field:string, value: Product){
+        // save previous value
+        this.checkProduct[field] = value;
+    }
+
+    checkAndSaveProduct(field:string, product: Product){
+        if (this.checkProduct[field] != product[field]){
+            this.saveProduct(product);
+        }
     }
 
     showMessage(msg:string, isError:boolean = true){

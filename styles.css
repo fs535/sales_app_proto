@@ -80,7 +80,7 @@ tr.selected {
   font-weight: bold;
 }
 
-tr.unassigned input {
+tr.unassigned input, tr.unassigned select {
   color: #039be5 !important;
 }
 
@@ -193,11 +193,18 @@ table.top-container-table th.th8, table.top-container-table td.td8 {
     width: 10%;
 }
 table.top-container-table th.th9, table.top-container-table td.td9 {
-    width: 15%;
+    width: 10%;
 }
 table.top-container-table th.th10, table.top-container-table td.td10 {
-    width: 15%;
+    width: 10%;
 }
+table.top-container-table th.th11, table.top-container-table td.td11 {
+    width: 5%;
+}
+table.top-container-table th.th12, table.top-container-table td.td12 {
+    width: 5%;
+}
+
 table.top-container-table th.thlast, table.top-container-table td.tdlast {
     width: 5%;
 }
@@ -315,7 +322,7 @@ table.product-container-table thead, table.product-container-table tbody {
 }
 table.product-container-table tbody {
     overflow-y: auto;
-    height: 500px;
+    height: 520px;
 }
 table.product-container-table tr {
     width: 100%;

@@ -39,6 +39,7 @@ export class ProductOffersComponent implements OnInit {
     benefitIds: string[];
     discounts: string[];
     combMaxs: string[];
+    offerRates: string[] = ['1', '2', '3', '4', '5'];
 
     offersTotalItems:number = 0;
     offersCurrentPage:number = 1;
@@ -100,6 +101,7 @@ export class ProductOffersComponent implements OnInit {
     offerValidFrom: string = "";
     offerValidTo: string = "";
     offerActive: string = "";
+    offerRate:string = "";
 
     offers: Offer[] = [];
     invalidOfferMap: { [key:string]:InvalidOffer; } = {};
@@ -162,6 +164,11 @@ export class ProductOffersComponent implements OnInit {
         if(!n) {
             this.saveOffer(offer);
         }
+    }
+
+    onOfferRateChange(item: string, offer:Offer){
+        offer.rate = item;
+        this.saveOffer(offer);
     }
 
     getCollections(): Promise<Categories> {
@@ -322,7 +329,7 @@ export class ProductOffersComponent implements OnInit {
         return this.offerService
             .getOffers(this.offerType, this.offerCategory1, this.offerCategory2, this.offerCategory3,
             this.offerBrand, this.offerPrice, this.offerSize,'', '', this.offerId, this.offerName,
-            this.offerCombType, this.offerDemandId, this.offerCombMax, this.offerValidFrom, this.offerValidTo, this.offerActive, this.offersCurrentPage)
+            this.offerCombType, this.offerDemandId, this.offerCombMax, this.offerValidFrom, this.offerValidTo, this.offerActive, this.offerRate, this.offersCurrentPage)
             .then(response => {
                 this.offersTotalItems = response['totalElements'];
                 this.offers = response['content'];
@@ -387,6 +394,7 @@ export class ProductOffersComponent implements OnInit {
         this.offer.combCardPrefix = "1";
         this.offer.combStacking = false;
         this.offer.combExternalId = "0";
+        this.offer.rate = '3';
     }
 
     closeOffer() {
@@ -618,6 +626,11 @@ export class ProductOffersComponent implements OnInit {
     }
     onOfferActiveSearch(item: SelectItem) {
         this.offerActive = item.id;
+        this.getOffers();
+    }
+
+    onOfferRateSearch(item: SelectItem) {
+        this.offerRate = item.id;
         this.getOffers();
     }
 

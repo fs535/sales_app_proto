@@ -81,7 +81,7 @@
                            [items]="yesno"
                            (selected)="onProductActivatedPimSearch($event)"
                            (removed)="onProductActivatedPimSearch({'id':'','text':''})"
-                           placeholder="ACT" title="Activated PIM?">
+                           placeholder="PIM" title="Activated PIM?">
                 </ng-select>
             </th>
             <th class="thsmall">
@@ -148,17 +148,17 @@
                        [ngModel]="product.packageSize"/>
             </td>
             <td class="tdtiny">
-                <input *ngIf="product.offer != null" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveOffer(product.offer)"
+                <input *ngIf="product.offer != null" [class.selected]="product.id === selectedProduct.id" class="wide"  (focus)="focusOnOffer('discount', product.offer)" (blur)="checkAndSaveOffer('discount', product.offer)"
                        type="text"
                        [(ngModel)]="product.offer.discount"/>
             </td>
             <td class="tdtiny">
-                <input [class.unassigned]="!product.offerId" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveProduct(product)"
+                <input [class.unassigned]="!product.offerId" [class.selected]="product.id === selectedProduct.id" class="wide" (focus)="focusOnProduct('offerId', product)" (blur)="checkAndSaveProduct('offerId', product)"
                        type="text"
                        [(ngModel)]="product.offerId"/>
             </td>
             <td class="tdlarge">
-                <input *ngIf="product.offer != null" [class.selected]="product.id === selectedProduct.id" class="wide" (blur)="saveOffer(product.offer)"
+                <input *ngIf="product.offer != null" [class.selected]="product.id === selectedProduct.id" class="wide" (focus)="focusOnOffer('name', product.offer)" (blur)="checkAndSaveOffer('name', product.offer)"
                        type="text"
                        [(ngModel)]="product.offer.name"/>
             </td>
@@ -227,12 +227,12 @@
             <th class="thlarge">
                 Picture URL
             </th>
-            <th class="thtiny" title="Rank">
-                RNK
+            <!--<th class="thtiny" title="Rate">
+                RAT
             </th>
             <th class="thtiny" title="Show Picture?">
                 SP
-            </th>
+            </th>-->
         </tr>
         </thead>
         <tbody *ngIf="selectedProduct.id != ''">
@@ -286,16 +286,6 @@
                 <input readonly="true" [class.unassigned]="!selectedProduct.offerId" [class.selected]="true" class="wide"
                        type="text"
                        [ngModel]="selectedProduct.pimPicture"/>
-            </td>
-            <td class="tdtiny">
-                <input readonly="true" *ngIf="selectedProduct.offer != null" [class.unassigned]="!selectedProduct.offerId" [class.selected]="true" class="wide"
-                       type="text"
-                       [ngModel]="selectedProduct.offer.rank"/>
-            </td>
-            <td class="tdtiny">
-                <input readonly="true" [class.unassigned]="!selectedProduct.offerId" [class.selected]="true" class="wide"
-                       type="text"
-                       [ngModel]="selectedProduct.showPicture"/>
             </td>
         </tr>
         </tbody>
