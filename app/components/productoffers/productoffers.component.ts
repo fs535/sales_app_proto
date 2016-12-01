@@ -647,11 +647,16 @@ export class ProductOffersComponent implements OnInit {
             if (isNew) {
                 this.addingOffer = false;
                 this.selectedOffer = response;
-                if(!hadProducts) {
+                /*if(!hadProducts) {
                     this.offerType = "New"
                     this.offerTypeSelected = [{id:"New", text:"New"}];
-                }
-                this.getOffers();
+                }*/
+                // go to last page
+                let wholePages:number = Math.floor((this.offersTotalItems + 1) / this.pageSize);
+                let remain:number = (this.offersTotalItems + 1) % this.pageSize;
+
+                this.offerPageChanged(wholePages + (remain > 0 ? 1 : 0));
+
                 this.getProducts();
                 // Save selected products with new offer
                 var expected = this.offerProducts.length;
