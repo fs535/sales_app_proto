@@ -17,7 +17,7 @@
                            [items]="category1values"
                            (selected)="onProductCategory1Search($event)"
                            (removed)="onProductCategory1Search({'id':'','text':''})"
-                           placeholder="Category1" title="Categry1">
+                           placeholder="Category1" title="Category1">
                 </ng-select>
             </th>
             <th class="thsmall">
@@ -25,7 +25,7 @@
                            [items]="category2values"
                            (selected)="onProductCategory2Search($event)"
                            (removed)="onProductCategory2Search({'id':'','text':''})"
-                           placeholder="Category2" title="Categry2">
+                           placeholder="Category2" title="Category2">
                 </ng-select>
             </th>
             <th class="thsmall">
@@ -33,7 +33,7 @@
                            [items]="category3values"
                            (selected)="onProductCategory3Search($event)"
                            (removed)="onProductCategory3Search({'id':'','text':''})"
-                           placeholder="Category3" title="Categry3">
+                           placeholder="Category3" title="Category3">
                 </ng-select>
             </th>
             <th class="thtiny">
@@ -85,12 +85,12 @@
                 </ng-select>
             </th>
             <th class="thsmall">
-                <input placeholder="Valid From" title="Valid From" class="form-control" type="text"
+                <input placeholder="Valid From" title="Valid from date" class="form-control" type="text"
                        (ngModelChange)="onOfferValidFromSearch($event)"
                        [(ngModel)]="offerValidFromSearch"/>
             </th>
             <th class="thsmall">
-                <input placeholder="Valid To" title="Valid To" class="form-control" type="text"
+                <input placeholder="Valid To" title="Valid to date" class="form-control" type="text"
                        (ngModelChange)="onOfferValidToSearch($event)"
                        [(ngModel)]="offerValidToSearch"/>
             </th>
@@ -99,7 +99,7 @@
                            [items]="yesno"
                            (selected)="onOfferActiveSearch($event)"
                            (removed)="onOfferActiveSearch({'id':'','text':''})"
-                           placeholder="ACT" title="Active">
+                           placeholder="ACT" title="Active offer?">
                 </ng-select>
             </th>
         </tr>
@@ -110,7 +110,7 @@
             <td class="tdtiny">
                 <input readonly="true" [class.unassigned]="!product.offerId" [class.selected]="product.id === selectedProduct.id" class="wide"
                        type="text"
-                       [ngModel]="product.id"/>
+                       [ngModel]="product.product"/>
             </td>
             <td class="tdlarge">
                 <input readonly="true" [class.unassigned]="!product.offerId" [class.selected]="product.id === selectedProduct.id" class="wide"
@@ -227,12 +227,6 @@
             <th class="thlarge">
                 Picture URL
             </th>
-            <!--<th class="thtiny" title="Rate">
-                RAT
-            </th>
-            <th class="thtiny" title="Show Picture?">
-                SP
-            </th>-->
         </tr>
         </thead>
         <tbody *ngIf="selectedProduct.id != ''">

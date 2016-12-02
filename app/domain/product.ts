@@ -2,6 +2,7 @@ import {Offer}    from './offer';
 
 export class Product {
     id: string;
+    product: string;
     productName: string;
     productCategory1Name: string;
     productCategory2Name: string;

@@ -17,7 +17,7 @@ export class Offer {
     primaryProduct: string;
     assigned: boolean;
     version:number;
-    productIds:string[];
+    productIds:string;
 
     constructor(id: string) {
         this.id = id;

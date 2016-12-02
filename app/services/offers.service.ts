@@ -76,12 +76,17 @@ export class OfferService {
             .then(res =>  {
                 let data:any = res.json() || [];
                 (data.content as Array<any>).forEach((d:any) => {
-                    d.validFrom = new Date(d['validFrom']);
-                    d.validTo = new Date(d['validTo']);
+                    this.covertFields(d);
                 });
                 return data;
             })
             .catch(this.handleError);
+    }
+
+    covertFields(data:any):any{
+        data.validFrom = new Date(data['validFrom']);
+        data.validTo = new Date(data['validTo']);
+        return data;
     }
 
     save(offer: Offer): Promise<Offer> {
@@ -107,9 +112,7 @@ export class OfferService {
                 if (data['statusCode']){
                     return data;
                 }
-                
-                data.validFrom = new Date(data['validFrom']);
-                data.validTo = new Date(data['validTo']);
+                this.covertFields(data);
                 //update version
                 offer.version = data.version;
                 return data;
@@ -131,9 +134,7 @@ export class OfferService {
                 if (data['statusCode']){
                     return data;
                 }
-
-                data.validFrom = new Date(data['validFrom']);
-                data.validTo = new Date(data['validTo']);
+                this.covertFields(data);
                 //update version
                 offer.version = data.version;
                 return data;

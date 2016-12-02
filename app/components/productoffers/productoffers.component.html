@@ -100,7 +100,7 @@
                            [items]="combTypes"
                            (selected)="onOfferCombTypeSearch($event)"
                            (removed)="onOfferCombTypeSearch({'id':'','text':''})"
-                           placeholder="CT" title="Combination Type">
+                           placeholder="CT" title="Combination type">
                 </ng-select>
             </th>
             <th class="th4">
@@ -118,7 +118,7 @@
                            [items]="demandCounts"
                            (selected)="onOfferDemandCountSearch($event)"
                            (removed)="onOfferDemandCountSearch({'id':'','text':''})"
-                           placeholder="DCN" title="Demand Count">
+                           placeholder="DCN" title="Demand count">
                 </ng-select>
             </th>
             <th class="th6">
@@ -145,16 +145,16 @@
                            [items]="combMaxs"
                            (selected)="onOfferCombMaxSearch($event)"
                            (removed)="onOfferCombMaxSearch({'id':'','text':''})"
-                           placeholder="CM" title="Comb Max">
+                           placeholder="CM" title="Comb max">
                 </ng-select>
             </th>
             <th class="th9">
-                <input placeholder="Valid From" title="Valid From" class="form-control" type="text"
+                <input placeholder="Valid From" title="Valid from date" class="form-control" type="text"
                        [disabled]="addingOffer" (ngModelChange)="onOfferValidFromSearch($event)"
                        [(ngModel)]="offerValidFromSearch"/>
             </th>
             <th class="th10">
-                <input placeholder="Valid To" title="Valid To" class="form-control" type="text"
+                <input placeholder="Valid To" title="Valid to date" class="form-control" type="text"
                        [disabled]="addingOffer" (ngModelChange)="onOfferValidToSearch($event)"
                        [(ngModel)]="offerValidToSearch"/>
             </th>
@@ -164,11 +164,11 @@
                            [items]="offerRates"
                            (selected)="onOfferRateSearch($event)"
                            (removed)="onOfferRateSearch({'id':'','text':''})"
-                           placeholder="Rate" title="Offer Rate">
+                           placeholder="Rate" title="Offer rate">
                 </ng-select>
             </th>
             <th class="th12">
-                <input readonly title="PIM" class="form-control" type="text" value="PIM"/>
+                <input readonly title="Show picture for product with ID" class="form-control" type="text" value="SP"/>
             </th>
             <th class="thlast">
                 <ng-select class="wide" [allowClear]="true"
@@ -176,7 +176,7 @@
                            [items]="yesno"
                            (selected)="onOfferActiveSearch($event)"
                            (removed)="onOfferActiveSearch({'id':'','text':''})"
-                           placeholder="ACT" title="Active">
+                           placeholder="ACT" title="Active offer?">
                 </ng-select>
             </th>
         </tr>
@@ -264,7 +264,7 @@
                                     [class.selected]="offer.id === selectedOffer.id" class="wide"
                                     [class.unassigned]="offer.assigned == false"
                                     [(ngModel)]="offer.primaryProduct" (ngModelChange)="saveOffer(offer)">
-                                <option [value]="pid" *ngFor="let pid of offer.productIds">{{pid}}</option>
+                                <option [value]="pid" *ngFor="let pid of convertOfferProductsIds(offer)">{{pid}}</option>
                             </select>
                         </td>
                         <td class="tdlast">
@@ -371,7 +371,7 @@
                            (selected)="onProductCategory1Search($event)"
                            [active]="productCategory1Selected"
                            (removed)="onProductCategory1Search({'id':'','text':''})"
-                           placeholder="Category1" title="Categry1">
+                           placeholder="Category1" title="Category1">
                 </ng-select>
             </th>
             <th class="thsmall">
@@ -380,7 +380,7 @@
                            (selected)="onProductCategory2Search($event)"
                            [active]="productCategory2Selected"
                            (removed)="onProductCategory2Search({'id':'','text':''})"
-                           placeholder="Category2" title="Categry2">
+                           placeholder="Category2" title="Category2">
                 </ng-select>
             </th>
             <th class="thsmall">
@@ -389,7 +389,7 @@
                            (selected)="onProductCategory3Search($event)"
                            [active]="productCategory3Selected"
                            (removed)="onProductCategory3Search({'id':'','text':''})"
-                           placeholder="Category3" title="Categry3">
+                           placeholder="Category3" title="Category3">
                 </ng-select>
             </th>
             <th class="thtiny">
@@ -428,7 +428,7 @@
                            [items]="yesno"
                            (selected)="onProductOfferAssignedSearch($event)"
                            (removed)="onProductOfferAssignedSearch({'id':'','text':''})"
-                           placeholder="OA" title="Offer Assigned?">
+                           placeholder="OA" title="Offer assigned?">
                 </ng-select>
             </th>
         </tr>
@@ -507,7 +507,7 @@
                            [items]="category1values"
                            (selected)="onSelectedOfferProductCategory1Search($event)"
                            (removed)="onSelectedOfferProductCategory1Search({'id':'','text':''})"
-                           placeholder="Category1" title="Categry1">
+                           placeholder="Category1" title="Category1">
                 </ng-select>
             </th>
             <th class="thsmall">
@@ -515,7 +515,7 @@
                            [items]="category2values"
                            (selected)="onSelectedOfferProductCategory2Search($event)"
                            (removed)="onSelectedOfferProductCategory2Search({'id':'','text':''})"
-                           placeholder="Category2" title="Categry2">
+                           placeholder="Category2" title="Category2">
                 </ng-select>
             </th>
             <th class="thsmall">
@@ -523,7 +523,7 @@
                            [items]="category3values"
                            (selected)="onSelectedOfferProductCategor3Search($event)"
                            (removed)="onSelectedOfferProductCategory3Search({'id':'','text':''})"
-                           placeholder="Category3" title="Categry3">
+                           placeholder="Category3" title="Category3">
                 </ng-select>
             </th>
             <th class="thtiny">

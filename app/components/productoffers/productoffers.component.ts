@@ -758,5 +758,14 @@ export class ProductOffersComponent implements OnInit {
         this.message = new Message(msg, isError);
     }
 
+    convertOfferProductsIds(data:any):string[]{
+        let ids:string[];
+        if (data.productIds){
+            ids = data.productIds.replace(' ','').split(',');
+        }else{
+            ids = [];
+        }
+        return ids;
+    }
 
 }
