@@ -9,7 +9,7 @@ export class Offer {
     combMax: string;
     validFrom: Date;
     validTo: Date;
-    active: boolean;
+    active: boolean = true;
     combCardPrefix: string;
     combStacking: boolean;
     combExternalId: string;
