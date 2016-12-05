@@ -260,7 +260,7 @@
                             </select>
                         </td>
                         <td class="td12">
-                            <select *ngIf="offer.productIds && offer.productIds.length"
+                            <select *ngIf="offer.productIds"
                                     [class.selected]="offer.id === selectedOffer.id" class="wide"
                                     [class.unassigned]="offer.assigned == false"
                                     [(ngModel)]="offer.primaryProduct" (ngModelChange)="saveOffer(offer)">

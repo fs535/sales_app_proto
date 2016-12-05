@@ -761,7 +761,7 @@ export class ProductOffersComponent implements OnInit {
     convertOfferProductsIds(data:any):string[]{
         let ids:string[];
         if (data.productIds){
-            ids = data.productIds.replace(' ','').split(',');
+            ids = data.productIds.replace(/ /g, '').split(',');
         }else{
             ids = [];
         }
