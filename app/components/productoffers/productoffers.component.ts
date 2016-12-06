@@ -780,6 +780,8 @@ export class ProductOffersComponent implements OnInit {
             }
             this.selectedOffer = new Offer("");
             self.getOffers();
+            self.getProducts();
+            this.offerProducts = [];
         }).catch((err) => {
             this.showMessage(err);
         });

@@ -507,3 +507,6 @@ table thead{
 .okCancelBtn{
     width: 80px;
 }
+tr .form-control{
+    border-radius: 0px !important;
+}
