@@ -190,23 +190,25 @@ table.top-container-table th.th7, table.top-container-table td.td7 {
     width: 5%;
 }
 table.top-container-table th.th8, table.top-container-table td.td8 {
-    width: 10%;
+    width: 8%;
 }
 table.top-container-table th.th9, table.top-container-table td.td9 {
-    width: 10%;
+    width: 9%;
 }
 table.top-container-table th.th10, table.top-container-table td.td10 {
-    width: 10%;
+    width: 9%;
 }
 table.top-container-table th.th11, table.top-container-table td.td11 {
     width: 5%;
 }
 table.top-container-table th.th12, table.top-container-table td.td12 {
+    width: 7%;
+}
+table.top-container-table th.th13, table.top-container-table td.td13 {
     width: 5%;
 }
-
 table.top-container-table th.thlast, table.top-container-table td.tdlast {
-    width: 5%;
+    width: 3%;
 }
 table.top-container-table th.thall, table.top-container-table td.tdall {
     width: 100%;
@@ -473,6 +475,10 @@ table thead{
     left: 20%;
     right: 20%;
 }
+.message-box.popup {
+    left: 40%;
+    right: 40%;
+}
 .close-btn{
     position: absolute;
     right: 10px;
@@ -488,6 +494,16 @@ table thead{
 .message-box-body{
     padding: 15px;
 }
+.message-box-footer{
+    padding: 5px;
+    text-align: right;
+}
 .message-box.error .message-box-header{
     background-color: #de2d2d;
+}
+.del-btn{
+    padding: 2px;
+}
+.okCancelBtn{
+    width: 80px;
 }

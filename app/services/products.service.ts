@@ -11,7 +11,7 @@ export class ProductService {
     constructor(private http: Http, private settings: Settings) {
     }
 
-    getProductsByOffer(offer: Offer, productNameSearch: string,
+    getProductsByOffer(offer: Offer, selectedOfferProductIDSearch:string, productNameSearch: string,
                        productCategory1: string, productCategory2: string, productCategory3: string,
                        price: string, brand: string, size: string, currentPage:number, pageSize:number = 10): Promise<Object> {
         let params: URLSearchParams = new URLSearchParams();
@@ -22,6 +22,9 @@ export class ProductService {
 
         if (offer.id){
             params.set('offerId', offer.id);
+        }
+        if (selectedOfferProductIDSearch){
+            params.set('productSearch', selectedOfferProductIDSearch);
         }
         params.set('category1', productCategory1);
         if (productCategory1){
@@ -93,7 +96,7 @@ export class ProductService {
             .catch(this.handleError);
     }
 
-    getProducts(productId: string, productNameSearch: string, category1: string, category2: string, category3: string,
+    getProducts(id: string, productID:string, productNameSearch: string, category1: string, category2: string, category3: string,
                 price: string, brand: string, size: string,
                 activatedPim: string, pictureUrl: string, description: string,
                 offerNameSearch: string, offerIdearch: string, offerAssigned: string, offerActive:string, currentPage:number, pageSize:number = 10): Promise<Object> {
@@ -103,8 +106,11 @@ export class ProductService {
         params.set('size', String(pageSize));
         //params.set('sort', offerType);
 
-        if (productId){
-            params.set('id', productId);
+        if (id){
+            params.set('id', id);
+        }
+        if (productID){
+            params.set('productSearch', productID);
         }
         if (productNameSearch){
             params.set('nameSearch', productNameSearch);
@@ -143,7 +149,7 @@ export class ProductService {
             params.set('offerId', offerIdearch);
         }
         if (offerAssigned){
-            params.set('offered', offerAssigned);
+            params.set('offerAssigned', offerAssigned);
         }
         if (offerActive){
             params.set('offerActive', offerActive);

@@ -142,7 +142,7 @@ export class ProductsComponent implements OnInit {
 
     getProducts(): Promise<Object> {
         return this.productService
-            .getProducts(this.productIdSearch, this.productNameSearch,
+            .getProducts(null, this.productIdSearch, this.productNameSearch,
                          this.productCategory1, this.productCategory2, this.productCategory3,
                          this.productPrice, this.productBrand, this.productSize,
                          this.productActivatedPim, this.productPictureUrlSearch, this.productDescriptionSearch,

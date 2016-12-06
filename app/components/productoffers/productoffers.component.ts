@@ -71,6 +71,7 @@ export class ProductOffersComponent implements OnInit {
     productSize: string = "";
 
 
+    selectedOfferProductIDSearch: string = "";
     selectedOfferProductNameSearch: string = "";
     selectedOfferProductCategory1: string = "";
     selectedOfferProductCategory2: string = "";
@@ -194,7 +195,7 @@ export class ProductOffersComponent implements OnInit {
 
     getProducts(): Promise<Object> {
         return this.productService
-            .getProducts(this.productIdSearch, this.productNameSearch,
+            .getProducts(this.productIdSearch, null, this.productNameSearch,
                          this.productCategory1, this.productCategory2, this.productCategory3,
                          this.productPrice, this.productBrand, this.productSize,
                          '', '', '',
@@ -210,7 +211,7 @@ export class ProductOffersComponent implements OnInit {
     getOfferProducts(): Promise<Object> {
         if(this.selectedOffer.id != '') {
             return this.productService
-                .getProductsByOffer(this.selectedOffer, this.selectedOfferProductNameSearch,
+                .getProductsByOffer(this.selectedOffer, this.selectedOfferProductIDSearch, this.selectedOfferProductNameSearch,
                                     this.selectedOfferProductCategory1, this.selectedOfferProductCategory2, this.selectedOfferProductCategory3,
                                     this.selectedOfferProductPrice, this.selectedOfferProductBrand, this.selectedOfferProductSize, this.offerProductsCurrentPage
                 )
@@ -455,8 +456,10 @@ export class ProductOffersComponent implements OnInit {
         this.productOfferAssigned = item.id
         this.getProducts();
     }
-
-
+    onSelectedOfferProductIDSearch(item: string) {
+        this.selectedOfferProductIDSearch = item
+        this.getOfferProducts();
+    }
     onSelectedOfferProductNameSearch(item: string) {
         this.selectedOfferProductNameSearch = item
         this.getOfferProducts();
@@ -766,6 +769,24 @@ export class ProductOffersComponent implements OnInit {
             ids = [];
         }
         return ids;
+    }
+
+    performDelete(data:any){
+        let self = this;
+        this.offerService.deleteOffer(data).then((response) => {
+            if (response['statusCode'] > 0){
+                this.showMessage(response['message']);
+                return;
+            }
+            this.selectedOffer = new Offer("");
+            self.getOffers();
+        }).catch((err) => {
+            this.showMessage(err);
+        });
+    }
+
+    deleteOffer(offer:Offer){
+        this.message = new Message('Please, confirm offer deletion!', false, true, offer, this.performDelete.bind(this));
     }
 
 }

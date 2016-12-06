@@ -145,10 +145,22 @@ export class OfferService {
     sendToSeelinger(): Promise<Object> {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        let url = `${this.settings.integration_url}/offers`;
+        let url = `${this.settings.hub_url}/offer`;
         return this.http.get(url).toPromise()
             .then(res =>  {
                 return res.json();
+            })
+            .catch(this.handleError);
+    }
+
+    deleteOffer(offer:Offer):Promise<Object>{
+        let url = `${this.settings.hub_url}/offer/${offer.id}`;
+        return this.http
+            .delete(url)
+            .toPromise()
+            .then((res) => {
+                let data:any = res.json();
+                return data;
             })
             .catch(this.handleError);
     }

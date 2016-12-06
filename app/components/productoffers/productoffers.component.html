@@ -5,7 +5,7 @@
         <span *ngIf="offerType != 'New'">Offers {{getOfferWith()}}</span>
     </div>
 
-    <msg-box-template [message]="message"></msg-box-template>
+    <msg-box-template [message]="message" (closed)="popUpClosed($event)"></msg-box-template>
 
     <div class="row">
         <div class="form-group col-md-1">
@@ -170,7 +170,7 @@
             <th class="th12">
                 <input readonly title="Show picture for product with ID" class="form-control" type="text" value="SP"/>
             </th>
-            <th class="thlast">
+            <th class="th13">
                 <ng-select class="wide" [allowClear]="true"
                            [disabled]="addingOffer"
                            [items]="yesno"
@@ -178,6 +178,9 @@
                            (removed)="onOfferActiveSearch({'id':'','text':''})"
                            placeholder="ACT" title="Active offer?">
                 </ng-select>
+            </th>
+            <th class="thlast">
+                <input readonly title="Delete offer" class="form-control" type="text" value="DEL"/>
             </th>
         </tr>
         </thead>
@@ -267,11 +270,17 @@
                                 <option [value]="pid" *ngFor="let pid of convertOfferProductsIds(offer)">{{pid}}</option>
                             </select>
                         </td>
-                        <td class="tdlast">
+                        <td class="td13">
                             <md-slide-toggle [class.selected]="offer.id === selectedOffer.id"
                                              [class.unassigned]="offer.assigned == false"
                                              [(ngModel)]="offer.active"
-                                             (change)="onOfferActiveChange($event, offer)"></md-slide-toggle>
+                                             (change)="onOfferActiveChange($event, offer)">
+                            </md-slide-toggle>
+                        </td>
+                        <td class="tdlast">
+                            <div class="text-center">
+                                <span class="btn btn-danger glyphicon glyphicon-remove del-btn" (click)="deleteOffer(offer)"></span>
+                            </div>
                         </td>
                     </tr>
                 </tbody>
@@ -498,6 +507,10 @@
     <table class="table table-striped right-container-table">
         <thead>
         <tr>
+            <th class="thsmall">
+                <input [disabled]="addingOffer" placeholder="ID" title="Product ID" class="form-control" type="text"
+                       (ngModelChange)="onSelectedOfferProductIDSearch($event)" [(ngModel)]="selectedOfferProductIDSearch"/>
+            </th>
             <th class="thlarge">
                 <input [disabled]="addingOffer" placeholder="Name" title="Name" class="form-control" type="text"
                        (ngModelChange)="onSelectedOfferProductNameSearch($event)" [(ngModel)]="selectedOfferProductNameSearch"/>
@@ -555,9 +568,16 @@
         <tbody>
         <tr *ngFor="let product of offerProducts | paginate: { id: 'offerProductsPagination', itemsPerPage: pageSize, currentPage: offerProductsCurrentPage, totalItems: offerProductsTotalItems}" (mousedown)="onProductSelect(product);true"
             [class.selected]="product.id === selectedProduct.id">
-            <td class="tdlarge">
+
+            <td class="tdsmall">
                 <a style="float: left;" *ngIf="!addingOffer" title="Remove offer {{selectedOffer.id}}: {{selectedOffer.name}} from product, and leave it unffered!" (click)="removeOffer(product)"><span class="glyphicon glyphicon-triangle-left"></span></a>
-                <input [disabled]="addingOffer" readonly="true" style="width: calc(100% - 16px);" [class.selected]="product.id === selectedProduct.id" (focus)="focusOnProduct('productName', product.productName)" (blur)="checkAndSaveProduct('productName', product, true)"
+                <input [disabled]="addingOffer" readonly="true" style="width: calc(100% - 16px);" [class.selected]="product.id === selectedProduct.id" class="wide"
+                       type="text"
+                       [(ngModel)]="product.product"/>
+            </td>
+
+            <td class="tdlarge">
+                <input [disabled]="addingOffer" readonly="true" [class.selected]="product.id === selectedProduct.id" class="wide" (focus)="focusOnProduct('productName', product.productName)" (blur)="checkAndSaveProduct('productName', product, true)"
                        type="text"
                        [(ngModel)]="product.productName"/>
             </td>
