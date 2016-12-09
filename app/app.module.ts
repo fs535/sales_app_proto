@@ -1,4 +1,4 @@
-import {NgModule, ApplicationRef, Provider, NgModuleRef}      from '@angular/core';
+import {NgModule, ApplicationRef, Provider, NgModuleRef, Injector}      from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule}   from '@angular/forms';
 import {SelectModule} from 'ng2-select/components/select.module';
@@ -18,6 +18,11 @@ import "hammerjs"
 import { MaterialModule } from '@angular/material';
 import {Ng2PaginationModule} from 'ng2-pagination';
 import {MessageBox} from "./components/templates/message-box";
+import {LoginComponent} from "./components/login/login.component";
+import {AuthGuard} from "./guards/authGuard";
+import {AuthenticationService} from "./services/authentication.service";
+import {Base64Service} from "./services/base64.service";
+import {Router} from "@angular/router";
 
 const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -27,18 +32,22 @@ var settings: Settings;
 
 @NgModule({
     imports: [FormsModule, HttpModule, BrowserModule, routing, MaterialModule.forRoot(), SelectModule, PerfectScrollbarModule.forRoot(PERFECT_SCROLLBAR_CONFIG), Ng2PaginationModule],
-    declarations: [AppComponent, ProductsComponent, ProductOffersComponent, Autosize, SpinnerComponent, MessageBox],
+    declarations: [LoginComponent, AppComponent, ProductsComponent, ProductOffersComponent, Autosize, SpinnerComponent, MessageBox],
     entryComponents: [AppComponent],
-    providers: [{
+    providers: [AuthGuard,
+        AuthenticationService,
+        Base64Service,
+        {
         provide: Settings, useFactory: () => {
             return settings;
         }
     }, {
         provide: Http,
         useFactory: (backend: XHRBackend,
-                     defaultOptions: RequestOptions) =>
-            new CustomHttp(backend, defaultOptions),
-        deps: [XHRBackend, RequestOptions]
+                     defaultOptions: RequestOptions,
+                     router: Router, injector:Injector) =>
+            new CustomHttp(backend, defaultOptions, router, injector),
+        deps: [XHRBackend, RequestOptions, Router, Injector]
     }]
 })
 export class AppModule {

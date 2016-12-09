@@ -1,4 +1,4 @@
 {
-  "hub_url": "http://hub.service.ideaportriga.lv/api",
-  "integration_url": "http://integrations.service.ideaportriga.lv:8008/api/generate"
+  "hub_url": "http://hub.service.ideaportriga.lv",
+  "integration_url": "http://integrations.service.ideaportriga.lv:8008"
 }

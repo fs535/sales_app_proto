@@ -29,7 +29,8 @@
       'moment':                   'npm:moment',
       'ng2-select/components': 'npm:ng2-select/components',
       'angular2-perfect-scrollbar': 'npm:angular2-perfect-scrollbar',
-      'ng2-pagination': 'npm:ng2-pagination'
+      'ng2-pagination': 'npm:ng2-pagination',
+      'ng2-cookies': 'npm:ng2-cookies'
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
@@ -58,6 +59,10 @@
       },
       'ng2-pagination':{
         main: './index.js',
+        defaultExtension: 'js'
+      },
+      'ng2-cookies': {
+        main: 'ng2-cookies.js',
         defaultExtension: 'js'
       }
     }

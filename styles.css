@@ -510,3 +510,30 @@ table thead{
 tr .form-control{
     border-radius: 0px !important;
 }
+.login-block{
+    padding-right: 35%;
+    padding-left: 35%;
+    padding-top: 10em;
+    margin-bottom: 20px;
+}
+.login-block .form{
+    padding: 2em;
+    border: 3px double;
+    background-color: #eee;
+}
+.login-block input{
+    width: 100%;
+}
+.login-block .error-block{
+    color: red;
+}
+.login-block .form-group{
+    margin-top: 1em;
+}
+.text-align-right{
+    text-align: right;
+}
+.error-message{
+    padding-right: 30%;
+    padding-left: 30%;
+}

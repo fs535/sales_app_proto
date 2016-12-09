@@ -3,20 +3,29 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { ProductOffersComponent } from './components/productoffers/productoffers.component';
 import { ProductsComponent } from './components/products/products.component';
+import {LoginComponent} from "./components/login/login.component";
+import {AuthGuard} from "./guards/authGuard";
 
 export const appRoutes: Routes = [
     {
+        path: 'login',
+        component: LoginComponent
+    },
+    {
         path: '',
         redirectTo: '/productoffers',
-        pathMatch: 'full'
+        pathMatch: 'full',
+        canActivate: [AuthGuard]
     },
     {
         path: 'products',
-        component: ProductsComponent
+        component: ProductsComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: 'productoffers',
-        component: ProductOffersComponent
+        component: ProductOffersComponent,
+        canActivate: [AuthGuard]
     }
 
 ];

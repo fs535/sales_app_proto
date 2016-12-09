@@ -1,12 +1,13 @@
 import {Injectable}    from '@angular/core';
-import {URLSearchParams, Headers, Http} from '@angular/http';
+import {URLSearchParams, Headers, Http, RequestOptions} from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import {Offer} from '../domain/offer';
 import {Settings} from "../domain/settings";
+import {AuthenticationService} from "./authentication.service";
 @Injectable()
 export class OfferService {
-    constructor(private http: Http, private settings: Settings) {
-    }
+
+    constructor(private http: Http, private settings: Settings, private authService: AuthenticationService) {}
 
     getOffers(offerType: string,category1: string, category2: string, category3: string,
               brand: string, price: string, size: string, product: string, text: string,
@@ -70,9 +71,8 @@ export class OfferService {
             params.set('rate', offerRate);
         }
 
-        return this.http.get(`${this.settings.hub_url}/offers`,{
-             search: params
-        }).toPromise()
+        return this.http.get(`${this.settings.hub_url}/api/offers`, new RequestOptions({search: params}))
+            .toPromise()
             .then(res =>  {
                 let data:any = res.json() || [];
                 (data.content as Array<any>).forEach((d:any) => {
@@ -100,11 +100,10 @@ export class OfferService {
     // Update existing Offer
     private patch(offer: Offer): Promise<Offer> {
         let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        let url = `${this.settings.hub_url}/offer/${offer.id}`;
+        let url = `${this.settings.hub_url}/api/offer/${offer.id}`;
 
         return this.http
-            .patch(url, JSON.stringify(offer), {headers: headers})
+            .patch(url, JSON.stringify(offer))
             .toPromise()
             .then((res) => {
                 let data:any = res.json();
@@ -122,11 +121,10 @@ export class OfferService {
 
     // Update existing Offer
     private post(offer: Offer): Promise<Offer> {
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        let url = `${this.settings.hub_url}/offer`;
+
+        let url = `${this.settings.hub_url}/api/offer`;
         return this.http
-            .post(url, JSON.stringify(offer), {headers: headers})
+            .post(url, JSON.stringify(offer))
             .toPromise()
             .then((res) => {
                 let data:any = res.json();
@@ -143,10 +141,9 @@ export class OfferService {
     }
 
     sendToSeelinger(): Promise<Object> {
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        let url = `${this.settings.hub_url}/offer`;
-        return this.http.get(url).toPromise()
+        let url = `${this.settings.integration_url}/api/generate`;
+        return this.http.get(url)
+            .toPromise()
             .then(res =>  {
                 return res.json();
             })
@@ -154,7 +151,7 @@ export class OfferService {
     }
 
     deleteOffer(offer:Offer):Promise<Object>{
-        let url = `${this.settings.hub_url}/offer/${offer.id}`;
+        let url = `${this.settings.hub_url}/api/offer/${offer.id}`;
         return this.http
             .delete(url)
             .toPromise()

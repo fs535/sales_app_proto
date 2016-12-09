@@ -1,15 +1,16 @@
 import {Injectable}    from '@angular/core';
-import {URLSearchParams, Headers, Http} from '@angular/http';
+import {URLSearchParams, Headers, Http, RequestOptions} from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import {Product} from '../domain/product';
 import {Offer} from '../domain/offer';
 import {Settings} from "../domain/settings";
 import {Categories} from "../domain/categories";
+import {AuthenticationService} from "./authentication.service";
 
 @Injectable()
 export class ProductService {
-    constructor(private http: Http, private settings: Settings) {
-    }
+
+    constructor(private http: Http, private settings: Settings, private authService: AuthenticationService){}
 
     getProductsByOffer(offer: Offer, selectedOfferProductIDSearch:string, productNameSearch: string,
                        productCategory1: string, productCategory2: string, productCategory3: string,
@@ -49,9 +50,8 @@ export class ProductService {
             params.set('nameSearch', productNameSearch);
         }
 
-        return this.http.get(`${this.settings.hub_url}/products`,{
-            search: params
-        }).toPromise()
+        return this.http.get(`${this.settings.hub_url}/api/products`, new RequestOptions({search: params}))
+            .toPromise()
             .then(res => {
                 let result:any = res.json();
                 return result;
@@ -61,7 +61,7 @@ export class ProductService {
 
 
     getCollections(): Promise<Categories> {
-        return this.http.get(`${this.settings.hub_url}/collections`)
+        return this.http.get(`${this.settings.hub_url}/api/collections`)
             .toPromise()
             .then(response => {
 
@@ -155,9 +155,8 @@ export class ProductService {
             params.set('offerActive', offerActive);
         }
 
-        return this.http.get(`${this.settings.hub_url}/products`,{
-            search: params
-        }).toPromise()
+        return this.http.get(`${this.settings.hub_url}/api/products`, new RequestOptions({search: params}))
+            .toPromise()
             .then(res => {
                 let data:any = res.json() || [];
                 data.content.forEach((d: any) => {
@@ -175,7 +174,9 @@ export class ProductService {
     save(product: Product): Promise<Product> {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        let url = `${this.settings.hub_url}/product/${product.id}`;
+        headers.append('Authorization', 'Bearer ' + this.authService.bearer);
+
+        let url = `${this.settings.hub_url}/api/product/${product.id}`;
         return this.http
             .patch(url, JSON.stringify(product), {headers: headers})
             .toPromise()
