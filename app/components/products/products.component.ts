@@ -51,7 +51,7 @@ export class ProductsComponent implements OnInit {
 
     productsTotalItems:number = 0;
     productsCurrentPage:number = 1;
-    pageSize:number = 20;
+    pageSize:number = 30;
 
     yesno: any = [{id:"", text:""},{id:"1", text:"Yes"}, {id:"0", text:"No"}];
 
@@ -68,6 +68,9 @@ export class ProductsComponent implements OnInit {
     productDescriptionSearch: string = "";
     checkProduct:Product = new Product("");
     checkOffer:Offer = new Offer("");
+
+    scrollEnds:boolean = false;
+    isScroll:boolean = false;
 
     constructor(private router: Router,
                 private productService: ProductService,
@@ -140,7 +143,14 @@ export class ProductsComponent implements OnInit {
             .catch(error => this.showMessage(error));
     }
 
-    getProducts(): Promise<Object> {
+    getProducts(append:boolean = false): Promise<Object> {
+
+        if (append){
+            this.productsCurrentPage += 1;
+        }else{
+            this.productsCurrentPage = 1;
+        }
+
         return this.productService
             .getProducts(null, this.productIdSearch, this.productNameSearch,
                          this.productCategory1, this.productCategory2, this.productCategory3,
@@ -149,7 +159,24 @@ export class ProductsComponent implements OnInit {
                          this.offerName, this.offerId, this.offerAssigned, this.offerActive, this.productsCurrentPage, this.pageSize)
             .then(response => {
                 this.productsTotalItems = response['totalElements'];
-                this.products = response['content'];
+
+                if (append){
+                    this.products = this.products.concat(response['content']);
+                }else{
+                    this.products = response['content'];
+                }
+
+                if (this.products.length > 20){
+                    this.isScroll = true;
+                }else{
+                    this.isScroll = false;
+                }
+
+                if (this.products.length >= this.productsTotalItems){
+                    this.scrollEnds = true;
+                }else{
+                    this.scrollEnds = false;
+                }
 
                 this.invalidOfferMap = {};
                 return this.products;
@@ -331,5 +358,14 @@ export class ProductsComponent implements OnInit {
 
     showMessage(msg:string, isError:boolean = true){
         this.message = new Message(msg, isError);
+    }
+
+    onScrollDown():void{
+        if (!this.scrollEnds){
+            this.getProducts(true);
+        }
+    }
+    onScrollUp():void{
+
     }
 }

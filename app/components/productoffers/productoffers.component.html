@@ -84,7 +84,7 @@
     </div>
 
     <table class="table table-striped top-container-table">
-        <thead>
+        <thead class="{{isOfferScroll ? 'offset-head' : ''}}">
         <tr>
             <th class="th1">
                 <input [disabled]="addingOffer" placeholder="ID" title="ID" class="form-control" type="text"
@@ -187,10 +187,19 @@
 <!--
         <div class="perfect-scroll-container-no">
             <perfect-scrollbar [config]="config" class="position-relative">-->
-                <tbody *ngIf="!addingOffer">
-                    <tr *ngFor="let offer of offers | paginate: { id: 'offersPagination', itemsPerPage: pageSize, currentPage: offersCurrentPage, totalItems: offersTotalItems }" (mousedown)="onOfferSelect(offer);true"
+                <tbody *ngIf="!addingOffer"
+                       infinite-scroll
+                       [infiniteScrollDistance]="5"
+                       [infiniteScrollUpDistance]="1"
+                       [infiniteScrollThrottle]="100"
+                       [scrollWindow]="false"
+                       (scrolled)="onOfferScrollDown()"
+                       (scrolledUp)="onScrollUp()">
+
+                <tr *ngFor="let offer of offers" (mousedown)="onOfferSelect(offer);true" [class.selected]="offer.id === selectedOffer.id" [class.unassigned]="offer.assigned == false">
+                    <!--<tr *ngFor="let offer of offers | paginate: { id: 'offersPagination', itemsPerPage: pageSize, currentPage: offersCurrentPage, totalItems: offersTotalItems }" (mousedown)="onOfferSelect(offer);true"
                         [class.selected]="offer.id === selectedOffer.id"
-                        [class.unassigned]="offer.assigned == false">
+                        [class.unassigned]="offer.assigned == false">-->
                         <td class="td1">
                             <input [class.selected]="offer.id === selectedOffer.id" class="wide"
                                    [class.unassigned]="offer.assigned == false"
@@ -287,7 +296,13 @@
            <!-- </perfect-scrollbar>
         </div>-->
 
-        <tbody *ngIf="addingOffer">
+        <tbody *ngIf="addingOffer" infinite-scroll
+               [infiniteScrollDistance]="5"
+               [infiniteScrollUpDistance]="1"
+               [infiniteScrollThrottle]="100"
+               [scrollWindow]="false"
+               (scrolled)="onOfferScrollDown()"
+               (scrolledUp)="onScrollUp()">
         <tr [class.selected]="true">
             <td class="td1">
                 <input [class.selected]="true" readonly="true" class="wide"
@@ -358,17 +373,18 @@
         </tbody>
     </table>
 
-    <div class="pagination-block">
+    <!--<div class="pagination-block">
         <pagination-controls id="offersPagination" directionLinks="true" (pageChange)="offerPageChanged($event)"></pagination-controls>
-    </div>
+    </div>-->
 
 </div>
-<div class="left-container">
-    <div class="caption-header">
+<div class="left-container {{expandedProducts ? 'expanded' : ''}}">
+    <div class="caption-header position-relative">
         <span>Products {{getProductWith()}}</span>
+        <button class="button-expand" (click)="expandProducts()" title="{{expandedProducts ? 'Collapse' : 'Expand'}}">{{expandedProducts ? '<' : '>'}}</button>
     </div>
     <table class="table table-striped left-container-table">
-        <thead>
+        <thead class="{{isProductScroll ? 'offset-head' : ''}}">
         <tr>
             <th class="thlarge">
                 <input [disabled]="addingOffer" placeholder="Name" title="Name" class="form-control" type="text"
@@ -442,9 +458,16 @@
             </th>
         </tr>
         </thead>
-        <tbody>
-        <tr *ngFor="let product of products | paginate: { id: 'productsPagination', itemsPerPage: pageSize, currentPage: productsCurrentPage, totalItems: productsTotalItems }" (mousedown)="onProductSelect(product);true"
-            [class.selected]="product.id === selectedProduct.id" [class.unassigned]="!product.offerId">
+        <tbody infinite-scroll
+               [infiniteScrollDistance]="5"
+               [infiniteScrollUpDistance]="1"
+               [infiniteScrollThrottle]="100"
+               [scrollWindow]="false"
+               (scrolled)="onProductScrollDown()"
+               (scrolledUp)="onScrollUp()">
+        <tr *ngFor="let product of products" (mousedown)="onProductSelect(product);true" [class.selected]="product.id === selectedProduct.id" [class.unassigned]="!product.offerId">
+        <!--<tr *ngFor="let product of products | paginate: { id: 'productsPagination', itemsPerPage: pageSize, currentPage: productsCurrentPage, totalItems: productsTotalItems }" (mousedown)="onProductSelect(product);true"
+            [class.selected]="product.id === selectedProduct.id" [class.unassigned]="!product.offerId">-->
             <td class="tdlarge">
                 <input [disabled]="addingOffer" readonly="true" [class.unassigned]="!product.offerId" [class.selected]="product.id === selectedProduct.id" class="wide"
                        type="text"
@@ -493,19 +516,19 @@
         </tbody>
     </table>
 
-    <div class="pagination-block">
+    <!--<div class="pagination-block">
         <pagination-controls id="productsPagination" directionLinks="true" (pageChange)="productsPageChanged($event)"></pagination-controls>
-    </div>
+    </div>-->
 
 </div>
-<div class="right-container">
+<div class="right-container {{expandedProducts ? 'displayNone' : ''}}">
     <div class="caption-header">
         <span *ngIf="addingOffer == true">New Offer Products</span>
         <span *ngIf="addingOffer == false && selectedOffer.id != ''">Offer {{selectedOffer.id}} Products</span>
         <span *ngIf="addingOffer == false && selectedOffer.id == ''">Offer Products</span>
     </div>
     <table class="table table-striped right-container-table">
-        <thead>
+        <thead class="{{isOfferProductScroll ? 'offset-head' : ''}}">
         <tr>
             <th class="thsmall">
                 <input [disabled]="addingOffer" placeholder="ID" title="Product ID" class="form-control" type="text"
@@ -515,59 +538,18 @@
                 <input [disabled]="addingOffer" placeholder="Name" title="Name" class="form-control" type="text"
                        (ngModelChange)="onSelectedOfferProductNameSearch($event)" [(ngModel)]="selectedOfferProductNameSearch"/>
             </th>
-            <th class="thsmall">
-                <ng-select [disabled]="addingOffer" class="wide" [allowClear]="true"
-                           [items]="category1values"
-                           (selected)="onSelectedOfferProductCategory1Search($event)"
-                           (removed)="onSelectedOfferProductCategory1Search({'id':'','text':''})"
-                           placeholder="Category1" title="Category1">
-                </ng-select>
-            </th>
-            <th class="thsmall">
-                <ng-select [disabled]="addingOffer" class="wide" [allowClear]="true"
-                           [items]="category2values"
-                           (selected)="onSelectedOfferProductCategory2Search($event)"
-                           (removed)="onSelectedOfferProductCategory2Search({'id':'','text':''})"
-                           placeholder="Category2" title="Category2">
-                </ng-select>
-            </th>
-            <th class="thsmall">
-                <ng-select [disabled]="addingOffer" class="wide" [allowClear]="true"
-                           [items]="category3values"
-                           (selected)="onSelectedOfferProductCategor3Search($event)"
-                           (removed)="onSelectedOfferProductCategory3Search({'id':'','text':''})"
-                           placeholder="Category3" title="Category3">
-                </ng-select>
-            </th>
-            <th class="thtiny">
-                <ng-select [disabled]="addingOffer" class="wide" [allowClear]="true"
-                           [items]="prices"
-                           (selected)="onSelectedOfferProductPriceSearch($event)"
-                           (removed)="onSelectedOfferProductPriceSearch({'id':'','text':''})"
-                           placeholder="PR" title="Price">
-                </ng-select>
-            </th>
-            <th class="thtiny">
-                <ng-select [disabled]="addingOffer" class="wide" [allowClear]="true"
-                           [items]="brands"
-                           (selected)="onSelectedOfferProductBrandSearch($event)"
-                           (removed)="onSelectedOfferProductBrandSearch({'id':'','text':''})"
-                           placeholder="BR" title="Brand">
-                </ng-select>
-            </th>
-            <th class="thtiny">
-                <ng-select [disabled]="addingOffer" class="wide" [allowClear]="true"
-                           [items]="sizes"
-                           (selected)="onSelectedOfferProductSizeSearch($event)"
-                           (removed)="onSelectedOfferProductSizeSearch({'id':'','text':''})"
-                           placeholder="SZ" title="Size">
-                </ng-select>
-            </th>
         </tr>
         </thead>
-        <tbody>
-        <tr *ngFor="let product of offerProducts | paginate: { id: 'offerProductsPagination', itemsPerPage: pageSize, currentPage: offerProductsCurrentPage, totalItems: offerProductsTotalItems}" (mousedown)="onProductSelect(product);true"
-            [class.selected]="product.id === selectedProduct.id">
+        <tbody infinite-scroll
+               [infiniteScrollDistance]="5"
+               [infiniteScrollUpDistance]="1"
+               [infiniteScrollThrottle]="100"
+               [scrollWindow]="false"
+               (scrolled)="onOfferProductScrollDown()"
+               (scrolledUp)="onScrollUp()">
+        <tr *ngFor="let product of offerProducts" (mousedown)="onProductSelect(product);true" [class.selected]="product.id === selectedProduct.id">
+        <!--<tr *ngFor="let product of offerProducts | paginate: { id: 'offerProductsPagination', itemsPerPage: pageSize, currentPage: offerProductsCurrentPage, totalItems: offerProductsTotalItems}" (mousedown)="onProductSelect(product);true"
+            [class.selected]="product.id === selectedProduct.id">-->
 
             <td class="tdsmall">
                 <a style="float: left;" *ngIf="!addingOffer" title="Remove offer {{selectedOffer.id}}: {{selectedOffer.name}} from product, and leave it unffered!" (click)="removeOffer(product)"><span class="glyphicon glyphicon-triangle-left"></span></a>
@@ -581,36 +563,6 @@
                        type="text"
                        [(ngModel)]="product.productName"/>
             </td>
-            <td class="tdsmall">
-                <input [disabled]="addingOffer" readonly="true" [class.selected]="product.id === selectedProduct.id" class="wide" (focus)="focusOnProduct('productCategory1Name', product.productCategory1Name)" (blur)="checkAndSaveProduct('productCategory1Name', product, true)"
-                       type="text"
-                       [(ngModel)]="product.productCategory1Name"/>
-            </td>
-            <td class="tdsmall">
-                <input [disabled]="addingOffer" readonly="true" [class.selected]="product.id === selectedProduct.id" class="wide" (focus)="focusOnProduct('productCategory2Name', product.productCategory2Name)" (blur)="checkAndSaveProduct('productCategory2Name', product, true)"
-                       type="text"
-                       [(ngModel)]="product.productCategory2Name"/>
-            </td>
-            <td class="tdsmall">
-                <input [disabled]="addingOffer" readonly="true" [class.selected]="product.id === selectedProduct.id" class="wide" (focus)="focusOnProduct('productCategory3Name', product.productCategory3Name)" (blur)="checkAndSaveProduct('productCategory3Name', product, true)"
-                       type="text"
-                       [(ngModel)]="product.productCategory3Name"/>
-            </td>
-            <td class="tdtiny">
-                <input [disabled]="addingOffer" readonly="true" [class.selected]="product.id === selectedProduct.id" class="wide" (focus)="focusOnProduct('ecomPrice', product.ecomPrice)" (blur)="checkAndSaveProduct('ecomPrice', product, true)"
-                       type="text"
-                       [(ngModel)]="product.ecomPrice"/>
-            </td>
-            <td class="tdtiny">
-                <input [disabled]="addingOffer" readonly="true" [class.selected]="product.id === selectedProduct.id" class="wide" (focus)="focusOnProduct('brand', product.brand)" (blur)="checkAndSaveProduct('brand', product, true)"
-                       type="text"
-                       [(ngModel)]="product.brand"/>
-            </td>
-            <td class="tdtiny">
-                <input [disabled]="addingOffer" readonly="true" [class.selected]="product.id === selectedProduct.id" class="wide" (focus)="focusOnProduct('packageSize', product.packageSize)" (blur)="checkAndSaveProduct('packageSize', product, true)"
-                       type="text"
-                       [(ngModel)]="product.packageSize"/>
-            </td>
         </tr>
         <tr *ngIf="selectedOffer.id == '' && !addingOffer">
             <td class="tdall" colspan="5">Select offer from list above...</td>
@@ -618,9 +570,9 @@
         </tbody>
     </table>
 
-    <div class="pagination-block">
+    <!--<div class="pagination-block">
         <pagination-controls id="offerProductsPagination" directionLinks="true" (pageChange)="offerProductsPageChanged($event)"></pagination-controls>
-    </div>
+    </div>-->
 
 </div>
 

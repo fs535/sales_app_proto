@@ -23,6 +23,7 @@ import {AuthGuard} from "./guards/authGuard";
 import {AuthenticationService} from "./services/authentication.service";
 import {Base64Service} from "./services/base64.service";
 import {Router} from "@angular/router";
+import {InfiniteScrollModule} from "angular2-infinite-scroll";
 
 const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -31,7 +32,7 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 var settings: Settings;
 
 @NgModule({
-    imports: [FormsModule, HttpModule, BrowserModule, routing, MaterialModule.forRoot(), SelectModule, PerfectScrollbarModule.forRoot(PERFECT_SCROLLBAR_CONFIG), Ng2PaginationModule],
+    imports: [FormsModule, HttpModule, BrowserModule, routing, MaterialModule.forRoot(), SelectModule, PerfectScrollbarModule.forRoot(PERFECT_SCROLLBAR_CONFIG), Ng2PaginationModule, InfiniteScrollModule],
     declarations: [LoginComponent, AppComponent, ProductsComponent, ProductOffersComponent, Autosize, SpinnerComponent, MessageBox],
     entryComponents: [AppComponent],
     providers: [AuthGuard,

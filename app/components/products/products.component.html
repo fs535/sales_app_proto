@@ -2,13 +2,13 @@
 
 <div class="product-container">
     <table class="table table-striped product-container-table">
-        <thead>
+        <thead class="{{isScroll ? 'offset-head' : ''}}">
         <tr>
             <th class="thtiny">
                 <input placeholder="ID" title="Product ID" class="form-control" type="text"
                        (ngModelChange)="onProductIdSearch($event)" [(ngModel)]="productIdSearch"/>
             </th>
-            <th class="thlarge">
+            <th class="thlargest">
                 <input placeholder="Name" title="Product Name" class="form-control" type="text"
                        (ngModelChange)="onProductNameSearch($event)" [(ngModel)]="productNameSearch"/>
             </th>
@@ -104,15 +104,24 @@
             </th>
         </tr>
         </thead>
-        <tbody>
-        <tr *ngFor="let product of products | paginate: { id: 'productsPagination', itemsPerPage: pageSize, currentPage: productsCurrentPage, totalItems: productsTotalItems }" (mousedown)="onProductSelect(product);true"
-            [class.unassigned]="!product.offerId" [class.selected]="product.id === selectedProduct.id">
+        <tbody infinite-scroll
+               [infiniteScrollDistance]="5"
+               [infiniteScrollUpDistance]="1"
+               [infiniteScrollThrottle]="50"
+               [scrollWindow]="false"
+               (scrolled)="onScrollDown()"
+               (scrolledUp)="onScrollUp()">
+
+        <tr *ngFor="let product of products" (mousedown)="onProductSelect(product);true" [class.unassigned]="!product.offerId" [class.selected]="product.id === selectedProduct.id">
+
+        <!--<tr *ngFor="let product of products | paginate: { id: 'productsPagination', itemsPerPage: pageSize, currentPage: productsCurrentPage, totalItems: productsTotalItems }" (mousedown)="onProductSelect(product);true"
+            [class.unassigned]="!product.offerId" [class.selected]="product.id === selectedProduct.id">-->
             <td class="tdtiny">
                 <input readonly="true" [class.unassigned]="!product.offerId" [class.selected]="product.id === selectedProduct.id" class="wide"
                        type="text"
                        [ngModel]="product.product"/>
             </td>
-            <td class="tdlarge">
+            <td class="tdlargest">
                 <input readonly="true" [class.unassigned]="!product.offerId" [class.selected]="product.id === selectedProduct.id" class="wide"
                        type="text"
                        [ngModel]="product.productName"/>
@@ -188,9 +197,9 @@
         </tbody>
     </table>
 
-    <div class="pagination-block">
+    <!--<div class="pagination-block">
         <pagination-controls id="productsPagination" directionLinks="true" (pageChange)="productsPageChanged($event)"></pagination-controls>
-    </div>
+    </div>-->
 
 </div>
 <div class="details-container">

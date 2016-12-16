@@ -115,6 +115,15 @@ export class ProductOffersComponent implements OnInit {
 
     checkOffer:Offer = new Offer("");
     checkProduct:Product = new Product("");
+    expandedProducts:boolean = false;
+
+    isOfferScroll:boolean = false;
+    isOfferProductScroll:boolean = false;
+    isProductScroll:boolean = false;
+
+    offerScrollEnds:boolean = false;
+    offerProductScrollEnds:boolean = false;
+    productScrollEnds:boolean = false;
 
     constructor(private router: Router,
                 private productService: ProductService,
@@ -193,32 +202,81 @@ export class ProductOffersComponent implements OnInit {
             .catch((err) => this.showMessage(err));
     }
 
-    getProducts(): Promise<Object> {
+    getProducts(append:boolean = false): Promise<Object> {
+
+        if (append){
+            this.productsCurrentPage += 1;
+        }else{
+            this.productsCurrentPage = 1;
+        }
+
         return this.productService
             .getProducts(this.productIdSearch, null, this.productNameSearch,
                          this.productCategory1, this.productCategory2, this.productCategory3,
                          this.productPrice, this.productBrand, this.productSize,
                          '', '', '',
-                         this.productOfferNameSearch, this.productOfferIdSearch, this.productOfferAssigned, '', this.productsCurrentPage)
+                         this.productOfferNameSearch, this.productOfferIdSearch, this.productOfferAssigned, '', this.productsCurrentPage, 20)
             .then(response => {
                 this.productsTotalItems = response['totalElements'];
-                this.products = response['content'];
+
+                if (append){
+                    this.products = this.products.concat(response['content']);
+                }else{
+                    this.products = response['content'];
+                }
+
+                if (this.products.length > 10){
+                    this.isProductScroll = true;
+                }else{
+                    this.isProductScroll = false;
+                }
+
+                if (this.products.length >= this.productsTotalItems){
+                    this.productScrollEnds = true;
+                }else{
+                    this.productScrollEnds = false;
+                }
+
                 return this.products;
             })
             .catch((err) => this.showMessage(err));
     }
 
-    getOfferProducts(): Promise<Object> {
+    getOfferProducts(append:boolean = false): Promise<Object> {
+
+        if (append){
+            this.offerProductsCurrentPage += 1;
+        }else{
+            this.offerProductsCurrentPage = 1;
+        }
+
         if(this.selectedOffer.id != '') {
             return this.productService
                 .getProductsByOffer(this.selectedOffer, this.selectedOfferProductIDSearch, this.selectedOfferProductNameSearch,
                                     this.selectedOfferProductCategory1, this.selectedOfferProductCategory2, this.selectedOfferProductCategory3,
-                                    this.selectedOfferProductPrice, this.selectedOfferProductBrand, this.selectedOfferProductSize, this.offerProductsCurrentPage
+                                    this.selectedOfferProductPrice, this.selectedOfferProductBrand, this.selectedOfferProductSize, this.offerProductsCurrentPage, 20
                 )
                 .then(response => {
 
                     this.offerProductsTotalItems = response['totalElements'];
-                    this.offerProducts = response['content'];
+
+                    if (append){
+                        this.offerProducts = this.offerProducts.concat(response['content']);
+                    }else{
+                        this.offerProducts = response['content'];
+                    }
+
+                    if (this.offerProducts.length > 10){
+                        this.isOfferProductScroll = true;
+                    }else{
+                        this.isOfferProductScroll = false;
+                    }
+
+                    if (this.offerProducts.length >= this.offerProductsTotalItems){
+                        this.offerProductScrollEnds = true;
+                    }else{
+                        this.offerProductScrollEnds = false;
+                    }
 
                     return this.offerProducts;
                 })
@@ -326,15 +384,42 @@ export class ProductOffersComponent implements OnInit {
         return result;
     }
 
-    getOffers(): Promise<Object> {
+    getOffers(append:boolean = false): Promise<Object> {
+
+        if (append){
+            this.offersCurrentPage += 1;
+        }else{
+            this.offersCurrentPage = 1;
+        }
+
         return this.offerService
             .getOffers(this.offerType, this.offerCategory1, this.offerCategory2, this.offerCategory3,
             this.offerBrand, this.offerPrice, this.offerSize,'', '', this.offerId, this.offerName,
-            this.offerCombType, this.offerDemandId, this.offerCombMax, this.offerValidFrom, this.offerValidTo, this.offerActive, this.offerRate, this.offersCurrentPage)
+            this.offerCombType, this.offerDemandId, this.offerCombMax, this.offerValidFrom, this.offerValidTo, this.offerActive, this.offerRate, this.offersCurrentPage, 20)
             .then(response => {
+
                 this.offersTotalItems = response['totalElements'];
-                this.offers = response['content'];
+
+                if (append){
+                    this.offers = this.offers.concat(response['content']);
+                }else{
+                    this.offers = response['content'];
+                }
+
+                if (this.offers.length > 10){
+                    this.isOfferScroll = true;
+                }else{
+                    this.isOfferScroll = false;
+                }
+
+                if (this.offers.length >= this.offersTotalItems){
+                    this.offerScrollEnds = true;
+                }else{
+                    this.offerScrollEnds = false;
+                }
+
                 this.invalidOfferMap = {};
+
                 return this.offers;
             })
             .catch((err) => this.showMessage(err));
@@ -372,7 +457,7 @@ export class ProductOffersComponent implements OnInit {
 
     newOfferFromProduct(product: Product) {
         this.addOffer();
-        this.offer.name = "Offer for "+product.productName;
+        this.offer.name = product.productName;
         this.offerProducts = [product];
     }
 
@@ -791,4 +876,29 @@ export class ProductOffersComponent implements OnInit {
         this.message = new Message('Please, confirm offer deletion!', false, true, offer, this.performDelete.bind(this));
     }
 
+    expandProducts():void{
+        this.expandedProducts = !this.expandedProducts;
+    }
+
+    onOfferScrollDown():void{
+        if (!this.offerScrollEnds){
+            this.getOffers(true);
+        }
+    }
+
+    onProductScrollDown():void{
+        if (!this.productScrollEnds){
+            this.getProducts(true);
+        }
+    }
+
+    onOfferProductScrollDown():void{
+        if (!this.offerProductScrollEnds){
+            this.getOfferProducts(true);
+        }
+    }
+
+    onScrollUp():void{
+
+    }
 }

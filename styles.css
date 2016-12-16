@@ -154,7 +154,8 @@ table.top-container-table thead, table.top-container-table tbody {
     width: 100%;
 }
 table.top-container-table tbody {
-     height: 272px;
+    height: 272px;
+    overflow-y: auto;
  }
 table tbody {
     border-bottom: 1px solid silver;
@@ -217,12 +218,15 @@ table.top-container-table th.thall, table.top-container-table td.tdall {
 
 
 .left-container {
-    width: 54.9%;
+    width: 74.9%;
     min-width: 550px;
     float: left;
     border: 1px solid silver;
     border-radius: 3px;
     padding: 5px 5px 0 5px;
+}
+.left-container.expanded{
+    width: 100%;
 }
 
 table.left-container-table {
@@ -235,7 +239,8 @@ table.left-container-table thead, table.left-container-table tbody {
     width: 100%;
 }
 table.left-container-table tbody {
-    height: 240px;
+    overflow-y: auto;
+    height: 242px;
 }
 table.left-container-table tr {
     width: 100%;
@@ -254,8 +259,12 @@ table.left-container-table th.thsmall, table.left-container-table td.tdsmall {
     width: 10%;
 }
 table.left-container-table th.thlarge, table.left-container-table td.tdlarge {
-    width: 20%;
+    width: 35%;
 }
+.left-container.expanded th.thlarge, .left-container.expanded td.tdlarge{
+    width: 60%;
+}
+
 table.left-container-table th.thall, table.left-container-table td.tdall {
     width: 100%;
     text-align: center;
@@ -263,9 +272,9 @@ table.left-container-table th.thall, table.left-container-table td.tdall {
 
 
 .right-container {
-    width: 45%;
+    width: 25%;
     min-width: 450px;
-    margin-left: 55%;
+    margin-left: 75%;
     border: 1px solid silver;
     border-radius: 3px;
     padding: 5px 5px 0 5px;
@@ -281,7 +290,8 @@ table.right-container-table thead, table.right-container-table tbody {
     width: 100%;
 }
 table.right-container-table tbody {
-    height: 240px;
+    height: 242px;
+    overflow-y: auto;
 }
 table.right-container-table tr {
     width: 100%;
@@ -343,6 +353,9 @@ table.product-container-table th.thsmall, table.product-container-table td.tdsma
 table.product-container-table th.thlarge, table.product-container-table td.tdlarge {
     width: 20%;
 }
+table.product-container-table th.thlargest, table.product-container-table td.tdlargest {
+    width: 30%;
+}
 table.product-container-table th.thall, table.product-container-table td.tdall {
     width: 100%;
     text-align: center;
@@ -368,7 +381,7 @@ table.details-container-table thead, table.details-container-table tbody {
     width: 100%;
 }
 table.details-container-table tbody {
-    height: 240px;
+    height: 242px;
 }
 table.details-container-table tr {
     width: 100%;
@@ -536,4 +549,16 @@ tr .form-control{
 .error-message{
     padding-right: 30%;
     padding-left: 30%;
+}
+.button-expand{
+    position: absolute;
+    right: 0px;
+    top: -3px;
+}
+.displayNone{
+    display: none;
+}
+
+.offset-head{
+    width: calc(100% - 18px) !important;
 }

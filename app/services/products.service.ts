@@ -104,7 +104,7 @@ export class ProductService {
 
         params.set('page', String(currentPage - 1));
         params.set('size', String(pageSize));
-        //params.set('sort', offerType);
+        params.set('sort', 'productName,asc');
 
         if (id){
             params.set('id', id);

@@ -30,7 +30,8 @@
       'ng2-select/components': 'npm:ng2-select/components',
       'angular2-perfect-scrollbar': 'npm:angular2-perfect-scrollbar',
       'ng2-pagination': 'npm:ng2-pagination',
-      'ng2-cookies': 'npm:ng2-cookies'
+      'ng2-cookies': 'npm:ng2-cookies',
+      'angular2-infinite-scroll': 'npm:angular2-infinite-scroll/'
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
@@ -63,6 +64,10 @@
       },
       'ng2-cookies': {
         main: 'ng2-cookies.js',
+        defaultExtension: 'js'
+      },
+      'angular2-infinite-scroll':{
+        main: './angular2-infinite-scroll',
         defaultExtension: 'js'
       }
     }
