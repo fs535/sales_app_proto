@@ -141,7 +141,7 @@ export class OfferService {
     }
 
     sendToSeelinger(): Promise<Object> {
-        let url = `${this.settings.integration_url}/api/generate`;
+        let url = `${this.settings.integration_url}/api/generate/offers`;
         return this.http.get(url)
             .toPromise()
             .then(res =>  {
