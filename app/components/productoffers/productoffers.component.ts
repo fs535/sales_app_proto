@@ -481,6 +481,8 @@ export class ProductOffersComponent implements OnInit {
         this.offer.combStacking = false;
         this.offer.combExternalId = "0";
         this.offer.rate = '3';
+
+        this.offerProducts = [];
     }
 
     closeOffer() {
