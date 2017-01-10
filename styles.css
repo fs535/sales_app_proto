@@ -10,7 +10,7 @@ h2, h3 {
   font-weight: lighter;
 }
 body {
-  margin: 2em;
+  margin: 10px;
   color: #888;
 }
 
@@ -43,12 +43,11 @@ a {
 /* Navigation link styles */
 nav {
     text-align: right;
-    margin-bottom: 10px;
+    margin-bottom: 2px;
 }
 nav a {
   padding: 5px 10px;
   text-decoration: none;
-  margin-top: 10px;
   display: inline-block;
   background-color: #eee;
   border-radius: 4px;
@@ -87,7 +86,7 @@ tr.unassigned input, tr.unassigned select {
 
 .spinner {
   top: 0;
-  left:0;
+  left: 49%;
   width: 40px;
   height: 40px;
   position: absolute;
@@ -157,9 +156,6 @@ table.top-container-table tbody {
     height: 272px;
     overflow-y: auto;
  }
-table tbody {
-    border-bottom: 1px solid silver;
-}
 
 table.top-container-table tr {
     width: 100%;
@@ -240,7 +236,7 @@ table.left-container-table thead, table.left-container-table tbody {
 }
 table.left-container-table tbody {
     overflow-y: auto;
-    height: 242px;
+    height: 482px;
 }
 table.left-container-table tr {
     width: 100%;
@@ -290,7 +286,7 @@ table.right-container-table thead, table.right-container-table tbody {
     width: 100%;
 }
 table.right-container-table tbody {
-    height: 242px;
+    height: 482px;
     overflow-y: auto;
 }
 table.right-container-table tr {
@@ -456,13 +452,12 @@ h1, .h1, h2, .h2, h3, .h3 {
 }
 .offer-btn-group{
     position: absolute;
-    top: 35px;
-    left: 10px;
+    top: 10px;
+    left: -5px;
 }
 .caption-header{
     font-size: 1.3em;
     font-weight: bold;
-    margin-bottom: 4px;
 }
 .position-relative{
     position: relative;
@@ -474,7 +469,7 @@ h1, .h1, h2, .h2, h3, .h3 {
     height: 240px;
 }
 table{
-    margin-bottom: 10px !important;
+    margin-bottom: 0px !important;
 }
 table thead{
     margin-bottom: 1px !important;
@@ -561,4 +556,8 @@ tr .form-control{
 
 .offset-head{
     width: calc(100% - 18px) !important;
+}
+
+.form-group{
+    margin-bottom: 5px !important;
 }

@@ -7,12 +7,14 @@ import {AuthenticationService} from "../services/authentication.service";
 @Component({
     selector: 'my-app',
     template: `
-    <nav *ngIf="authService.isLoggedIn">
-      <my-spinner [isRunning]="customHttp.isRunning"></my-spinner>
-      <a [routerLink]="['/productoffers']" routerLinkActive="active" class="btn">Product Offers</a>
-      <a [routerLink]="['/products']" routerLinkActive="active" class="btn">Products</a>
-    </nav>
-    <router-outlet></router-outlet>
+    <div class="app-container" [class.appBusy]="customHttp.isRunning">
+        <my-spinner [isRunning]="customHttp.isRunning"></my-spinner>
+        <nav *ngIf="authService.isLoggedIn">
+          <a [routerLink]="['/productoffers']" routerLinkActive="active" class="btn">Product Offers</a>
+          <a [routerLink]="['/products']" routerLinkActive="active" class="btn">Products</a>
+        </nav>
+        <router-outlet></router-outlet>
+    </div>
   `,
     providers: [
         ProductService,

@@ -1,6 +1,6 @@
 'use strict';
 
-import {Component, Input, OnDestroy} from '@angular/core';
+import {Component, Input, Output, OnDestroy} from '@angular/core';
 
 @Component({
     selector: 'my-spinner',
@@ -10,17 +10,21 @@ import {Component, Input, OnDestroy} from '@angular/core';
     </div>`
 })
 export class SpinnerComponent implements OnDestroy {
-    private currentTimeout: number;
+    private currentTimeout: any;
     private isDelayedRunning: boolean = false;
+    @Output()
+    public isAppRunning: boolean = false;
 
     @Input()
     public delay: number = 300;
 
     @Input()
     public set isRunning(value: boolean) {
+
         if (!value) {
             this.cancelTimeout();
             this.isDelayedRunning = false;
+            this.isAppRunning = value;
             return;
         }
 
@@ -28,8 +32,9 @@ export class SpinnerComponent implements OnDestroy {
             return;
         }
 
-        this.currentTimeout = core.setTimeout(() => {
+        this.currentTimeout = setTimeout(() => {
             this.isDelayedRunning = value;
+            this.isAppRunning = value;
             this.cancelTimeout();
         }, this.delay);
     }

@@ -215,7 +215,7 @@ export class ProductOffersComponent implements OnInit {
                          this.productCategory1, this.productCategory2, this.productCategory3,
                          this.productPrice, this.productBrand, this.productSize,
                          '', '', '',
-                         this.productOfferNameSearch, this.productOfferIdSearch, this.productOfferAssigned, '', this.productsCurrentPage, 20)
+                         this.productOfferNameSearch, this.productOfferIdSearch, this.productOfferAssigned, '', this.productsCurrentPage, 30)
             .then(response => {
                 this.productsTotalItems = response['totalElements'];
 
@@ -225,7 +225,7 @@ export class ProductOffersComponent implements OnInit {
                     this.products = response['content'];
                 }
 
-                if (this.products.length > 10){
+                if (this.products.length > 20){
                     this.isProductScroll = true;
                 }else{
                     this.isProductScroll = false;
@@ -254,7 +254,7 @@ export class ProductOffersComponent implements OnInit {
             return this.productService
                 .getProductsByOffer(this.selectedOffer, this.selectedOfferProductIDSearch, this.selectedOfferProductNameSearch,
                                     this.selectedOfferProductCategory1, this.selectedOfferProductCategory2, this.selectedOfferProductCategory3,
-                                    this.selectedOfferProductPrice, this.selectedOfferProductBrand, this.selectedOfferProductSize, this.offerProductsCurrentPage, 20
+                                    this.selectedOfferProductPrice, this.selectedOfferProductBrand, this.selectedOfferProductSize, this.offerProductsCurrentPage, 30
                 )
                 .then(response => {
 
@@ -266,7 +266,7 @@ export class ProductOffersComponent implements OnInit {
                         this.offerProducts = response['content'];
                     }
 
-                    if (this.offerProducts.length > 10){
+                    if (this.offerProducts.length > 20){
                         this.isOfferProductScroll = true;
                     }else{
                         this.isOfferProductScroll = false;
