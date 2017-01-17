@@ -64,7 +64,6 @@ export class ProductService {
         return this.http.get(`${this.settings.hub_url}/api/collections`)
             .toPromise()
             .then(response => {
-
                 let prepare = function(param:Array<string>) {
                     for (let i:number = 0; i < param.length; i++) {
                         if (param[i] === null) {
@@ -74,6 +73,16 @@ export class ProductService {
 
                         param[i] = String(param[i]);
                     }
+                    param.sort((a: string, b: string) => {
+                        if (a < b) {
+                            return -1;
+                        } else if (a > b) {
+                            return 1;
+                        } else {
+                            return 0;
+                        }
+                    });
+
                     param.splice(0, 0, "");
                 };
 
