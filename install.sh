@@ -8,9 +8,6 @@ go get github.com/GeertJohan/go.rice
 go get github.com/GeertJohan/go.rice/rice
 go install github.com/GeertJohan/go.rice
 go install github.com/GeertJohan/go.rice/rice
-
-go install hubui
-
 cd src/hubui
 go build -o hubui
 ../../bin/rice append --exec hubui
