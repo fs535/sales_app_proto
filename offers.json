@@ -1,5 +1,0 @@
-[
-  {"id": "10001", "name": "Personal offer: Acnicyl Cleanser", "discount": "20%", "combType": "4", "demandId": "1", "demandCount": "123", "benefitId":"7", "combMax":"345", "validFrom": "2012-03-20T21:28:11.633Z", "validTo": "2017-03-20T21:28:11.633Z", "suspended": false, "combCardPrefix": "1", "combStacking": false, "combExternalId": "0"},
-  {"id": "10002", "name": "Personal offer: Acnicyl Cream", "discount": "20%", "combType": "4", "demandId": "1", "demandCount": "123", "benefitId":"7", "combMax":"345", "validFrom": "2012-03-20T21:28:11.633Z", "validTo": "2017-03-20T21:28:11.633Z", "suspended": false, "combCardPrefix": "1", "combStacking": false, "combExternalId": "0"},
-  {"id": "10003", "name": "Personal offer: Acnicyl Everyday Cream", "discount": "20%", "combType": "4", "demandId": "1", "demandCount": "123", "benefitId":"7", "combMax":"345", "validFrom": "2012-03-20T21:28:11.633Z", "validTo": "2017-03-20T21:28:11.633Z", "suspended": false, "combCardPrefix": "1", "combStacking": false, "combExternalId": "0"}
-]
