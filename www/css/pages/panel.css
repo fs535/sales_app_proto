@@ -1,0 +1,78 @@
+#panel {
+    overflow-y: auto;
+}
+
+.panel-header {
+    background-color: #DDD;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    max-height: 160px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.user {
+    margin: 20px 40px;
+}
+
+.user .user-name {
+    margin-top: 2px;
+    float: left;
+}
+
+.user .user-name span {
+    white-space: nowrap;
+}
+
+.user .user-name:before {
+    font-family: "FontAwesome";
+    content: "\f007";
+    font-size: 1.2em;
+    margin-right: 23px;
+}
+
+.allButtonsContainer .ui-listview {
+    margin: 0;
+}
+
+.mainButtonsContainer .ui-listview a {
+    border-radius: 0;
+}
+
+.mainButtonsContainer .icon {
+    float: left;
+    margin: 0 16px;
+    width: 30px;
+    text-align: center;
+    font-size: 1.2em;
+}
+
+#panel .fa {
+    font-size: 1.2em;
+}
+
+#panel .fa.fa-car {
+    font-size: 1em;
+}
+
+.mainButtonsContainer .ui-btn {
+    vertical-align: middle;
+    line-height: 1.5em;
+    padding: 14px 16px;
+}
+
+.logout {
+    float: right;
+    padding: 5px;
+}
+
+.ui-page-theme-a .logout .ui-btn {
+    text-transform: initial;
+    background-color: transparent;
+}
+
+.logout .ui-btn span,
+.logout .ui-btn .fa {
+    vertical-align: middle;
+    margin: 5px;
+}

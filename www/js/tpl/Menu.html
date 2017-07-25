@@ -1,0 +1,65 @@
+<div>
+
+    <!--    HEADER  -->
+    <div id="header" class="">
+        <div class="ui-grid-b">
+            <div class="ui-block-a" align="center">
+                <a id="menu-toggle"  class="ui-link"><span class="logo fa fa-bars fa-2x"></span></a>
+            </div>
+            <div class="ui-block-b toggle">
+           <!--     <select id="toggle-mode" name="flip-1" class="flip-1" data-role="slider">
+                    <option value="day" class="day" <% if (!data.modeNight){ print('selected'); } %> ><%= i18next.t('t_day') %></option>
+                    <option value="night" class="night" <% if (data.modeNight){ print('selected'); } %> ><%= i18next.t('t_night') %></option>
+                </select>-->
+            </div>
+            <div class="ui-block-c" align="center">
+                <% if (!navigator.onLine) { %>
+                <image id="lead-send-icon" src="img/logo.png"></image>
+                <% } else { %>
+                <image id="lead-send-icon" src="img/logo.png"></image>
+                <% } %>
+
+                <span class="undelivered-leads-label">
+
+                </span>
+
+            </div>
+        </div>
+    </div>
+
+    <!--    MAIN MENU   -->
+    <div id="menu" data-role="panel" data-position="left" data-display="overlay">
+        <div class="menuHeader effect6 menuHeader">
+            <div class="ui-block-a">
+                <img src="img/logo.png" height="40"/>
+            </div>
+            <div class="ui-block-b mainMenuPanel_ui-block-b">
+                <span class="mainMenuPanelTitle"><%= i18next.t('t_menu') %></span>
+            </div>
+        </div>
+        <div class="menuitem" >
+            <a  class="link">
+                <div class="menuitemWrapper">
+                    <span class="menuitemText"><%= App.appData.loginData.get('Login_Name') %></span>
+                </div>
+            </a>
+        </div>
+        <div class="menuitem" >
+            <a id="btn-settings" class="link">
+                <div class="menuitemWrapperDeselected">
+                    <span class="fa fa-cogs marginLeft20px"></span>
+                    <span class="menuitemText" id="expand_settings"><%= i18next.t('t_settings') %></span>
+                </div>
+            </a>
+        </div>
+        <div class="menuitem">
+            <a class="link">
+                <div id="btn_logOut" class="menuitemWrapperDeselected">
+                    <span class="fa fa-sign-out marginLeft20px"></span>
+                    <span class="menuitemText" id="sidePanelLogoutButton"><%= i18next.t('t_logout') %></span>
+                </div>
+            </a>
+        </div>
+    </div>
+
+</div>

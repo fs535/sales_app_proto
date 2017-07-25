@@ -1,0 +1,28 @@
+#settingsPage .ui-content {
+    padding: 0;
+}
+
+#settingsPage .ui-collapsible-content label {
+    font-size: 16px;
+}
+
+#settingsPage .ui-radio input {
+    margin: 5px;
+}
+
+#settingsPage .ui-btn.ui-radio-off:after,
+#settingsPage .ui-btn.ui-radio-on:after {
+    top: 12px;
+}
+
+#settingsPage .ui-radio .ui-btn.ui-radio-on:before {
+    top: 17px;
+}
+
+#settingsPage .ui-content {
+    background-color: transparent;
+}
+
+#settingsPage .ui-field-contain {
+    padding: 8px 14px;
+}

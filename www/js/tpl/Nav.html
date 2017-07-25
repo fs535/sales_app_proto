@@ -1,0 +1,15 @@
+<div id="navbar" data-role="navbar" class="ui-navbar" role="navigation">
+    <ul class="ui-grid-d nav-tab">
+        <% for(var n in data) { %>
+        <li class="nav-tab-block">
+            <a href="#" id="<%= data[n].id %>" data-icon="custom" data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-iconpos="top" data-theme="a" data-inline="true"
+               class="ui-btn ui-btn-inline ui-btn-icon-top ui-btn-up-a <%= data[n].active ? 'ui-btn-active' : '' %>">
+                <span class="ui-btn-inner">
+                    <span class="ui-btn-text"><%= data[n].name %></span>
+                    <span class="ui-icon ui-icon-custom ui-icon-shadow">&nbsp;</span>
+                </span>
+            </a>
+        </li>
+        <% } %>
+    </ul>
+</div>

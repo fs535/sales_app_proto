@@ -1,0 +1,22 @@
+[data-role="popup"] {
+    overflow-y: auto;
+}
+
+.ui-popup-ios {
+    margin-top: 22px;
+}
+
+.no-scroll {
+    overflow-y: hidden;
+}
+
+#popup .popup-container {
+    overflow: auto;
+    padding: 25px;
+}
+
+#popup .popup-button {
+    float: right;
+    margin-bottom: -0.7em;
+}
+

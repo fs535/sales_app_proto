@@ -1,0 +1,14 @@
+body.mukana .error-popup-container {
+    overflow: auto;
+    padding: 25px;
+}
+
+body.mukana .error-popup-contact > a {
+    text-decoration: none;
+}
+
+body.mukana .error-popup-button {
+    float: right;
+    margin-right: -1em;
+    margin-bottom: -0.7em;
+}

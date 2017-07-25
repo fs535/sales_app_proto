@@ -1,0 +1,15 @@
+<div class="opportunity-wrap">
+	<% var colors = ["#910079", "#7500B1", "#060097", "#004F9D", "#B4000C", "#A27300", "#716F00", "#4A9200", "#00975C" ];
+		var rand = Math.floor(Math.random() * colors.length);
+	%>
+	<span class="opportunity-badge" 
+		  badge-data="<%= Name.charAt(0).toUpperCase() %>" 
+		  style="background-color: <%= colors[rand] %>;">
+	</span>
+	<span class="opportunity-title">
+		<%= Name %>
+	</span>
+	<div class="item-type">
+		<%= Sales_Stage ? Sales_Stage : '--' %>
+	</div>
+</div>

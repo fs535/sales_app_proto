@@ -1,0 +1,33 @@
+<div id="loginPage">
+    <div id="loginContent">
+        <div class="ui-body" id="loginContainer">
+            <div class="ui-grid-a">
+                <img src="img/logo.png" class="logoMain">
+            </div>
+            <div class="ui-grid-a">
+                <form id="login-form" action="">
+                    <div class="custominput">
+                        <input id="userName" type="text" name="name" class="username" placeholder="<%= i18next.t('t_placeholderUserName') %>" value="" data-clear-btn="true">
+                    </div>
+                    <div class="custominput">
+                        <input id="password" type="password" name="name" class="password" placeholder="<%= i18next.t('t_placeholderPassword') %>" value="" data-clear-btn="true">
+                    </div>
+                    <br>
+                    <div>
+                        <span id="error-msg" class="error-block">
+
+                        </span>
+                    </div>
+                    <div class="ui-input-btn ui-btn ui-btn-b custombutton buttongradient">
+                        <%= i18next.t('t_login') %>
+                        <input id="btn_logIn" type="submit" data-enhanced="true" value="<%= i18next.t('t_login') %>" class="submit btn login-button">
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+

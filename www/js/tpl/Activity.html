@@ -1,0 +1,18 @@
+<div class="activity-wrap">
+    <% var colors = ["#910079", "#7500B1", "#060097", "#004F9D", "#B4000C", "#A27300", "#716F00", "#4A9200", "#00975C" ];
+    var rand = Math.floor(Math.random() * colors.length);
+    %>
+    <span class="opportunity-badge"
+          badge-data="<%= Type.charAt(0).toUpperCase() %>"
+          style="background-color: <%= colors[rand] %>;">
+	</span>
+    <div class="item-type">
+        <%= Planned_Completion ? Planned_Completion : '--' %>
+    </div>
+    <span class="opportunity-title">
+		<%= Description ? Description : '--' %>
+	</span>
+    <div class="item-type">
+        <%= Type ? Type : '--' %>
+    </div>
+</div>

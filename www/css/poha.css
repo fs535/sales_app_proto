@@ -1,0 +1,444 @@
+body{
+    margin: 0;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    font-size: 1em;
+    color:  white;
+}
+h1{
+    font-size: 2.5em;
+    margin-top: 0;
+    margin-bottom: 1.5em;
+    letter-spacing: 0.1em;
+}
+textarea{
+    resize: none !important;
+}
+#loginPage{
+    display: table;
+    width: 100%;
+    height: 100%;
+}
+#loginContent{
+    vertical-align: middle;
+    display: table-cell;
+    padding-bottom: 50px;
+}
+.login-container{
+    position: absolute;
+    left: 0em;
+    bottom: 0em;
+    right: 0em;
+    top: 0em;
+}
+
+#result-footer{
+    position: absolute;
+    left: 1em;
+    right: 1em;
+    bottom: 1em;
+}
+
+#result-body{
+    padding: 2em;
+}
+
+#icon_userName, #icon_password{
+    position: absolute;
+    top: 1.3em;
+    right: 1.5em;
+    width: 24px;
+}
+
+#icon_warning{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 24px;
+}
+
+#error-msg-block{
+    color: #D50000;
+}
+
+/*****************************************************************/
+
+#form-footer{
+    margin-top: 1.5em;
+}
+
+#menu{
+    height: 100%;
+    width: 17em;
+    box-shadow: rgba(0, 0, 0, 0.15) 5px 0px 5px 0px;
+    position: fixed;
+    z-index: 999;
+    background-color: #2a2a2a;
+    border-color: #1d1d1d;
+    color: #fff;
+    text-shadow: 0 1px 0 #111;
+}
+
+#main-view-container{
+    padding: 3em;
+    margin-left: 5em;
+}
+/*#menu-toggle{
+    position: absolute;
+    padding: 1.5em 1.5em 1.5em 1em;
+    width: 28px;
+}*/
+
+#menu-footer-content{
+    top: 0.5em;
+    width: 10em;
+}
+
+#container{
+    height: 100%;
+}
+
+#container-flex{
+    display: flex;
+    height: 100%;
+}
+
+#body{
+    flex: 1;
+    height: 100%;
+}
+
+#header{
+    background-color: #333333;
+    position: absolute;
+    right: 0;
+    left: 0;
+    height: 50px;
+}
+
+#form-content, #result-content{
+    padding: 1em;
+}
+
+#lead-form .form-label, #send-leads-block .form-label{
+    font-weight: bold;
+    margin-bottom: 0.5em;
+}
+
+#send-leads-block .form-label{
+    border-bottom: 1px solid silver;
+}
+
+#container-common{
+    background-color: white;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    bottom: 57px;
+    right: 0;
+}
+
+#form-content, #result-content, #settings-content, #leads-content{
+    position: absolute;
+    top: 40px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow-y: auto;
+    padding: 2px;
+}
+
+#body.disabled{
+    pointer-events: none;
+}
+
+#login-title{
+    margin-bottom: 1em;
+}
+#menu-header{
+    width: 100%;
+    background: #05377A;
+    height: 30%;
+}
+
+#lead-send-icon{
+    right: 0;
+    top: 0;
+    width: 37px;
+    padding-top: 5px;
+    height: 40px;
+}
+
+#menu-body{
+    height: 70%;
+}
+
+
+#menu-footer{
+    border-top: 1px solid silver;
+    position: absolute;
+    bottom: 0;
+    height: 3em;
+    width: 100%;
+}
+#menu-header-user-info-container, #menu-body-language-container, #menu-footer-content{
+    position: absolute;
+    left: 1em;
+    right: 2em;
+}
+#menu-header-user-info-container{
+    bottom: 0;
+}
+#menu-body-language-container{
+    top: 1em;
+}
+#menu-body-language-container, #menu-footer{
+    color: #004A8D;
+}
+
+#menu-body-language-container select{
+    width: 100%;
+    margin-bottom: 1em;
+    padding: 0.5em 0;
+    margin-left: 1em;
+    border: 0;
+    color: #05377A;
+    background: white;
+    outline: 0;
+    font-size: 1em;
+}
+div#menu-body-language-container .flex-row img{
+    margin-top: 0.3em;
+}
+
+
+
+/**************************************** common styles*****************************************/
+.width100p{
+    width: 100%;
+}
+.position-relative{
+    position: relative;
+}
+.displayNone{
+    display: none !important;
+}
+.flex-row{
+    display: flex;
+}
+.widthDateBlock{
+    width: 30%;
+}
+.field{
+    position: relative;
+}
+#lead-form option{
+    color: #000000;
+}
+
+.field__label {
+    color: #15CBF6;
+    box-sizing: border-box;
+    opacity: 0;
+    padding: 0.5em 2em 0.5em 1em;
+    pointer-events: none;
+    position: absolute;
+    transform: translateY(3px);
+    transition: all .2s ease-out;
+    width: 100%;
+    position: absolute;
+}
+.field--not-empty .field__label{
+    opacity: 1;
+    transform: none;
+}
+.margin-right-common{
+    margin-right: 0.5em;
+}
+
+#end_time_block_container{
+    padding: 10px;
+    margin: 20px -10px;
+}
+
+#end_time_block{
+    margin-top: 1em;
+}
+
+.add_remove_end_time_block_label{
+    color: #00BAF2;
+    margin-top: 0em;
+}
+#add_end_time_block, #remove_end_time_block{
+    position: absolute;
+    height: 2em;
+    left: 1em;
+    right: 1em;
+    cursor: pointer;
+}
+#close_icon_blue{
+    position: absolute;
+    z-index: 1;
+    right: 0;
+    top: -0.5em;
+    width: 24px;
+    padding: 0.5em;
+}
+
+#send-leads-block{
+    position: absolute;
+    top: 5em;
+    left: 1em;
+    right: 1em;
+    bottom: 5em;
+    overflow-y: auto;
+}
+#settings-content, #leads-content{
+    color: #000000;
+    position: fixed;
+}
+
+.margin-top-medium{
+    margin-top: 10px;
+}
+.language-container{
+    width: 70% !important;
+    margin: 0 auto;
+}
+.flex1{
+    flex: 1;
+}
+.font-normal{
+    font-weight: normal !important;
+}
+
+.padding-bottom-common{
+    padding-bottom: 0.5em;
+}
+.padding-right-common{
+    padding-right: 0.5em;
+}
+.text-align-right{
+    text-align: right;
+}
+.button-common-padding{
+    padding: 0.5em 1em !important;
+}
+.select-field-wrapper{
+    border: 1px solid #dddddd;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+#lead-form .select-field-wrapper select{
+    padding: 0.7em 42px.7em 5px;
+    line-height: 1.4em;
+    display: block;
+    width: 100%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    outline: 0;
+    margin: 0;
+    min-height: 2.2em;
+    text-align: left;
+    border: 0;
+    background-color: #fff;
+}
+.ui-input-text input, .ui-input-search input, textarea.ui-input-text{
+    padding: 0.6em !important;
+}
+.select-arrow-icon{
+    background: url(../img/chevron_down.png) no-repeat #EBEBEB;
+    position: absolute;
+    width: 39px;
+    border: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.chevron-icon{
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border: 0;
+    right: 2px;
+}
+
+.chevron-icon-up{
+    background: url(../img/chevron_up.png) no-repeat #EBEBEB -5px;
+}
+.chevron-icon-down{
+    background: url(../img/chevron_down.png) no-repeat #EBEBEB -5px;
+}
+
+.refresh-button-icon{
+    height: 36px;
+    margin-top: 2px;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+}
+.refresh-button-label{
+    position: relative;
+    bottom: 0.7em;
+}
+.no-padding{
+    padding: 0 !important;
+}
+#lead-form select:focus {
+    -webkit-box-shadow: 0 0 15px 	#3388cc;
+    -moz-box-shadow: 0 0 15px 		#3388cc;
+    box-shadow: 0 0 15px 			#3388cc;
+}
+.picker-icon{
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    right: 5px;
+    top: 14px;
+}
+.picker-icon.icon-time{
+    background: url(../img/clock-black.png) no-repeat 8px;
+}
+
+.picker-icon.icon-date{
+    background: url(../img/calendar-black.png) no-repeat 8px 10px;
+}
+.undelivered-leads-label{
+    position: absolute;
+    top: 15px;
+    color: #fff;
+    margin-left: 3px;
+}
+
+.text-area{
+    box-sizing: border-box;
+    border: 1px solid rgb(221, 221, 221);
+    border-radius: 2px;
+    margin-bottom: 10px;
+}
+textarea{
+    padding: 0.7em;
+    width: 100%;
+    box-sizing: border-box;
+    border: 0;
+    margin-bottom: -4px;
+}
+
+textarea:focus{
+    box-shadow: 0 0 15px #3388cc;
+}
+
+.has-error .ui-input-text{
+    outline: 2px solid red;
+}
+.has-error select, .has-error .text-area{
+    outline: 2px solid red !important;
+}
+.ellipsis{
+    word-wrap: break-word;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

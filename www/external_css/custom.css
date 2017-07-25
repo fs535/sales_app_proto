@@ -1,0 +1,73 @@
+.center {
+    margin: auto;
+    width: 60%;
+    border: 1px solid #06377a;
+    padding: 10px;
+	justify-content: center; /* for horizontal alignment */
+    align-items: center; /* for vertical alignment */
+}
+
+#sub-left {
+   float: left;
+   padding: 7px;
+   margin-left: 27%;
+}
+#sub-right {
+   float: right;
+   padding: 7px;
+   margin-right: 27%;
+}
+.clear-both {
+   padding: 5px;
+   clear: both;
+}
+
+.margins5{
+
+  margin-left: 5%;
+  margin-right: 5%;
+
+}
+
+.margins10{
+
+  margin-left: 10%;
+  margin-right: 10%;
+
+}
+
+#groupDiv {
+
+
+  margin-left: 10%;
+  margin-right: 10%;
+
+}
+
+#searchButton {
+
+  background-color: #0063b1; 
+  color: white;
+
+}
+
+#mainButtons{
+
+  background-color: white;
+  color: #0063b1;
+  width: 60px; 
+  height: 60px
+
+}
+
+.col-centered{
+    float: none;
+    margin: auto;
+}
+
+.mainColor{
+
+  background-color: #06377a; 
+  color: white;
+
+}

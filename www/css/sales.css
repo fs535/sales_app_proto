@@ -1,0 +1,114 @@
+button.create-op-btn {
+    display: block;
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    border-width: 0;
+    background-color: red;
+    color: white;
+}
+
+div.create-op {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+}
+
+.sales-cases {
+    background-color: #eee;
+    padding: 0;
+    height: 100%;
+}
+
+.sales-case-list,.activity-list {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+}
+
+.sales-case-list > li, .activity-list > li {
+    background-color: #fff;
+    list-style-type: none;
+    width: 100%;
+    height: 60px;
+    border-bottom: 1px solid rgba(52, 122, 255, 0.5);
+    display: table;
+}
+
+.opportunity-badge {
+    position: relative;
+}
+
+.opportunity-badge:after {
+    content: attr(badge-data);
+    background-color: inherit;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    right: 25px;
+    text-align: center;
+    box-shadow: 0 0 1px #333;
+    line-height: 40px;
+    color: white;
+    font-weight: bold;
+}
+
+.opportunity-wrap .opportunity-badge:after {
+    top: -2px;
+}
+.activity-wrap .opportunity-badge:after {
+    top: 3px;
+}
+
+.opportunity-title {
+    color: #333;
+}
+
+.opportunity-wrap, .activity-wrap {
+    display: table-cell;
+    vertical-align: middle;
+    padding-left: 80px;
+}
+
+#navbar{
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+.nav-tab{
+    display: flex !important;
+}
+.nav-tab-block{
+    display: inline-block;
+    flex: 1;
+}
+
+#form-header{
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    right: 0;
+    left: 0;
+    height: 40px;
+    border-bottom: 1px solid #000;
+}
+
+.items-count{
+    top: 8px;
+    color: #000;
+    left: 55px;
+    position: absolute;
+}
+#form-header-icon{
+    height: 30px;
+    left: 20px;
+    top: 5px;
+    position: absolute;
+}
+.item-type{
+    font-size: 12px;
+    font-weight: bold;
+}
